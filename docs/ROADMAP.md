@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 2.6.
+**Now:** 2.7.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -27,13 +27,8 @@ Done: 1.1, 1.2.
 
 ## 2. Skeleton
 
-Done: 2.1, 2.2, 2.3, 2.4, 2.5, 2.11, 2.12.
+Done: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.11, 2.12.
 
-- **2.6 · Lint and format.** The tool, its rules, `make format`, and the check
-  in `make test`. Prefer tools that also work with TypeScript 7. Decide
-  whether the lint takes over `noUnusedLocals` and `noUnusedParameters` from
-  TypeScript, and turn off any rule that asks for dot access where
-  `noPropertyAccessFromIndexSignature` asks for brackets.
 - **2.7 · Unit tests.** The test runner, a first test, and `make test` running
   it every time.
 - **2.14 · Image report.** `make outdated` also checks the images pinned by
@@ -77,6 +72,7 @@ Done: 2.1, 2.2, 2.3, 2.4, 2.5, 2.11, 2.12.
 - **5.1 · Consumer requirements.** `docs/consumers.md`: what the app's shell
   and People screen need.
 - **5.2 · Component conventions.** Folder layout, naming, props and exports.
+  Revisit the lint exception that lets `src/index.ts` only re-export.
 - **5.3 · Styling approach.** How component CSS is written and shipped, and
   the class prefix. The user prefers prefixes tied to the repository, such as
   `au-`, over the artifact's undocumented `bs-`.
@@ -113,6 +109,9 @@ No order between them; each becomes items when its time comes.
 - **TypeScript 7.** Move when `make test` passes on it, with the lint and the
   build. Drop TypeScript from `update.ignoreDeps` in the same commit. Today,
   `typescript-eslint` and `@microsoft/api-extractor` do not accept it.
+- **Editor integration.** Biome's editor extension needs its macOS binary,
+  but `node_modules` is installed in the container, with Linux's only; pnpm's
+  `supportedArchitectures` can install both.
 - **Update bot.** Renovate or Dependabot opening pull requests, with the CI;
   check first that it respects the release age and updates image digests.
 - **pnpm's update notice.** Every run says a newer pnpm exists, though the

@@ -5,7 +5,7 @@ IMAGE := aurum-ds
 # pnpm's package store, kept in a volume so an install downloads nothing twice.
 STORE := aurum-ds-pnpm-store
 
-.PHONY: help install test outdated audit
+.PHONY: help install format test outdated audit
 .DEFAULT_GOAL := help
 
 ##@ Development
@@ -19,8 +19,13 @@ install: ## After changing package.json: install in a container, updating pnpm-l
 	docker run --rm -v "$(CURDIR)":/app -v $(STORE):/pnpm-store $(IMAGE):base \
 		pnpm install --store-dir /pnpm-store
 
-test: ## Run every check, from the lockfile and the sources: types
+format: ## Format the files and apply the safe lint fixes, in place
+	docker build -f infra/Dockerfile --target base -t $(IMAGE):base .
+	docker run --rm -v "$(CURDIR)":/app $(IMAGE):base pnpm exec biome check --write
+
+test: ## Run every check, from the lockfile and the repository: lint and format, then types
 	docker build -f infra/Dockerfile --target test -t $(IMAGE):test .
+	docker run --rm $(IMAGE):test pnpm exec biome ci --error-on-warnings
 	docker run --rm $(IMAGE):test pnpm exec tsc
 
 ##@ Dependencies

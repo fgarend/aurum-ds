@@ -1,0 +1,42 @@
+// Lint and format settings (decision 0016).
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  // What .gitignore lists is left out.
+  "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
+  "files": {
+    // The frozen snapshot is never edited, and pnpm writes its own lockfile.
+    "includes": ["**", "!reference", "!pnpm-lock.yaml"]
+  },
+  // Biome's default style, with the indentation from .editorconfig.
+  "formatter": { "useEditorconfig": true },
+  "markdown": { "formatter": { "enabled": true } },
+  "linter": {
+    "rules": {
+      // Every stable rule. Each one turned off or adjusted says why.
+      "preset": "all",
+      "complexity": {
+        // noPropertyAccessFromIndexSignature asks for brackets on keys that may be missing (decision 0013).
+        "useLiteralKeys": "off"
+      },
+      "suspicious": {
+        // Biome does not see that noUncheckedIndexedAccess makes an indexed read possibly undefined
+        // (decision 0013), so it would flag the very checks that handle it.
+        "noUnnecessaryConditions": "off"
+      },
+      "correctness": {
+        // Node's module rules ask for .js in relative imports (decision 0013).
+        "useImportExtensions": {
+          "level": "on",
+          "options": { "forceJsExtensions": true }
+        }
+      }
+    }
+  },
+  "overrides": [
+    {
+      // The package's public entry only re-exports. Revisited with the component conventions.
+      "includes": ["src/index.ts"],
+      "linter": { "rules": { "performance": { "noBarrelFile": "off" } } }
+    }
+  ]
+}

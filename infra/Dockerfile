@@ -17,7 +17,6 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN --mount=type=cache,id=aurum-ds-pnpm-store,target=/pnpm-store \
     pnpm install --frozen-lockfile --store-dir /pnpm-store
 
-# The sources, checked by make test.
+# The repository, checked by make test.
 FROM deps AS test
-COPY tsconfig.json ./
-COPY src ./src
+COPY . .
