@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 2.11.
+**Now:** 2.12.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -27,11 +27,8 @@ Done: 1.1, 1.2.
 
 ## 2. Skeleton
 
-Done: 2.1, 2.2, 2.3, 2.4.
+Done: 2.1, 2.2, 2.3, 2.4, 2.11.
 
-- **2.11 · Dependency report.** `make outdated`: dependencies with newer
-  versions, and the images pinned by hand (Node, pnpm), saying which are past
-  the 7-day release age.
 - **2.12 · Security audit.** `make audit`: known vulnerabilities in the
   installed dependencies.
 - **2.5 · TypeScript.** Version, compiler options and the type check in
@@ -40,6 +37,9 @@ Done: 2.1, 2.2, 2.3, 2.4.
   in `make test`.
 - **2.7 · Unit tests.** The test runner, a first test, and `make test` running
   it every time.
+- **2.14 · Image report.** `make outdated` also checks the images pinned by
+  hand (Node, pnpm) against their official sources, by release date, with a
+  tested script.
 - **2.8 · Component tests.** The DOM environment, the testing library, React
   declared in `devDependencies` (the latest 19, developed on), and a check
   against React 18.3.
