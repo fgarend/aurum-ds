@@ -30,6 +30,29 @@ Source: the format reference, "tokens.json grammar".
   its compiled `tokens.css`, but this artifact does not (reading it fails), so
   the port compiles it from `tokens.json`.
 
+### The exact output
+
+Source: the artifact type's app (`artifact-type/app.js`, read on
+2026-11-01), whose compiler writes `tokens.css` line by line.
+
+- **Layout:** a selector line ending in ` {`, one declaration per line
+  indented by two spaces, a closing `}`, lines joined by a newline, and a
+  final newline.
+- **The theme block** lists the colors in file order, then the shadows.
+- **The root block** lists spacing, then radius, then every other family in
+  file order, then the font families. It is left out when empty.
+- **A text style class** holds, in order: `font-family: var(--font-<key>)`
+  (the style's own family, else its group's), `font-size`, `line-height`,
+  `font-weight`, `letter-spacing`, then `font-style` only when italic and
+  `font-variation-settings: 'opsz' N` only with an optical size.
+- **Defaults** read in for a style: `line-height` 1.4, `font-weight` 400
+  (`normal` and `bold` read as 400 and 700), `letter-spacing` 0, `font-style`
+  normal. A number for a length gets `px`, and a hex color is lowercased.
+- **Escaping:** besides the `.`, a name starting with a digit has that digit
+  escaped as `\3<digit> ` (`2x` becomes `\32 x`).
+- **Usage notes** become comments only when asked for, which is not the
+  default.
+
 ## Rendering a preview outside the artifact
 
 Sources: the format reference, "The preview.html contract"; the artifact's

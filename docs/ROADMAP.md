@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 3.2.
+**Now:** 3.3.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -31,12 +31,10 @@ Done: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 2.10, 2.11, 2.12, 2.13, 2.14.
 
 ## 3. Tokens and assets
 
-Done: 3.1.
+Done: 3.1, 3.2.
 
-- **3.2 · Token output.** The generated CSS, tested against what the artifact
-  compiles. The compiler adds the `au-` prefix (decision 0025), so the test
-  compares names without it.
-- **3.3 · Fonts.** Geist and Geist Mono, how they are shipped.
+- **3.3 · Fonts.** Geist and Geist Mono, how they are shipped. The token
+  compiler fails on `type.fonts` until then (decision 0026).
 - **3.4 · Icons.** The 41 SVGs as package assets.
 - **3.5 · Base styles.** The global CSS every component relies on.
 - **3.6 · Brand book.** `docs/guidelines.md`, the living copy of the
@@ -71,7 +69,8 @@ Done: 3.1.
 - **5.7 · Build.** The bundler and what `dist/` contains. Only tools that work
   with TypeScript 7 (decision 0024). `tsconfig.json` then emits: `noEmit`,
   `rootDir` and `outDir`. Test files and `src/test-setup.ts` stay out of the
-  package. Consider the React Compiler, which memoizes by itself.
+  package. Consider the React Compiler, which memoizes by itself. Whether the
+  token compiler in `src/tokens/` ships, or only `tokens.css`.
 - **5.8 · Delivery.** How the app gets the built code from the git dependency.
 - **5.9 · Package check.** `make pack`: what the app will receive.
 - **5.10 · Release v0.1.0.** The changelog and the first tag.
@@ -93,7 +92,8 @@ No order between them; each becomes items when its time comes.
   React 19 (decision 0019).
 - **Continuous integration.** Running `make test` on GitHub.
 - **License.** See decision 0002.
-- **Dark theme.** When the app's first screen needs it.
+- **Dark theme.** When the app's first screen needs it. The token compiler
+  fails on a second theme until then (decision 0026).
 - **Image vulnerability scan.** The system packages inside the images (the
   Debian of the Node image), which `make audit` does not cover.
 - **Vitest 5.** Move when `jest-dom`'s types accept it, with the type check
