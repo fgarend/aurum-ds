@@ -37,41 +37,61 @@ Done: 3.1, 3.2, 3.3, 3.4, 3.5, 3.6.
 
 Done: 4.1, 4.2, 4.3.
 
-## 5. v0.1.0: the shell and People
+## 5. v0.1.0: the base delivered to the app
 
-- **5.1 · Consumer requirements.** `docs/consumers.md`: what the app's shell
-  and People screen need. The app's bundler must handle `@import` and `url()`
-  in CSS, and its build must carry the fonts' license notice (decision 0027).
-  It puts `.au-root` where Aurum begins (decision 0030).
-- **5.2 · Component conventions.** Folder layout, naming, props and exports.
-  Revisit the lint exception that lets `src/index.ts` only re-export. When to
-  use `memo` and `useCallback`, context values included.
-- **5.3 · Styling approach.** How component CSS is written and shipped, and
-  the class prefix. The user prefers prefixes tied to the repository, such as
-  `au-`, over the artifact's undocumented `bs-`.
-- **5.4 · Accessibility approach.** Hand-made or a library, and the locale.
-- **5.5 · Copy and language.** Default texts and how the app replaces them.
-  Settle Biome's `noJsxLiterals`, which forbids text written in JSX.
-- **5.11 · Coverage.** The tool, and whether `make test` requires a minimum.
-- **5.6 · Components.** One item per component the shell and People need,
-  listed from 5.1. The `Icon` component decides how the package depends on
-  Lucide (peer or dependency; the app is on 1.59.0), the stroke width (Aurum's
-  1.5 or Lucide's 2), names by concept as the app's `Icon` has them, and the
-  three artifact names Lucide spells differently: `arrows-swap`
-  (`arrow-left-right`), `more` (`ellipsis`) and `piggy` (`piggy-bank`).
-  Update the guidelines' Components section as components arrive
-  (decision 0031). Compare each component with its reference screenshot in
-  `reference/screenshots/` (decision 0033), and give it a visual test of its
-  own (decision 0034).
-- **5.7 · Build.** The bundler and what `dist/` contains. Only tools that work
-  with TypeScript 7 (decision 0024). `tsconfig.json` then emits: `noEmit`,
+The first release carries no component: the tokens, the fonts and the base
+styles, which the app can adopt on its own. It proves the way from this
+repository to the app with little at stake.
+
+- **5.1 · Consumer requirements and component order.** `docs/consumers.md`:
+  what the app's shell and People screen need, and the components in order of
+  importance, use and simplicity, a component after those it depends on. The
+  list becomes the component items of milestone 7. The app's bundler must
+  handle `@import` and `url()` in CSS, and its build must carry the fonts'
+  license notice (decision 0027). It puts `.au-root` where Aurum begins
+  (decision 0030).
+- **5.7 · Build.** The bundler and what `dist/` contains: at first
+  `tokens.css`, `fonts.css` and `base.css`. Only tools that work with
+  TypeScript 7 (decision 0024). `tsconfig.json` then emits: `noEmit`,
   `rootDir` and `outDir`. Test files, `src/test-setup.ts` and the
-  `__screenshots__` folders stay out of the package. Consider the React Compiler, which memoizes by itself. Whether the
-  token compiler in `src/tokens/` ships, or only `tokens.css`.
+  `__screenshots__` folders stay out of the package. Consider the React
+  Compiler, which memoizes by itself. Whether the token compiler in
+  `src/tokens/` ships, or only `tokens.css`.
 - **5.8 · Delivery.** How the app gets the built code from the git dependency.
   Update the guidelines' section on using Aurum (decision 0031).
 - **5.9 · Package check.** `make pack`: what the app will receive.
-- **5.10 · Release v0.1.0.** The changelog and the first tag.
+- **5.10 · Release v0.1.0.** The changelog and the first tag. The app then
+  installs it and adopts it, in its own repository.
+
+## 7. One component per release
+
+Each component is one item and ends in a release the app can use, a patch
+version while in `0.y.z` (decision 0004). The decisions every component
+relies on come first.
+
+- **7.1 (was 5.2) · Component conventions.** Folder layout, naming, props and
+  exports. Revisit the lint exception that lets `src/index.ts` only
+  re-export. When to use `memo` and `useCallback`, context values included.
+- **7.2 (was 5.3) · Styling approach.** How component CSS is written and
+  shipped, and the class prefix. The user prefers prefixes tied to the
+  repository, such as `au-`, over the artifact's undocumented `bs-`.
+- **7.3 (was 5.4) · Accessibility approach.** Hand-made or a library, and the
+  locale.
+- **7.4 (was 5.5) · Copy and language.** Default texts and how the app
+  replaces them. Settle Biome's `noJsxLiterals`, which forbids text written
+  in JSX.
+- **7.5 (was 5.11) · Coverage.** The tool, and whether `make test` requires a
+  minimum.
+- **7.6 (was 5.6) · Components.** One item per component, in the order of
+  5.1, each the same way: tests, the component, its visual test (decision
+  0034), a comparison with its reference screenshot in
+  `reference/screenshots/` (decision 0033), the guidelines' Components
+  section (decision 0031), the changelog, and a release. The `Icon` component
+  decides how the package depends on Lucide (peer or dependency; the app is
+  on 1.59.0), the stroke width (Aurum's 1.5 or Lucide's 2), names by concept
+  as the app's `Icon` has them, and the three artifact names Lucide spells
+  differently: `arrows-swap` (`arrow-left-right`), `more` (`ellipsis`) and
+  `piggy` (`piggy-bank`).
 
 ## 6. One version per screen
 
