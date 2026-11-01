@@ -1,0 +1,17 @@
+<!-- @dsCard group="Feedback" height=332 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Alert — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var B = window.Aurum, h = React.createElement, useState = React.useState;
+function Demo(){ return h('div',{className:'bs-demo bs-demo--col',style:{maxWidth:560}},
+ h(B.Alert,{title:'All set',onClose:function(){}},'Your 48 transactions were imported.'),
+ h(B.Alert,{tone:'success',title:'Goal reached'},'Emergency fund hit R$ 30.000,00.'),
+ h(B.Alert,{tone:'warning',title:'Food budget at 92%'},'R$ 64,00 left for the next 8 days.'),
+ h(B.Alert,{tone:'danger',title:'Card bill overdue'},'Pay by tomorrow to avoid interest.')); }
+ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

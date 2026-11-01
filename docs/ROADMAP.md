@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 1.1.
+**Now:** 1.2.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -23,9 +23,8 @@ Done: 0.1, 0.2, 0.3.
 
 ## 1. Reference
 
-- **1.1 · Reference snapshot.** The artifact's `project/` files and its 41
-  icons, frozen, with checksums and a README. Records that the repository is
-  the source.
+Done: 1.1.
+
 - **1.2 · Artifact format notes.** How the artifact compiles tokens and
   renders previews, checked against the type's official reference.
 

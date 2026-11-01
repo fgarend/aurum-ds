@@ -1,0 +1,15 @@
+<!-- @dsCard group="Data display" height=88 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Avatar — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var B = window.Aurum, h = React.createElement, useState = React.useState;
+function Demo(){ return h('div',{className:'bs-demo'},
+ h(B.Avatar,{name:'Ana Souza',size:'sm'}), h(B.Avatar,{name:'Felipe Lima'}), h(B.Avatar,{name:'Marina Costa',size:'lg'}),
+ h(B.Avatar,{name:'Felipe',size:'xs',tone:5}), h(B.Avatar,{name:'Felipe',tone:5}), h(B.Avatar,{name:'Carla',tone:7}), h(B.Avatar,{name:'Carla',size:'lg',tone:7})); }
+ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

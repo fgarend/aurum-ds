@@ -1,0 +1,13 @@
+<!-- @dsCard group="Feedback" height=270 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>EmptyState — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var B = window.Aurum, h = React.createElement, useState = React.useState;
+function Demo(){ return h(B.EmptyState,{icon:'credit-card',title:'No transactions yet',description:'Add your first expense or import a bank statement to see where your money goes.',action:h(B.Button,{icon:'plus'},'Add transaction')}); }
+ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

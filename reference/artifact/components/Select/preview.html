@@ -1,0 +1,15 @@
+<!-- @dsCard group="Forms" height=102 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Select — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var B = window.Aurum, h = React.createElement, useState = React.useState;
+function Demo(){ return h('div',{className:'bs-demo bs-demo--grid'},
+ h(B.Select,{label:'Category',defaultValue:'food',options:[{value:'food',label:'Food & dining'},{value:'home',label:'Housing'},{value:'transport',label:'Transport'}]}),
+ h(B.Select,{label:'Account',placeholder:'Choose an account',defaultValue:'',options:['Checking','Savings','Credit card']})); }
+ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

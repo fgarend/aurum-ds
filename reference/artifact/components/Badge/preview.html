@@ -1,0 +1,15 @@
+<!-- @dsCard group="Data display" height=62 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Badge — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var B = window.Aurum, h = React.createElement, useState = React.useState;
+function Demo(){ return h('div',{className:'bs-demo'},
+ h(B.Badge,null,'Checking'), h(B.Badge,{tone:'primary'},'Default'), h(B.Badge,{tone:'income',dot:true},'Received'), h(B.Badge,{tone:'expense',dot:true},'Overdue'),
+ h(B.Badge,{tone:'invest'},'Fixed income'), h(B.Badge,{tone:'warning',dot:true},'Pending'), h(B.Badge,{tone:'outline',icon:'repeat'},'Monthly')); }
+ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

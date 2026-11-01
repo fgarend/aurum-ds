@@ -1,0 +1,15 @@
+<!-- @dsCard group="Forms" height=124 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>SegmentedControl — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var B = window.Aurum, h = React.createElement, useState = React.useState;
+function Demo(){ return h('div',{className:'bs-demo bs-demo--col',style:{maxWidth:420}},
+ h('div',null,h(B.SegmentedControl,{label:'Period',defaultValue:'month',options:[{value:'week',label:'Week'},{value:'month',label:'Month'},{value:'year',label:'Year'}]})),
+ h(B.SegmentedControl,{label:'Type',block:true,defaultValue:'expense',options:[{value:'expense',label:'Expense',icon:'arrow-up-right'},{value:'income',label:'Income',icon:'arrow-down-left'},{value:'transfer',label:'Transfer',icon:'arrows-swap'}]})); }
+ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

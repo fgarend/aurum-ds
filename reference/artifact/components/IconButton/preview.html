@@ -1,0 +1,16 @@
+<!-- @dsCard group="Actions" height=88 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>IconButton — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var B = window.Aurum, h = React.createElement, useState = React.useState;
+function Demo(){ return h('div',{className:'bs-demo'},
+ h(B.IconButton,{icon:'bell',label:'Notifications',dot:true}), h(B.IconButton,{icon:'search',label:'Search',variant:'secondary'}),
+ h(B.IconButton,{icon:'more',label:'More options',variant:'secondary'}), h(B.IconButton,{icon:'plus',label:'Add',variant:'primary'}),
+ h(B.IconButton,{icon:'eye-off',label:'Hide balances',size:'sm'}), h(B.IconButton,{icon:'sliders',label:'Filters',size:'lg'})); }
+ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

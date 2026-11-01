@@ -1,0 +1,14 @@
+<!-- @dsCard group="Finance" height=64 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Delta — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var B = window.Aurum, h = React.createElement;
+function Demo(){ return h('div',{className:'bs-demo',style:{gap:28}},
+ h(B.Delta,{value:4.2,label:'vs September'}), h(B.Delta,{value:-12.4,invert:true,label:'less than September'}), h(B.Delta,{value:-3.1,label:'vs September'}), h(B.Delta,{value:0,label:'no change'})); }
+ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

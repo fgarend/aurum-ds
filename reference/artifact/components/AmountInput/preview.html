@@ -1,0 +1,16 @@
+<!-- @dsCard group="Forms" height=148 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>AmountInput — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var B = window.Aurum, h = React.createElement, useState = React.useState;
+function Demo(){ return h('div',{className:'bs-demo bs-demo--grid'},
+ h(B.AmountInput,{label:'Expense amount',kind:'expense',defaultValue:'184,90'}),
+ h(B.AmountInput,{label:'Income amount',kind:'income',defaultValue:'7.250,00'}),
+ h(B.AmountInput,{label:'Goal',hint:'How much do you want to save?'})); }
+ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

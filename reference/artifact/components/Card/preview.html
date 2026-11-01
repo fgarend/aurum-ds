@@ -1,0 +1,16 @@
+<!-- @dsCard group="Layout" height=184 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Card — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var B = window.Aurum, h = React.createElement, useState = React.useState;
+function Demo(){ return h('div',{className:'bs-demo bs-demo--grid',style:{gap:20}},
+ h(B.Card,{title:'Monthly overview',subtitle:'October 2026',action:h(B.Button,{variant:'ghost',size:'sm',iconRight:'chevron-right'},'Details')},
+  h('p',{style:{margin:0,fontSize:14,lineHeight:'20px',color:'var(--ink-muted)'}},'You spent 12% less than last month. Housing and food remain your largest categories.')),
+ h(B.Card,{variant:'sunken'},h('p',{style:{margin:0,fontSize:13,color:'var(--ink-muted)'}},'Sunken card for secondary or nested content.'))); }
+ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

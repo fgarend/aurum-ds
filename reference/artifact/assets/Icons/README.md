@@ -1,0 +1,1 @@
+Aurum line icons as standalone SVGs: 24×24 viewBox, 1.5px stroke, round caps and joins, no fills. Single ink: stroke `#142636` (the `ink` token) baked in, because `<img>` cannot inherit colour. In React use `Aurum.Icon` with the same names instead — it draws with `currentColor`. Use at 16, 20 or 24px; recolour by editing the stroke or importing as inline SVG.

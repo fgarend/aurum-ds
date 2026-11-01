@@ -1,0 +1,17 @@
+<!-- @dsCard group="Actions" height=140 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Button — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var B = window.Aurum, h = React.createElement, useState = React.useState;
+function Demo(){ return h('div',{className:'bs-demo bs-demo--col'},
+ h('div',{style:{display:'flex',gap:12,flexWrap:'wrap',alignItems:'center'}},
+  h(B.Button,{variant:'accent',icon:'plus'},'Add transaction'), h(B.Button,null,'Save'), h(B.Button,{variant:'secondary',icon:'download'},'Export'), h(B.Button,{variant:'ghost'},'Cancel'), h(B.Button,{variant:'danger'},'Delete account')),
+ h('div',{style:{display:'flex',gap:12,flexWrap:'wrap',alignItems:'center'}},
+  h(B.Button,{size:'sm'},'Small'), h(B.Button,{size:'lg',iconRight:'chevron-right'},'Continue'), h(B.Button,{loading:true},'Saving'), h(B.Button,{disabled:true},'Disabled'))); }
+ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!-- @dsCard group="Finance" height=268 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>BudgetBar — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var B = window.Aurum, h = React.createElement, useState = React.useState;
+function Demo(){ return h('div',{className:'bs-demo bs-demo--col',style:{maxWidth:480,gap:24}},
+ h(B.BudgetBar,{label:'Housing',icon:'home',spent:1850,limit:2400}),
+ h(B.BudgetBar,{label:'Food & dining',icon:'utensils',spent:1104,limit:1200}),
+ h(B.BudgetBar,{label:'Shopping',icon:'shopping-bag',spent:690,limit:500})); }
+ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!-- @dsCard group="Finance" height=470 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>TransactionRow — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var B = window.Aurum, h = React.createElement, useState = React.useState;
+function Demo(){ return h('div',{style:{padding:20}}, h(B.Card,{title:'Today',flush:true,action:h(B.Amount,{value:-312.3,size:'sm'})},
+ h(B.TransactionRow,{title:'Supermarket',meta:'Food & dining · Credit card',amount:-286.4,icon:'shopping-bag',category:3,date:'14:32',onClick:function(){}}),
+ h(B.TransactionRow,{title:'Salary',meta:'Income · Checking',amount:7250,icon:'briefcase',category:2,date:'09:00',recurring:true,onClick:function(){}}),
+ h(B.TransactionRow,{title:'Treasury IPCA+ 2035',meta:'Investment · Brokerage',amount:-1500,kind:'investment',category:4,date:'08:15',onClick:function(){}}),
+ h(B.TransactionRow,{title:'Bus pass',meta:'Transport · Debit',amount:-25.9,icon:'bus',category:5,pending:true,onClick:function(){}})),
+ h('div',{style:{height:16}}), h(B.Card,{title:'Household view — owner on the tile',flush:true},
+ h(B.TransactionRow,{title:'Pharmacy',meta:'Health · Carla · Card',amount:-64.3,icon:'heart-pulse',category:2,owner:'C',ownerTone:7,ownerLabel:'Carla',date:'18:22'}),
+ h(B.TransactionRow,{title:'Pix to Carla',meta:'Felipe → Carla',amount:-1000,kind:'transfer',category:8,owner:'F',ownerTone:5,ownerLabel:'Felipe',tag:'internal',date:'10:00'}))); }
+ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

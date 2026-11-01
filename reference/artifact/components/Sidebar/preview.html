@@ -1,0 +1,22 @@
+<!-- @dsCard group="Navigation" height=820 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Sidebar — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var B = window.Aurum, h = React.createElement;
+var items=[{id:'home',label:'Overview',icon:'home'},{id:'tx',label:'Transactions',icon:'arrows-swap',count:142},{id:'budgets',label:'Budgets',icon:'target'},{id:'reports',label:'Reports',icon:'bar-chart'},
+ {section:'Investments'},{id:'inv',label:'Portfolio',icon:'trending-up'},{id:'notes',label:'Brokerage notes',icon:'download',count:3,countTone:'attention'},
+ {section:'Accounts'},{id:'chk',label:'Checking',icon:'building'},{id:'card',label:'Credit card',icon:'credit-card'},
+ {section:'Settings',collapsible:true},{id:'people',label:'People',icon:'user'},{id:'cats',label:'Categories',icon:'tag'},{id:'settings',label:'Preferences',icon:'settings'}];
+var scopes=[{id:'f',label:'Felipe',initials:'F',tone:5},{id:'c',label:'Carla',initials:'C',tone:7},{id:'home',label:'Household',people:[{initials:'F',tone:5},{initials:'C',tone:7}]}];
+function Col(t, props){ return h('div',{style:{display:'flex',flexDirection:'column',gap:8}},
+  h('span',{style:{fontSize:12,color:'var(--ink-subtle)'}},t),
+  h('div',{style:{height:760,display:'flex'}}, h(B.Sidebar,Object.assign({variant:'inverse',brandMark:'A',brand:'Aurum',defaultActive:'home',items:items,scopes:scopes,defaultScope:'home',scopeLabel:'Viewing',collapsible:true},props)))); }
+function Demo(){ return h('div',{style:{display:'flex',gap:32,padding:20,alignItems:'flex-start'}},
+ Col('size md',{}), Col('collapsed (icons only)',{defaultCollapsed:true}), Col('size lg',{size:'lg'})); }
+ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

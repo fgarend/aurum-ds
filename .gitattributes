@@ -1,3 +1,6 @@
 # LF line endings for every text file, whatever the platform.
 # Binary types and third-party folders are added in the commits that bring them.
 * text=auto eol=lf
+
+# The frozen snapshot of the artifact: third-party code, kept byte for byte.
+reference/artifact/** linguist-vendored -text

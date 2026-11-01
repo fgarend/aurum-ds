@@ -1,0 +1,13 @@
+<!-- @dsCard group="Finance" height=216 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>AllocationBar — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var B = window.Aurum, h = React.createElement, useState = React.useState;
+function Demo(){ return h('div',{className:'bs-demo bs-demo--col',style:{maxWidth:640}}, h(B.AllocationBar,{showAmounts:true,items:[{label:'Fixed income',value:58200},{label:'Stocks',value:31400},{label:'Real estate funds',value:18900},{label:'International',value:12100},{label:'Crypto',value:4300},{label:'Cash',value:2000}]})); }
+ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

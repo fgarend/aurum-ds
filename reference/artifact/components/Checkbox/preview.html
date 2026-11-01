@@ -1,0 +1,15 @@
+<!-- @dsCard group="Forms" height=60 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Checkbox — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var B = window.Aurum, h = React.createElement, useState = React.useState;
+function Demo(){ return h('div',{className:'bs-demo',style:{gap:24}},
+ h(B.Checkbox,{label:'Include pending',defaultChecked:true}), h(B.Checkbox,{label:'Only recurring'}),
+ h(B.Checkbox,{label:'Some accounts',indeterminate:true,defaultChecked:true}), h(B.Checkbox,{label:'Archived',disabled:true})); }
+ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

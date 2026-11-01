@@ -1,0 +1,20 @@
+<!-- @dsCard group="Layout" height=520 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Section — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var B = window.Aurum, h = React.createElement;
+function Demo(){ return h('div',{style:{padding:24,display:'flex',flexDirection:'column',gap:40}},
+ h(B.Section,{title:'October summary',subtitle:'Compared with September',actions:h(B.Button,{variant:'ghost',size:'sm',iconRight:'chevron-right'},'Report'),footer:h('span',null,'Updated 5 minutes ago')},
+  h('div',{style:{display:'grid',gridTemplateColumns:'repeat(3,minmax(0,1fr))',gap:16}},
+   h(B.StatCard,{label:'Income',icon:'arrow-down-left',tone:'income',value:8450,delta:6.5,deltaLabel:'vs Sep'}),
+   h(B.StatCard,{label:'Expenses',icon:'arrow-up-right',tone:'expense',value:6184.35,delta:-12.4,invertDelta:true,deltaLabel:'vs Sep'}),
+   h(B.StatCard,{label:'Invested',icon:'trending-up',tone:'invest',value:126900,delta:1.8,deltaLabel:'this month'}))),
+ h(B.Section,{title:'Budgets',subtitle:'3 of 6 categories',footer:h('span',null,'1 category over its limit')},
+  h(B.Card,null,h(B.BudgetBar,{label:'Food & dining',icon:'utensils',spent:1104,limit:1200})))); }
+ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

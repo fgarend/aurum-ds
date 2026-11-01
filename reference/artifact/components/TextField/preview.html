@@ -1,0 +1,17 @@
+<!-- @dsCard group="Forms" height=122 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>TextField — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var B = window.Aurum, h = React.createElement, useState = React.useState;
+function Demo(){ return h('div',{className:'bs-demo bs-demo--grid'},
+ h(B.TextField,{label:'Description',placeholder:'e.g. Groceries',hint:'Shown in your statement.'}),
+ h(B.TextField,{label:'Due date',icon:'calendar',defaultValue:'10/11/2026',error:'Choose a date after today.'}),
+ h(B.TextField,{icon:'search',pill:true,placeholder:'Search transactions…','aria-label':'Search'}),
+ h(B.TextField,{label:'Annual yield',suffix:'%',defaultValue:'11,25'})); }
+ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>
