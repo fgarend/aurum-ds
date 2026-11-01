@@ -43,10 +43,15 @@ The first release carries no component: the tokens, the fonts and the base
 styles, which the app can adopt on its own. It proves the way from this
 repository to the app with little at stake.
 
-- **5.1 · Consumer requirements and component order.** `docs/consumers.md`:
-  what the app's shell and People screen need, and the components in order of
-  importance, use and simplicity, a component after those it depends on. The
-  list becomes the component items of milestone 7. The app's bundler must
+Done: 5.12.
+
+- **5.1 · Consumer requirements, inventory and component order.**
+  `docs/consumers.md`: what the app's shell and People screen need; an
+  inventory of what the prototype's screens repeat (decision 0035), each
+  part a design system component, a new component or a screen layout; and
+  the components in order of importance, use and simplicity, a component
+  after those it depends on. The list becomes the component items of
+  milestone 7. The app's bundler must
   handle `@import` and `url()` in CSS, and its build must carry the fonts'
   license notice (decision 0027). It puts `.au-root` where Aurum begins
   (decision 0030).
@@ -96,7 +101,8 @@ relies on come first.
 ## 6. One version per screen
 
 - **6.1 · Position, Notes, Note, then the others by area.** Each screen is
-  planned in items when its turn comes.
+  planned in items when its turn comes, with its prototype screen as the
+  visual target (decision 0035).
 - **6.2 · Release 1.0.0.** When every screen of the app uses Aurum and the old
   interface is gone.
 

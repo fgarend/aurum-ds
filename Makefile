@@ -50,7 +50,7 @@ screenshots: ## Write the browser tests' screenshots again, to review and approv
 		'find src -type d -name __screenshots__ -prune -exec rm -rf {} + && \
 		pnpm exec vitest run --config infra/vitest.config.ts --project browser --update'
 
-reference: ## Render the artifact's previews into reference/screenshots, to review and approve
+reference: ## Render the artifact's previews and the prototype's screens into reference/screenshots, to review
 	docker build -f infra/Dockerfile --target browser -t $(IMAGE):browser .
 	docker run --rm -v "$(CURDIR)":/app -v /app/node_modules $(IMAGE):browser \
 		pnpm exec vitest run --config infra/vitest.config.ts --project reference

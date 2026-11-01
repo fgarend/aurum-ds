@@ -40,11 +40,12 @@ const config: ViteUserConfig = defineConfig({
       {
         test: { name: "browser", include: [browserTests], browser: chromium },
       },
-      // Only make reference runs it, to render the artifact's previews (decision 0033).
+      // Only make reference runs it, to render the artifact's previews and the prototype's screens (decisions 0033 and
+      // 0035).
       {
         test: {
           name: "reference",
-          include: ["infra/reference.render.ts"],
+          include: ["infra/reference.render.ts", "infra/prototype.render.ts"],
           // A page large enough that no preview is scaled down to fit.
           browser: {
             ...chromium,

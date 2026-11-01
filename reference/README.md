@@ -3,13 +3,19 @@
 `artifact/` is an exact copy of the Aurum design system as it was made in
 Claude Design, taken on 2026-11-01 from artifact version `1793490792-e9aa`.
 
+`prototype/` is the Web Desktop page of the app's prototype drawn with Aurum
+in Claude Design, the canvas "Aurum — Finance app prototype", exported by
+Claude Design on 2026-11-01 as 29 HTML screens that run on their own
+(decision 0035).
+
 It is the specification for porting: each component is rewritten in this
 repository and must look and behave like its original here, unless a decision
 says otherwise. The repository is the source; the artifact is not.
 
 ## Rules
 
-- **Never edit anything under `artifact/`.** It is frozen history.
+- **Never edit anything under `artifact/` or `prototype/`.** They are frozen
+  history.
 - **Check it with** `shasum -a 256 -c SHA256SUMS`, run in this folder.
 - **It stays** while any of it is still useful as a specification. Removing it
   is a decision of its own.
@@ -27,8 +33,12 @@ says otherwise. The repository is the source; the artifact is not.
 | `artifact/components/<Name>/README.md` | Each component's guidelines |
 | `artifact/components/<Name>/preview.html` | Each component's live preview |
 | `artifact/assets/Icons/` | The 41 icons as SVG files, and their README |
-| `SHA256SUMS` | The checksum of every file under `artifact/` |
+| `prototype/index.html` | The list of the prototype's screens, by group |
+| `prototype/<Screen>.html` | Each Web Desktop screen, drawn with Aurum's components and markup of its own |
+| `prototype/assets/` | What the screens load: the tokens, Aurum's components (the same files as `artifact/components/`), React 18 and a script that mounts the components |
+| `SHA256SUMS` | The checksum of every file under `artifact/` and `prototype/` |
 | `screenshots/<Name>.png` | Each preview rendered by `make reference`, the visual target for review (decision 0033) |
+| `screenshots/prototype/<Screen>.png` | Each prototype screen rendered by `make reference` (decision 0035) |
 | `ARTIFACT-FORMAT.md` | How the artifact compiles tokens, loads the bundle and renders previews |
 
 ## How it was taken
