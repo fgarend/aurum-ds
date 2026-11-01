@@ -36,7 +36,8 @@ age, with its advisory.
 ## How
 
 - **A dependency:** `pnpm add -D <package>@<version>` in a container, as
-  `make install` runs pnpm, then `make test`.
+  `make install` runs pnpm, then `make test`. A runtime dependency keeps its
+  range: `pnpm add <package>@^<version>` (decision 0028).
 - **A pinned image:** copy the line `make outdated` prints into
   `infra/Dockerfile`. For pnpm, change `packageManager` in `package.json` to
   the same version and run `make install`. Then `make test`.

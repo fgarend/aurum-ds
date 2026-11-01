@@ -95,8 +95,8 @@
   --au-sidebar-width: 248px;
   --au-content-max: 1200px;
   --au-breakpoint-md: 768px;
-  --au-font-sans: Geist, "Helvetica Neue", Arial, system-ui, sans-serif;
-  --au-font-mono: "Geist Mono", ui-monospace, Menlo, monospace;
+  --au-font-sans: "Geist Variable", Geist, "Helvetica Neue", Arial, system-ui, sans-serif;
+  --au-font-mono: "Geist Mono Variable", "Geist Mono", ui-monospace, Menlo, monospace;
 }
 .au-text-amount-xl {
   font-family: var(--au-font-sans);

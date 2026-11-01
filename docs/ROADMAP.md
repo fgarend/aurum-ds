@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 3.3.
+**Now:** 3.4.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -31,10 +31,8 @@ Done: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 2.10, 2.11, 2.12, 2.13, 2.14.
 
 ## 3. Tokens and assets
 
-Done: 3.1, 3.2.
+Done: 3.1, 3.2, 3.3.
 
-- **3.3 · Fonts.** Geist and Geist Mono, how they are shipped. The token
-  compiler fails on `type.fonts` until then (decision 0026).
 - **3.4 · Icons.** The 41 SVGs as package assets.
 - **3.5 · Base styles.** The global CSS every component relies on.
 - **3.6 · Brand book.** `docs/guidelines.md`, the living copy of the
@@ -44,7 +42,8 @@ Done: 3.1, 3.2.
 
 - **4.1 · Browser tests.** The browser test mode, its provider, and the image
   with the browsers. Turn Biome's domain back on if its tool comes in (such as
-  `playwright`), and teach the image report any new pinned image.
+  `playwright`), and teach the image report any new pinned image. Check that
+  Geist and Geist Mono render from the package (decision 0027).
 - **4.2 · Reference screenshots.** The artifact's previews rendered and
   approved, with `make reference`.
 - **4.3 · Screenshot approval.** `make screenshots` and how a visual change is
@@ -53,7 +52,8 @@ Done: 3.1, 3.2.
 ## 5. v0.1.0: the shell and People
 
 - **5.1 · Consumer requirements.** `docs/consumers.md`: what the app's shell
-  and People screen need.
+  and People screen need. The app's bundler must handle `@import` and `url()`
+  in CSS, and its build must carry the fonts' license notice (decision 0027).
 - **5.2 · Component conventions.** Folder layout, naming, props and exports.
   Revisit the lint exception that lets `src/index.ts` only re-export. When to
   use `memo` and `useCallback`, context values included.
