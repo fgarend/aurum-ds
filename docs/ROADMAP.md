@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 1.2.
+**Now:** 2.1.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -23,10 +23,7 @@ Done: 0.1, 0.2, 0.3.
 
 ## 1. Reference
 
-Done: 1.1.
-
-- **1.2 · Artifact format notes.** How the artifact compiles tokens and
-  renders previews, checked against the type's official reference.
+Done: 1.1, 1.2.
 
 ## 2. Skeleton
 
