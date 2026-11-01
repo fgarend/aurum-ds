@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 4.3.
+**Now:** 5.1.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -35,11 +35,7 @@ Done: 3.1, 3.2, 3.3, 3.4, 3.5, 3.6.
 
 ## 4. Visual test
 
-Done: 4.1, 4.2.
-
-- **4.3 · Screenshot approval.** `make screenshots` and how a visual change is
-  reviewed. Where our components' screenshots live: Vitest writes them in
-  `__screenshots__/` next to each test, inside the container.
+Done: 4.1, 4.2, 4.3.
 
 ## 5. v0.1.0: the shell and People
 
@@ -65,11 +61,12 @@ Done: 4.1, 4.2.
   (`arrow-left-right`), `more` (`ellipsis`) and `piggy` (`piggy-bank`).
   Update the guidelines' Components section as components arrive
   (decision 0031). Compare each component with its reference screenshot in
-  `reference/screenshots/` (decision 0033).
+  `reference/screenshots/` (decision 0033), and give it a visual test of its
+  own (decision 0034).
 - **5.7 · Build.** The bundler and what `dist/` contains. Only tools that work
   with TypeScript 7 (decision 0024). `tsconfig.json` then emits: `noEmit`,
-  `rootDir` and `outDir`. Test files and `src/test-setup.ts` stay out of the
-  package. Consider the React Compiler, which memoizes by itself. Whether the
+  `rootDir` and `outDir`. Test files, `src/test-setup.ts` and the
+  `__screenshots__` folders stay out of the package. Consider the React Compiler, which memoizes by itself. Whether the
   token compiler in `src/tokens/` ships, or only `tokens.css`.
 - **5.8 · Delivery.** How the app gets the built code from the git dependency.
   Update the guidelines' section on using Aurum (decision 0031).

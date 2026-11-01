@@ -42,8 +42,8 @@ age, with its advisory.
   `infra/Dockerfile`. For pnpm, change `packageManager` in `package.json` to
   the same version and run `make install`. For Playwright, change the
   `playwright` package to the same version (decision 0032), run
-  `make reference`, and review any screenshot that changes (decision 0033).
-  Then `make test`.
+  `make reference` and `make screenshots`, and review any screenshot that
+  changes (decisions 0033 and 0034). Then `make test`.
 
 ## Checks made by hand
 

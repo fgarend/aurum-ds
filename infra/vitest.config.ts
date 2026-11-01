@@ -10,6 +10,10 @@ const chromium = {
   provider: playwright(),
   headless: true,
   instances: [{ browser: "chromium" as const }],
+  // One canvas for every visual test: the tokens' content-max wide (decision 0034).
+  viewport: { width: 1200, height: 800 },
+  // A failing test's screenshot would land among the approved ones.
+  screenshotFailures: false,
 };
 
 const config: ViteUserConfig = defineConfig({
