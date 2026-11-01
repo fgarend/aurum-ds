@@ -7,7 +7,5 @@ autoInstallPeers: false
 saveExact: true
 update:
   ignoreDeps:
-    # Left out of make outdated until the move to TypeScript 7 (decision 0013).
-    - typescript
     # Left out until jest-dom's types accept Vitest 5 (decision 0020).
     - vitest

@@ -67,8 +67,8 @@ Done: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 2.10, 2.11, 2.12, 2.13, 2.14.
 - **5.11 · Coverage.** The tool, and whether `make test` requires a minimum.
 - **5.6 · Components.** One item per component the shell and People need,
   listed from 5.1.
-- **5.7 · Build.** The bundler and what `dist/` contains. Prefer tools that
-  also work with TypeScript 7. `tsconfig.json` then emits: `noEmit`,
+- **5.7 · Build.** The bundler and what `dist/` contains. Only tools that work
+  with TypeScript 7 (decision 0024). `tsconfig.json` then emits: `noEmit`,
   `rootDir` and `outDir`. Test files and `src/test-setup.ts` stay out of the
   package. Consider the React Compiler, which memoizes by itself.
 - **5.8 · Delivery.** How the app gets the built code from the git dependency.
@@ -95,12 +95,6 @@ No order between them; each becomes items when its time comes.
 - **Dark theme.** When the app's first screen needs it.
 - **Image vulnerability scan.** The system packages inside the images (the
   Debian of the Node image), which `make audit` does not cover.
-- **TypeScript 7.** Move when `make test` passes on it, with the lint and the
-  build. Drop TypeScript from `update.ignoreDeps` in the same commit. Today,
-  `typescript-eslint` and `@microsoft/api-extractor` do not accept it.
-- **Editor integration.** Biome's editor extension needs its macOS binary,
-  but `node_modules` is installed in the container, with Linux's only; pnpm's
-  `supportedArchitectures` can install both.
 - **Vitest 5.** Move when `jest-dom`'s types accept it, with the type check
   passing, and drop Vitest from `update.ignoreDeps` in the same commit.
 - **Update bot.** Renovate or Dependabot opening pull requests, with the CI;

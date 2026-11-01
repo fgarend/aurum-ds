@@ -45,13 +45,6 @@ age, with its advisory.
 
 `make outdated` cannot see these. Each says when it goes away.
 
-- **TypeScript on its 6 line.** Left out of the report until the move to 7
-  (decision 0013), so even its fixes do not show:
-  `docker run --rm aurum-ds:base pnpm view typescript@6 version`.
-  Goes away with the move to TypeScript 7.
-- **Does `make test` pass on TypeScript 7?** Try the newest 7 old enough, then
-  restore `package.json` and `pnpm-lock.yaml` if it fails. When it passes, the
-  move is made as its own step. Goes away with the move.
 - **Vitest on its 4 line.** Left out of the report until `jest-dom` accepts
   Vitest 5 (decision 0020):
   `docker run --rm aurum-ds:base pnpm view vitest@4 version`.
