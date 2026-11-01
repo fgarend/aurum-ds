@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 2.13.
+**Now:** 3.1.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -27,13 +27,7 @@ Done: 1.1, 1.2.
 
 ## 2. Skeleton
 
-Done: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 2.10, 2.11, 2.12, 2.14.
-
-- **2.13 · Update routine.** How updates are made: one per commit, the
-  release-age rule, `make test` green, and how often to check. While
-  TypeScript is left out of `make outdated`, check its 6 line by hand. Move
-  `target` and `lib` up a year when all of that year's features are widely
-  available in Baseline. Keep `@types/node` on the image's Node line.
+Done: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 2.10, 2.11, 2.12, 2.13, 2.14.
 
 ## 3. Tokens and assets
 

@@ -9,6 +9,8 @@ built in small steps, each decided with the user before it is made.
 1. `docs/ROADMAP.md`: where the work is now, and every item planned or
    deferred, in order.
 2. `docs/decisions/`: the choices already made, and why.
+3. `docs/updating.md`: the update routine, run at the start of every roadmap
+   item.
 
 ## Rules
 
