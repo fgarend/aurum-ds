@@ -3,3 +3,9 @@
 minimumReleaseAge: 10080
 # Peer dependencies are not installed on their own: the versions used here are declared in devDependencies.
 autoInstallPeers: false
+# Dependencies are saved with their exact version (decision 0015).
+saveExact: true
+update:
+  # Left out of make outdated until the move to TypeScript 7 (decision 0013).
+  ignoreDeps:
+    - typescript

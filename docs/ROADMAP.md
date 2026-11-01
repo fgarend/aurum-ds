@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 2.5.
+**Now:** 2.6.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -27,24 +27,29 @@ Done: 1.1, 1.2.
 
 ## 2. Skeleton
 
-Done: 2.1, 2.2, 2.3, 2.4, 2.11, 2.12.
+Done: 2.1, 2.2, 2.3, 2.4, 2.5, 2.11, 2.12.
 
-- **2.5 · TypeScript.** Version, compiler options and the type check in
-  `make test`.
 - **2.6 · Lint and format.** The tool, its rules, `make format`, and the check
-  in `make test`.
+  in `make test`. Prefer tools that also work with TypeScript 7. Decide
+  whether the lint takes over `noUnusedLocals` and `noUnusedParameters` from
+  TypeScript, and turn off any rule that asks for dot access where
+  `noPropertyAccessFromIndexSignature` asks for brackets.
 - **2.7 · Unit tests.** The test runner, a first test, and `make test` running
   it every time.
 - **2.14 · Image report.** `make outdated` also checks the images pinned by
   hand (Node, pnpm) against their official sources, by release date, with a
   tested script.
 - **2.8 · Component tests.** The DOM environment, the testing library, React
-  declared in `devDependencies` (the latest 19, developed on), and a check
-  against React 18.3.
+  declared in `devDependencies` (the latest 19, developed on), a check
+  against React 18.3, and the JSX settings in `tsconfig.json`.
 - **2.9 · Watch container.** `make watch`: the tests again on every change.
-- **2.10 · Clean.** `make clean`: the project images only, caches kept.
+- **2.10 · Clean.** `make clean`: the project images only, caches kept (the
+  pnpm store volume and the build cache, which `docker builder prune` clears).
 - **2.13 · Update routine.** How updates are made: one per commit, the
-  release-age rule, `make test` green, and how often to check.
+  release-age rule, `make test` green, and how often to check. While
+  TypeScript is left out of `make outdated`, check its 6 line by hand. Move
+  `target` and `lib` up a year when all of that year's features are widely
+  available in Baseline.
 
 ## 3. Tokens and assets
 
@@ -79,7 +84,9 @@ Done: 2.1, 2.2, 2.3, 2.4, 2.11, 2.12.
 - **5.5 · Copy and language.** Default texts and how the app replaces them.
 - **5.6 · Components.** One item per component the shell and People need,
   listed from 5.1.
-- **5.7 · Build.** The bundler and what `dist/` contains.
+- **5.7 · Build.** The bundler and what `dist/` contains. Prefer tools that
+  also work with TypeScript 7. `tsconfig.json` then emits: `noEmit`,
+  `rootDir` and `outDir`.
 - **5.8 · Delivery.** How the app gets the built code from the git dependency.
 - **5.9 · Package check.** `make pack`: what the app will receive.
 - **5.10 · Release v0.1.0.** The changelog and the first tag.
@@ -103,6 +110,9 @@ No order between them; each becomes items when its time comes.
 - **Dark theme.** When the app's first screen needs it.
 - **Image vulnerability scan.** The system packages inside the images (the
   Debian of the Node image), which `make audit` does not cover.
+- **TypeScript 7.** Move when `make test` passes on it, with the lint and the
+  build. Drop TypeScript from `update.ignoreDeps` in the same commit. Today,
+  `typescript-eslint` and `@microsoft/api-extractor` do not accept it.
 - **Update bot.** Renovate or Dependabot opening pull requests, with the CI;
   check first that it respects the release age and updates image digests.
 - **pnpm's update notice.** Every run says a newer pnpm exists, though the

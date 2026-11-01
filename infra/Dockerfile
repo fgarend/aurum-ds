@@ -9,3 +9,15 @@ FROM node:26.12.1-trixie-slim@sha256:94816674c62774da0d099a947bf4613b9e1972a2733
 COPY --from=pnpm /opt/pnpm /opt/pnpm
 RUN ln -s /opt/pnpm/pnpm /usr/local/bin/pnpm
 WORKDIR /app
+
+# The dependencies, exactly as the lockfile lists them (decision 0014).
+# pnpm's store is a build cache, so a change to the lockfile downloads only what is new.
+FROM base AS deps
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+RUN --mount=type=cache,id=aurum-ds-pnpm-store,target=/pnpm-store \
+    pnpm install --frozen-lockfile --store-dir /pnpm-store
+
+# The sources, checked by make test.
+FROM deps AS test
+COPY tsconfig.json ./
+COPY src ./src
