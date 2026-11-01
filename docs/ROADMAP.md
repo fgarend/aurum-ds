@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 3.1.
+**Now:** 3.2.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -31,10 +31,11 @@ Done: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 2.10, 2.11, 2.12, 2.13, 2.14.
 
 ## 3. Tokens and assets
 
-- **3.1 · Token source.** The source format (the artifact's list or DTCG),
-  where it lives, and whether token names take the repository's prefix too.
+Done: 3.1.
+
 - **3.2 · Token output.** The generated CSS, tested against what the artifact
-  compiles.
+  compiles. The compiler adds the `au-` prefix (decision 0025), so the test
+  compares names without it.
 - **3.3 · Fonts.** Geist and Geist Mono, how they are shipped.
 - **3.4 · Icons.** The 41 SVGs as package assets.
 - **3.5 · Base styles.** The global CSS every component relies on.
