@@ -34,6 +34,11 @@
         // Choosing between two values, as in JSX, reads best as a ternary. noNestedTernary stays on.
         "noTernary": "off"
       },
+      "performance": {
+        // It allows a handler declared in the component, which changes identity just the same, and it
+        // flags handlers on DOM elements, where identity does not matter. Memoization is a convention.
+        "noJsxPropsBind": "off"
+      },
       "complexity": {
         // noPropertyAccessFromIndexSignature asks for brackets on keys that may be missing (decision 0013).
         "useLiteralKeys": "off"
@@ -59,11 +64,23 @@
       "linter": { "rules": { "performance": { "noBarrelFile": "off" } } }
     },
     {
-      // A test file's long function is a describe block grouping short cases.
+      // In a test, a long function is a describe block grouping short cases, text in JSX is test data,
+      // and a component declared only for the test is never hot reloaded.
       "includes": ["**/*.test.ts", "**/*.test.tsx"],
       "linter": {
-        "rules": { "complexity": { "noExcessiveLinesPerFunction": "off" } }
+        "rules": {
+          "complexity": { "noExcessiveLinesPerFunction": "off" },
+          "style": {
+            "noJsxLiterals": "off",
+            "useComponentExportOnlyModules": "off"
+          }
+        }
       }
+    },
+    {
+      // Vitest reads its configuration from a default export.
+      "includes": ["infra/vitest.config.ts"],
+      "linter": { "rules": { "style": { "noDefaultExport": "off" } } }
     },
     {
       // The repository's scripts run on Node: they read files, print and set the exit code.

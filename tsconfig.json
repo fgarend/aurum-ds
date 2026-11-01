@@ -12,6 +12,9 @@
     "lib": ["es2023", "dom"],
     "types": [],
 
+    // React's automatic JSX runtime: no React import in each file.
+    "jsx": "react-jsx",
+
     // Every check TypeScript offers.
     "strict": true,
     "noUncheckedIndexedAccess": true,

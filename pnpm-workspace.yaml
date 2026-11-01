@@ -6,6 +6,8 @@ autoInstallPeers: false
 # Dependencies are saved with their exact version (decision 0015).
 saveExact: true
 update:
-  # Left out of make outdated until the move to TypeScript 7 (decision 0013).
   ignoreDeps:
+    # Left out of make outdated until the move to TypeScript 7 (decision 0013).
     - typescript
+    # Left out until jest-dom's types accept Vitest 5 (decision 0020).
+    - vitest

@@ -28,7 +28,7 @@ test: ## Run every check, from the lockfile and the repository: lint and format,
 	docker run --rm $(IMAGE):test pnpm exec biome ci --error-on-warnings
 	docker run --rm $(IMAGE):test pnpm exec tsc
 	docker run --rm $(IMAGE):test pnpm exec tsc -p infra
-	docker run --rm $(IMAGE):test pnpm exec vitest run
+	docker run --rm $(IMAGE):test pnpm exec vitest run --config infra/vitest.config.ts
 
 ##@ Dependencies
 

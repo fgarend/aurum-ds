@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 2.8.
+**Now:** 2.9.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -27,11 +27,8 @@ Done: 1.1, 1.2.
 
 ## 2. Skeleton
 
-Done: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.11, 2.12, 2.14.
+Done: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.11, 2.12, 2.14.
 
-- **2.8 · Component tests.** The DOM environment, the testing library, React
-  declared in `devDependencies` (the latest 19, developed on), a check
-  against React 18.3, and the JSX settings in `tsconfig.json`.
 - **2.9 · Watch container.** `make watch`: the tests again on every change.
 - **2.10 · Clean.** `make clean`: the project images only, caches kept (the
   pnpm store volume and the build cache, which `docker builder prune` clears).
@@ -68,18 +65,21 @@ Done: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.11, 2.12, 2.14.
 - **5.1 · Consumer requirements.** `docs/consumers.md`: what the app's shell
   and People screen need.
 - **5.2 · Component conventions.** Folder layout, naming, props and exports.
-  Revisit the lint exception that lets `src/index.ts` only re-export.
+  Revisit the lint exception that lets `src/index.ts` only re-export. When to
+  use `memo` and `useCallback`, context values included.
 - **5.3 · Styling approach.** How component CSS is written and shipped, and
   the class prefix. The user prefers prefixes tied to the repository, such as
   `au-`, over the artifact's undocumented `bs-`.
 - **5.4 · Accessibility approach.** Hand-made or a library, and the locale.
 - **5.5 · Copy and language.** Default texts and how the app replaces them.
+  Settle Biome's `noJsxLiterals`, which forbids text written in JSX.
 - **5.11 · Coverage.** The tool, and whether `make test` requires a minimum.
 - **5.6 · Components.** One item per component the shell and People need,
   listed from 5.1.
 - **5.7 · Build.** The bundler and what `dist/` contains. Prefer tools that
   also work with TypeScript 7. `tsconfig.json` then emits: `noEmit`,
-  `rootDir` and `outDir`. Test files stay out of the package.
+  `rootDir` and `outDir`. Test files and `src/test-setup.ts` stay out of the
+  package. Consider the React Compiler, which memoizes by itself.
 - **5.8 · Delivery.** How the app gets the built code from the git dependency.
 - **5.9 · Package check.** `make pack`: what the app will receive.
 - **5.10 · Release v0.1.0.** The changelog and the first tag.
@@ -97,7 +97,8 @@ No order between them; each becomes items when its time comes.
 
 - **Storybook.** A component gallery, which would also serve `make run`.
 - **Artifact mirror.** Keeping the Claude Design artifact in sync with this
-  repository.
+  repository. Its previews load React 18.3.1, and the package supports only
+  React 19 (decision 0019).
 - **Continuous integration.** Running `make test` on GitHub.
 - **License.** See decision 0002.
 - **Dark theme.** When the app's first screen needs it.
@@ -109,6 +110,8 @@ No order between them; each becomes items when its time comes.
 - **Editor integration.** Biome's editor extension needs its macOS binary,
   but `node_modules` is installed in the container, with Linux's only; pnpm's
   `supportedArchitectures` can install both.
+- **Vitest 5.** Move when `jest-dom`'s types accept it, with the type check
+  passing, and drop Vitest from `update.ignoreDeps` in the same commit.
 - **Update bot.** Renovate or Dependabot opening pull requests, with the CI;
   check first that it respects the release age and updates image digests.
 - **pnpm's update notice.** Every run says a newer pnpm exists, though the
