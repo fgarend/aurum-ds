@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 2.3.
+**Now:** 2.4.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -27,8 +27,8 @@ Done: 1.1, 1.2.
 
 ## 2. Skeleton
 
-Done: 2.1, 2.2.
-- **2.3 · Package manager.** Which one, its lockfile, and `make install`.
+Done: 2.1, 2.2, 2.3.
+
 - **2.4 · Package manifest.** Name, privacy, module type, description,
   repository, license and the React versions accepted.
 - **2.5 · TypeScript.** Version, compiler options and the type check in
@@ -99,3 +99,5 @@ No order between them; each becomes items when its time comes.
 - **Dark theme.** When the app's first screen needs it.
 - **Dependency updates.** `make outdated`, for the periodic check of security
   fixes.
+- **pnpm's update notice.** Every run says a newer pnpm exists, though the
+  version is chosen by the release-age rule; `updateNotifier` turns it off.

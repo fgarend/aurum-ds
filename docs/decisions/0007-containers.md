@@ -1,6 +1,6 @@
 # 0007. Container runtime and images
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0008: npm from the image
 - Date: 2026-11-01
 
 ## Context

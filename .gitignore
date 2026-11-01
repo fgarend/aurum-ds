@@ -8,6 +8,9 @@
 .vscode/
 *.swp
 
+# Dependencies, installed by make install
+node_modules/
+
 # Environment files: never versioned
 .env
 .env.*
