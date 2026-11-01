@@ -10,6 +10,10 @@ indent_size = 2
 insert_final_newline = true
 trim_trailing_whitespace = true
 
+# Make requires tabs to indent recipes.
+[Makefile]
+indent_style = tab
+
 # Two trailing spaces are a line break in Markdown.
 [*.md]
 trim_trailing_whitespace = false
