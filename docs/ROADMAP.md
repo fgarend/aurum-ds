@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 2.7.
+**Now:** 2.14.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -27,10 +27,8 @@ Done: 1.1, 1.2.
 
 ## 2. Skeleton
 
-Done: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.11, 2.12.
+Done: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.11, 2.12.
 
-- **2.7 · Unit tests.** The test runner, a first test, and `make test` running
-  it every time.
 - **2.14 · Image report.** `make outdated` also checks the images pinned by
   hand (Node, pnpm) against their official sources, by release date, with a
   tested script.
@@ -78,11 +76,12 @@ Done: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.11, 2.12.
   `au-`, over the artifact's undocumented `bs-`.
 - **5.4 · Accessibility approach.** Hand-made or a library, and the locale.
 - **5.5 · Copy and language.** Default texts and how the app replaces them.
+- **5.11 · Coverage.** The tool, and whether `make test` requires a minimum.
 - **5.6 · Components.** One item per component the shell and People need,
   listed from 5.1.
 - **5.7 · Build.** The bundler and what `dist/` contains. Prefer tools that
   also work with TypeScript 7. `tsconfig.json` then emits: `noEmit`,
-  `rootDir` and `outDir`.
+  `rootDir` and `outDir`. Test files stay out of the package.
 - **5.8 · Delivery.** How the app gets the built code from the git dependency.
 - **5.9 · Package check.** `make pack`: what the app will receive.
 - **5.10 · Release v0.1.0.** The changelog and the first tag.

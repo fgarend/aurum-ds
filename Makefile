@@ -23,10 +23,11 @@ format: ## Format the files and apply the safe lint fixes, in place
 	docker build -f infra/Dockerfile --target base -t $(IMAGE):base .
 	docker run --rm -v "$(CURDIR)":/app $(IMAGE):base pnpm exec biome check --write
 
-test: ## Run every check, from the lockfile and the repository: lint and format, then types
+test: ## Run every check, from the lockfile and the repository: lint and format, types, then tests
 	docker build -f infra/Dockerfile --target test -t $(IMAGE):test .
 	docker run --rm $(IMAGE):test pnpm exec biome ci --error-on-warnings
 	docker run --rm $(IMAGE):test pnpm exec tsc
+	docker run --rm $(IMAGE):test pnpm exec vitest run
 
 ##@ Dependencies
 
