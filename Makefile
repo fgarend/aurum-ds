@@ -5,7 +5,7 @@ IMAGE := aurum-ds
 # pnpm's package store, kept in a volume so an install downloads nothing twice.
 STORE := aurum-ds-pnpm-store
 
-.PHONY: help install format test outdated audit
+.PHONY: help install format test watch outdated audit
 .DEFAULT_GOAL := help
 
 ##@ Development
@@ -29,6 +29,11 @@ test: ## Run every check, from the lockfile and the repository: lint and format,
 	docker run --rm $(IMAGE):test pnpm exec tsc
 	docker run --rm $(IMAGE):test pnpm exec tsc -p infra
 	docker run --rm $(IMAGE):test pnpm exec vitest run --config infra/vitest.config.ts
+
+watch: ## Run the tests again on every change, until stopped with q or Ctrl+C
+	docker build -f infra/Dockerfile --target test -t $(IMAGE):test .
+	docker run --rm -it -v "$(CURDIR)":/app -v /app/node_modules $(IMAGE):test \
+		pnpm exec vitest --config infra/vitest.config.ts
 
 ##@ Dependencies
 
