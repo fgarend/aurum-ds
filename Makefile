@@ -5,7 +5,7 @@ IMAGE := aurum-ds
 # pnpm's package store, kept in a volume so an install downloads nothing twice.
 STORE := aurum-ds-pnpm-store
 
-.PHONY: help install outdated
+.PHONY: help install outdated audit
 .DEFAULT_GOAL := help
 
 ##@ Development
@@ -24,3 +24,7 @@ install: ## After changing package.json: install in a container, updating pnpm-l
 outdated: ## List the dependencies with a newer version past the release age. Fails when there is one, or on an error
 	docker build -f infra/Dockerfile --target base -t $(IMAGE):base .
 	docker run --rm -v "$(CURDIR)":/app $(IMAGE):base pnpm outdated
+
+audit: ## List the known vulnerabilities in the dependencies, of any severity. Fails when there is one, or on an error
+	docker build -f infra/Dockerfile --target base -t $(IMAGE):base .
+	docker run --rm -v "$(CURDIR)":/app $(IMAGE):base pnpm audit

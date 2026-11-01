@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 2.12.
+**Now:** 2.5.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -27,10 +27,8 @@ Done: 1.1, 1.2.
 
 ## 2. Skeleton
 
-Done: 2.1, 2.2, 2.3, 2.4, 2.11.
+Done: 2.1, 2.2, 2.3, 2.4, 2.11, 2.12.
 
-- **2.12 · Security audit.** `make audit`: known vulnerabilities in the
-  installed dependencies.
 - **2.5 · TypeScript.** Version, compiler options and the type check in
   `make test`.
 - **2.6 · Lint and format.** The tool, its rules, `make format`, and the check
@@ -103,6 +101,8 @@ No order between them; each becomes items when its time comes.
 - **Continuous integration.** Running `make test` on GitHub.
 - **License.** See decision 0002.
 - **Dark theme.** When the app's first screen needs it.
+- **Image vulnerability scan.** The system packages inside the images (the
+  Debian of the Node image), which `make audit` does not cover.
 - **Update bot.** Renovate or Dependabot opening pull requests, with the CI;
   check first that it respects the release age and updates image digests.
 - **pnpm's update notice.** Every run says a newer pnpm exists, though the
