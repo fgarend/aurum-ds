@@ -1,0 +1,13 @@
+# Each tool adds its own section in the commit that introduces it.
+
+# macOS
+.DS_Store
+
+# Editors
+.idea/
+.vscode/
+*.swp
+
+# Environment files: never versioned
+.env
+.env.*
