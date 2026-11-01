@@ -7,5 +7,6 @@ autoInstallPeers: false
 saveExact: true
 update:
   ignoreDeps:
-    # Left out until jest-dom's types accept Vitest 5 (decision 0020).
+    # Left out until jest-dom's types accept Vitest 5 (decision 0020), with its browser provider.
     - vitest
+    - "@vitest/browser-playwright"

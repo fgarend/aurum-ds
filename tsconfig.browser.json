@@ -1,0 +1,11 @@
+// TypeScript settings for the browser tests (decision 0032). Vitest's browser mode declares DOM matchers of its own,
+// which clash with jest-dom's in the other tests, so the browser tests are checked apart.
+{
+  "extends": "./tsconfig.json",
+  "include": ["src/**/*.browser.test.ts", "src/**/*.browser.test.tsx"],
+  "exclude": [],
+  "compilerOptions": {
+    // Vite's client types declare the CSS files the tests import, and Vitest's browser types name a Node type.
+    "types": ["vite/client", "node"]
+  }
+}

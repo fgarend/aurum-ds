@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 4.1.
+**Now:** 4.2.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -35,14 +35,12 @@ Done: 3.1, 3.2, 3.3, 3.4, 3.5, 3.6.
 
 ## 4. Visual test
 
-- **4.1 · Browser tests.** The browser test mode, its provider, and the image
-  with the browsers. Turn Biome's domain back on if its tool comes in (such as
-  `playwright`), and teach the image report any new pinned image. Check that
-  Geist and Geist Mono render from the package (decision 0027), and the base
-  styles: `.au-root`, the focus ring, `.au-sr` (decision 0030).
+Done: 4.1.
+
 - **4.2 · Reference screenshots.** The artifact's previews rendered and
   approved, with `make reference`. Icons differ from the previews, since
-  Aurum draws Lucide's (decision 0029).
+  Aurum draws Lucide's (decision 0029). Where the screenshots live: Vitest
+  writes them in `__screenshots__/` next to each test, inside the container.
 - **4.3 · Screenshot approval.** `make screenshots` and how a visual change is
   reviewed.
 
@@ -102,7 +100,10 @@ No order between them; each becomes items when its time comes.
 - **Image vulnerability scan.** The system packages inside the images (the
   Debian of the Node image), which `make audit` does not cover.
 - **Vitest 5.** Move when `jest-dom`'s types accept it, with the type check
-  passing, and drop Vitest from `update.ignoreDeps` in the same commit.
+  passing, and drop Vitest and `@vitest/browser-playwright` from
+  `update.ignoreDeps` in the same commit.
+- **Other browsers.** WebKit, for Safari and the iPhone, and Firefox, once
+  item 5.1 says which browsers the app supports (decision 0032).
 - **Update bot.** Renovate or Dependabot opening pull requests, with the CI;
   check first that it respects the release age and updates image digests.
 - **pnpm's update notice.** Every run says a newer pnpm exists, though the

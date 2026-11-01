@@ -29,17 +29,20 @@ tokens: ## After changing src/tokens/tokens.json: write src/tokens/tokens.css, w
 	docker build -f infra/Dockerfile --target test -t $(IMAGE):test .
 	docker run --rm -v "$(CURDIR)":/app -v /app/node_modules $(IMAGE):test node infra/build-tokens.ts
 
-test: ## Run every check, from the lockfile and the repository: lint and format, types, then tests
+test: ## Run every check, from the lockfile and the repository: lint and format, types, tests, then browser tests
 	docker build -f infra/Dockerfile --target test -t $(IMAGE):test .
 	docker run --rm $(IMAGE):test pnpm exec biome ci --error-on-warnings
 	docker run --rm $(IMAGE):test pnpm exec tsc
 	docker run --rm $(IMAGE):test pnpm exec tsc -p infra
-	docker run --rm $(IMAGE):test pnpm exec vitest run --config infra/vitest.config.ts
+	docker run --rm $(IMAGE):test pnpm exec tsc -p tsconfig.browser.json
+	docker run --rm $(IMAGE):test pnpm exec vitest run --config infra/vitest.config.ts --project node --project dom
+	docker build -f infra/Dockerfile --target browser -t $(IMAGE):browser .
+	docker run --rm $(IMAGE):browser pnpm exec vitest run --config infra/vitest.config.ts --project browser
 
-watch: ## Run the tests again on every change, until stopped with q or Ctrl+C
+watch: ## Run the tests again on every change, until stopped with q or Ctrl+C. Browser tests run in make test
 	docker build -f infra/Dockerfile --target test -t $(IMAGE):test .
 	docker run --rm -it -v "$(CURDIR)":/app -v /app/node_modules $(IMAGE):test \
-		pnpm exec vitest --config infra/vitest.config.ts
+		pnpm exec vitest --config infra/vitest.config.ts --project node --project dom
 
 clean: ## Remove the project's images, tagged or not. Keeps node_modules and the caches
 	docker image prune --all --force --filter label=org.opencontainers.image.source=$(SOURCE)

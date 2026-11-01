@@ -3,8 +3,9 @@
   "extends": "../tsconfig.json",
   "include": ["."],
   "compilerOptions": {
-    // Node's APIs, and no DOM: these scripts never run in a browser.
-    "lib": ["es2023"],
+    // Node's APIs. The DOM is there only because Vitest's configuration types, with the browser provider, name DOM
+    // types; these scripts never run in a browser.
+    "lib": ["es2023", "dom"],
     "types": ["node"]
   }
 }

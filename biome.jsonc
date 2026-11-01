@@ -54,10 +54,11 @@
         "noUnnecessaryConditions": "off"
       },
       "correctness": {
-        // Node's module rules ask for .js in relative imports (decision 0013).
+        // Node's module rules ask for .js in relative imports of TypeScript (decision 0013). Mapping only .ts and
+        // .tsx leaves CSS imports alone, which forceJsExtensions would turn into .js.
         "useImportExtensions": {
           "level": "on",
-          "options": { "forceJsExtensions": true }
+          "options": { "extensionMappings": { "ts": "js", "tsx": "js" } }
         }
       }
     }

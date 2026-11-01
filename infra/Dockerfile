@@ -22,3 +22,15 @@ RUN --mount=type=cache,id=aurum-ds-pnpm-store,target=/pnpm-store \
 # The repository, checked by make test.
 FROM deps AS test
 COPY . .
+
+# The browsers for the browser tests (decision 0032): Playwright's official image, pinned by tag and digest, whose
+# version moves with the playwright package. The dependencies are installed again, for its system.
+FROM mcr.microsoft.com/playwright:v1.64.1-noble@sha256:2f05f8a734509a7b3f26a912639488ee08f58a7b292d14d62271bcff9038768f AS browser
+LABEL org.opencontainers.image.source="https://github.com/fgarend/aurum-ds"
+COPY --from=pnpm /opt/pnpm /opt/pnpm
+RUN ln -s /opt/pnpm/pnpm /usr/local/bin/pnpm
+WORKDIR /app
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+RUN --mount=type=cache,id=aurum-ds-pnpm-store,target=/pnpm-store \
+    pnpm install --frozen-lockfile --store-dir /pnpm-store
+COPY . .

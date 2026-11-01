@@ -1,4 +1,4 @@
-// Reports the images pinned by hand in the Dockerfile that have something to look at (decision 0018):
+// Reports the images pinned by hand in the Dockerfile that have something to look at (decisions 0018 and 0032):
 // a newer version past the release age, or the same version rebuilt. Run by make outdated.
 import { readFile } from "node:fs/promises";
 
@@ -6,6 +6,7 @@ type Fetch = (url: string, init?: RequestInit) => Promise<Response>;
 
 interface Pin {
   image: string;
+  prefix: string;
   version: string;
   suffix: string;
   digest: string;
@@ -25,15 +26,20 @@ const httpNotFound = 404;
 // Every image pinned by tag and digest, whatever its tag looks like.
 const pinPattern =
   /^FROM\s+(?<image>[^\s:@]+):(?<tag>[^\s@]+)@(?<digest>sha256:[0-9a-f]{64})/gmu;
-const versionTag = /^(?<version>\d+\.\d+\.\d+)(?<suffix>.*)$/u;
+// A version tag, such as 26.12.1-trixie-slim, or v1.64.1-noble for Playwright.
+const versionTag = /^(?<prefix>v?)(?<version>\d+\.\d+\.\d+)(?<suffix>.*)$/u;
 const stableVersion = /^\d+\.\d+\.\d+$/u;
 const leadingV = /^v/u;
 
 function readPins(dockerfile: string): Pin[] {
   return [...dockerfile.matchAll(pinPattern)].map((match) => {
     const { image = "", tag = "", digest = "" } = match.groups ?? {};
-    const { version = "", suffix = "" } = tag.match(versionTag)?.groups ?? {};
-    return { image, version, suffix, digest };
+    const {
+      prefix = "",
+      version = "",
+      suffix = "",
+    } = tag.match(versionTag)?.groups ?? {};
+    return { image, prefix, version, suffix, digest };
   });
 }
 
@@ -102,9 +108,13 @@ async function nodeCandidates(fetchFn: Fetch, pin: Pin): Promise<Candidate[]> {
   });
 }
 
-// pnpm: any line, stable versions only.
-async function pnpmCandidates(fetchFn: Fetch): Promise<Candidate[]> {
-  const url = "https://registry.npmjs.org/pnpm";
+// pnpm and Playwright: any line of their npm package, stable versions only.
+function npmCandidates(name: string): (fetchFn: Fetch) => Promise<Candidate[]> {
+  return (fetchFn) => npmVersions(fetchFn, name);
+}
+
+async function npmVersions(fetchFn: Fetch, name: string): Promise<Candidate[]> {
+  const url = `https://registry.npmjs.org/${name}`;
   const document = await getJson(fetchFn, url);
   if (!(isRecord(document) && isRecord(document["time"]))) {
     throw unexpected(url);
@@ -146,11 +156,35 @@ async function pnpmDigest(
   if (!(isRecord(token) && typeof token["token"] === "string")) {
     throw unexpected(tokenUrl);
   }
-  const url = `https://ghcr.io/v2/pnpm/pnpm/manifests/${tag}`;
+  return manifestDigest(
+    fetchFn,
+    `https://ghcr.io/v2/pnpm/pnpm/manifests/${tag}`,
+    { authorization: `Bearer ${token["token"]}` },
+  );
+}
+
+// The digest of a Playwright image tag on Microsoft's registry, which needs no token.
+function playwrightDigest(
+  fetchFn: Fetch,
+  tag: string,
+): Promise<string | undefined> {
+  return manifestDigest(
+    fetchFn,
+    `https://mcr.microsoft.com/v2/playwright/manifests/${tag}`,
+    {},
+  );
+}
+
+// A registry's digest for a tag, read from the headers of its manifest, or undefined when the tag does not exist.
+async function manifestDigest(
+  fetchFn: Fetch,
+  url: string,
+  headers: Record<string, string>,
+): Promise<string | undefined> {
   const response = await fetchFn(url, {
     method: "HEAD",
     headers: {
-      authorization: `Bearer ${token["token"]}`,
+      ...headers,
       accept:
         "application/vnd.oci.image.index.v1+json, application/vnd.docker.distribution.manifest.list.v2+json",
     },
@@ -174,9 +208,14 @@ interface Source {
 const sources: Record<string, Source> = {
   node: { candidates: nodeCandidates, digest: nodeDigest, name: "node" },
   "ghcr.io/pnpm/pnpm": {
-    candidates: pnpmCandidates,
+    candidates: npmCandidates("pnpm"),
     digest: pnpmDigest,
     name: "pnpm",
+  },
+  "mcr.microsoft.com/playwright": {
+    candidates: npmCandidates("playwright"),
+    digest: playwrightDigest,
+    name: "playwright",
   },
 };
 
@@ -197,14 +236,14 @@ async function checkPin(
     .toSorted((a, b) => compareVersions(b.version, a.version));
   // The newest version whose image exists. Requests stay in order, so the newest is asked first.
   for (const { version } of newer) {
-    const tag = `${version}${pin.suffix}`;
+    const tag = `${pin.prefix}${version}${pin.suffix}`;
     // biome-ignore lint/performance/noAwaitInLoops: each request depends on the previous one finding no image.
     const digest = await source.digest(fetchFn, tag);
     if (digest !== undefined) {
       return `${source.name}  ${pin.version} → ${version}  ${pin.image}:${tag}@${digest}`;
     }
   }
-  const tag = `${pin.version}${pin.suffix}`;
+  const tag = `${pin.prefix}${pin.version}${pin.suffix}`;
   const digest = await source.digest(fetchFn, tag);
   if (digest !== undefined && digest !== pin.digest) {
     return `${source.name}  ${pin.version} rebuilt  ${pin.image}:${tag}@${digest}`;

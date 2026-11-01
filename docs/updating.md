@@ -40,14 +40,15 @@ age, with its advisory.
   range: `pnpm add <package>@^<version>` (decision 0028).
 - **A pinned image:** copy the line `make outdated` prints into
   `infra/Dockerfile`. For pnpm, change `packageManager` in `package.json` to
-  the same version and run `make install`. Then `make test`.
+  the same version and run `make install`. For Playwright, change the
+  `playwright` package to the same version (decision 0032). Then `make test`.
 
 ## Checks made by hand
 
 `make outdated` cannot see these. Each says when it goes away.
 
-- **Vitest on its 4 line.** Left out of the report until `jest-dom` accepts
-  Vitest 5 (decision 0020):
+- **Vitest on its 4 line**, with `@vitest/browser-playwright`. Left out of the
+  report until `jest-dom` accepts Vitest 5 (decision 0020):
   `docker run --rm aurum-ds:base pnpm view vitest@4 version`.
   Goes away with the move to Vitest 5.
 - **Does `jest-dom` accept Vitest 5?** When `@testing-library/jest-dom` has a

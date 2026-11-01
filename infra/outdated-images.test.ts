@@ -5,11 +5,13 @@ import { checkImages, type Fetch } from "./outdated-images.js";
 const digestLength = 64;
 const pnpmDigest = `sha256:${"a".repeat(digestLength)}`;
 const nodeDigest = `sha256:${"b".repeat(digestLength)}`;
+const playwrightDigest = `sha256:${"d".repeat(digestLength)}`;
 const newDigest = `sha256:${"c".repeat(digestLength)}`;
 
 const dockerfile = `# A comment
 FROM ghcr.io/pnpm/pnpm:5.1.0@${pnpmDigest} AS pnpm
 FROM node:40.2.0-trixie-slim@${nodeDigest} AS base
+FROM mcr.microsoft.com/playwright:v7.2.0-noble@${playwrightDigest} AS browser
 `;
 
 // Eight days after the newest release below that should be reported.
@@ -26,6 +28,8 @@ interface Sources {
   nodeTags: Record<string, string>;
   pnpm: Record<string, string>;
   pnpmTags: Record<string, string>;
+  playwright: Record<string, string>;
+  playwrightTags: Record<string, string>;
 }
 
 const upToDate: Sources = {
@@ -33,12 +37,16 @@ const upToDate: Sources = {
   nodeTags: { "40.2.0-trixie-slim": nodeDigest },
   pnpm: { "5.1.0": "2030-05-01T00:00:00Z" },
   pnpmTags: { "5.1.0": pnpmDigest },
+  playwright: { "7.2.0": "2030-05-01T00:00:00Z" },
+  playwrightTags: { "v7.2.0-noble": playwrightDigest },
 };
 
 const nodeTagUrl =
   /^https:\/\/hub\.docker\.com\/v2\/repositories\/library\/node\/tags\/(?<tag>.+)$/u;
 const pnpmTagUrl =
   /^https:\/\/ghcr\.io\/v2\/pnpm\/pnpm\/manifests\/(?<tag>.+)$/u;
+const playwrightTagUrl =
+  /^https:\/\/mcr\.microsoft\.com\/v2\/playwright\/manifests\/(?<tag>.+)$/u;
 
 function json(body: unknown): Response {
   return new Response(JSON.stringify(body), { status: 200 });
@@ -74,10 +82,14 @@ function fakeFetch(sources: Sources): Fetch {
     "https://ghcr.io/token?scope=repository:pnpm/pnpm:pull": {
       token: "fictitious",
     },
+    "https://registry.npmjs.org/playwright": {
+      time: { created: "2030-01-01T00:00:00Z", ...sources.playwright },
+    },
   };
   return (url) => {
     const nodeTag = url.match(nodeTagUrl)?.groups?.["tag"];
     const pnpmTag = url.match(pnpmTagUrl)?.groups?.["tag"];
+    const playwrightTag = url.match(playwrightTagUrl)?.groups?.["tag"];
     if (url in fixed) {
       return Promise.resolve(json(fixed[url]));
     }
@@ -86,6 +98,11 @@ function fakeFetch(sources: Sources): Fetch {
     }
     if (pnpmTag !== undefined) {
       return Promise.resolve(digestResponse(sources.pnpmTags[pnpmTag], true));
+    }
+    if (playwrightTag !== undefined) {
+      return Promise.resolve(
+        digestResponse(sources.playwrightTags[playwrightTag], true),
+      );
     }
     return Promise.reject(new Error(`unexpected request: ${url}`));
   };
@@ -185,6 +202,29 @@ describe("checkImages", () => {
 
     expect(await checkImages(dockerfile, fakeFetch(sources), now)).toEqual([
       `pnpm  5.1.0 → 6.0.0  ghcr.io/pnpm/pnpm:6.0.0@${newDigest}`,
+    ]);
+  });
+
+  it("reports a newer Playwright image, whose tag starts with v, past the release age", async () => {
+    const sources: Sources = {
+      ...upToDate,
+      playwright: { ...upToDate.playwright, "7.3.0": "2030-06-01T00:00:00Z" },
+      playwrightTags: { ...upToDate.playwrightTags, "v7.3.0-noble": newDigest },
+    };
+
+    expect(await checkImages(dockerfile, fakeFetch(sources), now)).toEqual([
+      `playwright  7.2.0 → 7.3.0  mcr.microsoft.com/playwright:v7.3.0-noble@${newDigest}`,
+    ]);
+  });
+
+  it("reports a Playwright image rebuilt under the same version", async () => {
+    const sources: Sources = {
+      ...upToDate,
+      playwrightTags: { "v7.2.0-noble": newDigest },
+    };
+
+    expect(await checkImages(dockerfile, fakeFetch(sources), now)).toEqual([
+      `playwright  7.2.0 rebuilt  mcr.microsoft.com/playwright:v7.2.0-noble@${newDigest}`,
     ]);
   });
 
