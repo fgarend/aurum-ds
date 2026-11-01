@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 3.4.
+**Now:** 3.5.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -31,12 +31,11 @@ Done: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 2.10, 2.11, 2.12, 2.13, 2.14.
 
 ## 3. Tokens and assets
 
-Done: 3.1, 3.2, 3.3.
+Done: 3.1, 3.2, 3.3, 3.4.
 
-- **3.4 · Icons.** The 41 SVGs as package assets.
 - **3.5 · Base styles.** The global CSS every component relies on.
 - **3.6 · Brand book.** `docs/guidelines.md`, the living copy of the
-  artifact's guidelines.
+  artifact's guidelines. Its section on icons follows Lucide (decision 0029).
 
 ## 4. Visual test
 
@@ -45,7 +44,8 @@ Done: 3.1, 3.2, 3.3.
   `playwright`), and teach the image report any new pinned image. Check that
   Geist and Geist Mono render from the package (decision 0027).
 - **4.2 · Reference screenshots.** The artifact's previews rendered and
-  approved, with `make reference`.
+  approved, with `make reference`. Icons differ from the previews, since
+  Aurum draws Lucide's (decision 0029).
 - **4.3 · Screenshot approval.** `make screenshots` and how a visual change is
   reviewed.
 
@@ -65,7 +65,11 @@ Done: 3.1, 3.2, 3.3.
   Settle Biome's `noJsxLiterals`, which forbids text written in JSX.
 - **5.11 · Coverage.** The tool, and whether `make test` requires a minimum.
 - **5.6 · Components.** One item per component the shell and People need,
-  listed from 5.1.
+  listed from 5.1. The `Icon` component decides how the package depends on
+  Lucide (peer or dependency; the app is on 1.59.0), the stroke width (Aurum's
+  1.5 or Lucide's 2), names by concept as the app's `Icon` has them, and the
+  three artifact names Lucide spells differently: `arrows-swap`
+  (`arrow-left-right`), `more` (`ellipsis`) and `piggy` (`piggy-bank`).
 - **5.7 · Build.** The bundler and what `dist/` contains. Only tools that work
   with TypeScript 7 (decision 0024). `tsconfig.json` then emits: `noEmit`,
   `rootDir` and `outDir`. Test files and `src/test-setup.ts` stay out of the
@@ -89,7 +93,7 @@ No order between them; each becomes items when its time comes.
 - **Storybook.** A component gallery, which would also serve `make run`.
 - **Artifact mirror.** Keeping the Claude Design artifact in sync with this
   repository. Its previews load React 18.3.1, and the package supports only
-  React 19 (decision 0019).
+  React 19 (decision 0019). Its icons must follow Lucide (decision 0029).
 - **Continuous integration.** Running `make test` on GitHub.
 - **License.** See decision 0002.
 - **Dark theme.** When the app's first screen needs it. The token compiler
