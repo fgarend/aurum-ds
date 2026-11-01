@@ -11,9 +11,29 @@
   "formatter": { "useEditorconfig": true },
   "markdown": { "formatter": { "enabled": true } },
   "linter": {
+    // Rules for frameworks and libraries this repository does not use. A domain is turned back on
+    // by the roadmap item that brings its tool in.
+    "domains": {
+      "astro": "none",
+      "drizzle": "none",
+      "next": "none",
+      "playwright": "none",
+      "qwik": "none",
+      "reactNative": "none",
+      "solid": "none",
+      "svelte": "none",
+      "tailwind": "none",
+      "tanstackQuery": "none",
+      "turborepo": "none",
+      "vue": "none"
+    },
     "rules": {
       // Every stable rule. Each one turned off or adjusted says why.
       "preset": "all",
+      "style": {
+        // Choosing between two values, as in JSX, reads best as a ternary. noNestedTernary stays on.
+        "noTernary": "off"
+      },
       "complexity": {
         // noPropertyAccessFromIndexSignature asks for brackets on keys that may be missing (decision 0013).
         "useLiteralKeys": "off"
@@ -37,6 +57,23 @@
       // The package's public entry only re-exports. Revisited with the component conventions.
       "includes": ["src/index.ts"],
       "linter": { "rules": { "performance": { "noBarrelFile": "off" } } }
+    },
+    {
+      // A test file's long function is a describe block grouping short cases.
+      "includes": ["**/*.test.ts", "**/*.test.tsx"],
+      "linter": {
+        "rules": { "complexity": { "noExcessiveLinesPerFunction": "off" } }
+      }
+    },
+    {
+      // The repository's scripts run on Node: they read files, print and set the exit code.
+      "includes": ["infra/**"],
+      "linter": {
+        "rules": {
+          "correctness": { "noNodejsModules": "off", "noProcessGlobal": "off" },
+          "suspicious": { "noConsole": "off" }
+        }
+      }
     }
   ]
 }

@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 2.14.
+**Now:** 2.8.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -27,11 +27,8 @@ Done: 1.1, 1.2.
 
 ## 2. Skeleton
 
-Done: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.11, 2.12.
+Done: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.11, 2.12, 2.14.
 
-- **2.14 · Image report.** `make outdated` also checks the images pinned by
-  hand (Node, pnpm) against their official sources, by release date, with a
-  tested script.
 - **2.8 · Component tests.** The DOM environment, the testing library, React
   declared in `devDependencies` (the latest 19, developed on), a check
   against React 18.3, and the JSX settings in `tsconfig.json`.
@@ -42,7 +39,7 @@ Done: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.11, 2.12.
   release-age rule, `make test` green, and how often to check. While
   TypeScript is left out of `make outdated`, check its 6 line by hand. Move
   `target` and `lib` up a year when all of that year's features are widely
-  available in Baseline.
+  available in Baseline. Keep `@types/node` on the image's Node line.
 
 ## 3. Tokens and assets
 
@@ -59,7 +56,8 @@ Done: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.11, 2.12.
 ## 4. Visual test
 
 - **4.1 · Browser tests.** The browser test mode, its provider, and the image
-  with the browsers.
+  with the browsers. Turn Biome's domain back on if its tool comes in (such as
+  `playwright`), and teach the image report any new pinned image.
 - **4.2 · Reference screenshots.** The artifact's previews rendered and
   approved, with `make reference`.
 - **4.3 · Screenshot approval.** `make screenshots` and how a visual change is

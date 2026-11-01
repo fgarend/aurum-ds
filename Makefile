@@ -27,13 +27,17 @@ test: ## Run every check, from the lockfile and the repository: lint and format,
 	docker build -f infra/Dockerfile --target test -t $(IMAGE):test .
 	docker run --rm $(IMAGE):test pnpm exec biome ci --error-on-warnings
 	docker run --rm $(IMAGE):test pnpm exec tsc
+	docker run --rm $(IMAGE):test pnpm exec tsc -p infra
 	docker run --rm $(IMAGE):test pnpm exec vitest run
 
 ##@ Dependencies
 
-outdated: ## List the dependencies with a newer version past the release age. Fails when there is one, or on an error
+outdated: ## List the dependencies and pinned images with a newer version past the release age. Fails when there is one, or on an error
 	docker build -f infra/Dockerfile --target base -t $(IMAGE):base .
-	docker run --rm -v "$(CURDIR)":/app $(IMAGE):base pnpm outdated
+	status=0; \
+	docker run --rm -v "$(CURDIR)":/app $(IMAGE):base pnpm outdated || status=1; \
+	docker run --rm -v "$(CURDIR)":/app $(IMAGE):base node infra/outdated-images.ts || status=1; \
+	exit $$status
 
 audit: ## List the known vulnerabilities in the dependencies, of any severity. Fails when there is one, or on an error
 	docker build -f infra/Dockerfile --target base -t $(IMAGE):base .
