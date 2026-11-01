@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 3.6.
+**Now:** 4.1.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -31,10 +31,7 @@ Done: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 2.10, 2.11, 2.12, 2.13, 2.14.
 
 ## 3. Tokens and assets
 
-Done: 3.1, 3.2, 3.3, 3.4, 3.5.
-
-- **3.6 · Brand book.** `docs/guidelines.md`, the living copy of the
-  artifact's guidelines. Its section on icons follows Lucide (decision 0029).
+Done: 3.1, 3.2, 3.3, 3.4, 3.5, 3.6.
 
 ## 4. Visual test
 
@@ -71,12 +68,15 @@ Done: 3.1, 3.2, 3.3, 3.4, 3.5.
   1.5 or Lucide's 2), names by concept as the app's `Icon` has them, and the
   three artifact names Lucide spells differently: `arrows-swap`
   (`arrow-left-right`), `more` (`ellipsis`) and `piggy` (`piggy-bank`).
+  Update the guidelines' Components section as components arrive
+  (decision 0031).
 - **5.7 · Build.** The bundler and what `dist/` contains. Only tools that work
   with TypeScript 7 (decision 0024). `tsconfig.json` then emits: `noEmit`,
   `rootDir` and `outDir`. Test files and `src/test-setup.ts` stay out of the
   package. Consider the React Compiler, which memoizes by itself. Whether the
   token compiler in `src/tokens/` ships, or only `tokens.css`.
 - **5.8 · Delivery.** How the app gets the built code from the git dependency.
+  Update the guidelines' section on using Aurum (decision 0031).
 - **5.9 · Package check.** `make pack`: what the app will receive.
 - **5.10 · Release v0.1.0.** The changelog and the first tag.
 
