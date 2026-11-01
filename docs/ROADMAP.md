@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 3.5.
+**Now:** 3.6.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -31,9 +31,8 @@ Done: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 2.10, 2.11, 2.12, 2.13, 2.14.
 
 ## 3. Tokens and assets
 
-Done: 3.1, 3.2, 3.3, 3.4.
+Done: 3.1, 3.2, 3.3, 3.4, 3.5.
 
-- **3.5 · Base styles.** The global CSS every component relies on.
 - **3.6 · Brand book.** `docs/guidelines.md`, the living copy of the
   artifact's guidelines. Its section on icons follows Lucide (decision 0029).
 
@@ -42,7 +41,8 @@ Done: 3.1, 3.2, 3.3, 3.4.
 - **4.1 · Browser tests.** The browser test mode, its provider, and the image
   with the browsers. Turn Biome's domain back on if its tool comes in (such as
   `playwright`), and teach the image report any new pinned image. Check that
-  Geist and Geist Mono render from the package (decision 0027).
+  Geist and Geist Mono render from the package (decision 0027), and the base
+  styles: `.au-root`, the focus ring, `.au-sr` (decision 0030).
 - **4.2 · Reference screenshots.** The artifact's previews rendered and
   approved, with `make reference`. Icons differ from the previews, since
   Aurum draws Lucide's (decision 0029).
@@ -54,6 +54,7 @@ Done: 3.1, 3.2, 3.3, 3.4.
 - **5.1 · Consumer requirements.** `docs/consumers.md`: what the app's shell
   and People screen need. The app's bundler must handle `@import` and `url()`
   in CSS, and its build must carry the fonts' license notice (decision 0027).
+  It puts `.au-root` where Aurum begins (decision 0030).
 - **5.2 · Component conventions.** Folder layout, naming, props and exports.
   Revisit the lint exception that lets `src/index.ts` only re-export. When to
   use `memo` and `useCallback`, context values included.
