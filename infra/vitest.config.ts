@@ -5,6 +5,12 @@ import { defineConfig, type ViteUserConfig } from "vitest/config";
 // A browser test is named *.browser.test.ts or .tsx, and the other projects leave it out.
 const browserTests = "**/*.browser.test.{ts,tsx}";
 const notBrowserTests = ["**/node_modules/**", browserTests];
+const chromium = {
+  enabled: true,
+  provider: playwright(),
+  headless: true,
+  instances: [{ browser: "chromium" as const }],
+};
 
 const config: ViteUserConfig = defineConfig({
   test: {
@@ -28,14 +34,19 @@ const config: ViteUserConfig = defineConfig({
         },
       },
       {
+        test: { name: "browser", include: [browserTests], browser: chromium },
+      },
+      // Only make reference runs it, to render the artifact's previews (decision 0033).
+      {
         test: {
-          name: "browser",
-          include: [browserTests],
+          name: "reference",
+          include: ["infra/reference.render.ts"],
+          // A page large enough that no preview is scaled down to fit.
           browser: {
-            enabled: true,
-            provider: playwright(),
-            headless: true,
-            instances: [{ browser: "chromium" }],
+            ...chromium,
+            provider: playwright({
+              contextOptions: { viewport: { width: 3000, height: 3000 } },
+            }),
           },
         },
       },

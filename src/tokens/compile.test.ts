@@ -194,6 +194,31 @@ describe("compileTokens", () => {
     );
   });
 
+  it("writes without a prefix when asked, as the artifact does", () => {
+    const css = compileTokens(
+      {
+        ...minimal,
+        spacing: { tokens: [{ name: "gap", value: "4px", usage: "" }] },
+        type: {
+          fonts: [],
+          families: { body: "Fictional Sans" },
+          groups: [
+            {
+              name: "Fictional",
+              family: "body",
+              styles: [{ name: "text-plain", fontSize: "14px" }],
+            },
+          ],
+        },
+      },
+      "",
+    );
+
+    expect(css).toContain("  --paper: #fafafa;\n");
+    expect(css).toContain("  --gap: 4px;\n  --font-body: Fictional Sans;\n");
+    expect(css).toContain(".text-plain {\n  font-family: var(--font-body);\n");
+  });
+
   it("leaves out a block with nothing in it", () => {
     expect(
       compile({ color: { themes: [{ id: "day", name: "Day" }], tokens: [] } }),

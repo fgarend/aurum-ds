@@ -28,6 +28,7 @@ says otherwise. The repository is the source; the artifact is not.
 | `artifact/components/<Name>/preview.html` | Each component's live preview |
 | `artifact/assets/Icons/` | The 41 icons as SVG files, and their README |
 | `SHA256SUMS` | The checksum of every file under `artifact/` |
+| `screenshots/<Name>.png` | Each preview rendered by `make reference`, the visual target for review (decision 0033) |
 | `ARTIFACT-FORMAT.md` | How the artifact compiles tokens, loads the bundle and renders previews |
 
 ## How it was taken

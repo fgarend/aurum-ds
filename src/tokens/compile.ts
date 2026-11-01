@@ -1,9 +1,8 @@
 // Compiles tokens.json into tokens.css (decisions 0025 and 0026): the artifact type's own output, with every name
-// prefixed.
+// prefixed. The reference screenshots compile the artifact's own tokens without the prefix (decision 0033).
 import { aliasTarget, readTokens, type Token } from "./read.js";
 import type { TextStyle } from "./type.js";
 
-const prefix = "au-";
 const leadingDigit = /^[0-9]/u;
 const allDots = /\./gu;
 
@@ -15,17 +14,17 @@ function escapeName(name: string): string {
     : escaped;
 }
 
-function property(name: string): string {
-  return `--${prefix}${escapeName(name)}`;
-}
-
-function colorLine({ name, value }: Token): string {
-  const target = aliasTarget(value);
-  return `  ${property(name)}: ${target === undefined ? value : `var(${property(target)})`};`;
-}
-
-function styleRule(style: TextStyle): string[] {
-  return [
+function writer(prefix: string): {
+  property: (name: string) => string;
+  colorLine: (token: Token) => string;
+  styleRule: (style: TextStyle) => string[];
+} {
+  const property = (name: string): string => `--${prefix}${escapeName(name)}`;
+  const colorLine = ({ name, value }: Token): string => {
+    const target = aliasTarget(value);
+    return `  ${property(name)}: ${target === undefined ? value : `var(${property(target)})`};`;
+  };
+  const styleRule = (style: TextStyle): string[] => [
     `.${prefix}${escapeName(style.name)} {`,
     ...(style.family === ""
       ? []
@@ -42,11 +41,13 @@ function styleRule(style: TextStyle): string[] {
       : [`  font-variation-settings: 'opsz' ${style.opticalSize};`]),
     "}",
   ];
+  return { property, colorLine, styleRule };
 }
 
-function compileTokens(source: unknown): string {
+function compileTokens(source: unknown, prefix = "au-"): string {
   const { theme, colors, shadows, others, families, styles } =
     readTokens(source);
+  const { property, colorLine, styleRule } = writer(prefix);
   const themeLines = [
     ...colors.map(colorLine),
     ...shadows.map(({ name, value }) => `  ${property(name)}: ${value};`),

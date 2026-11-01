@@ -7,7 +7,7 @@ SOURCE := https://github.com/fgarend/aurum-ds
 # pnpm's package store, kept in a volume so an install downloads nothing twice.
 STORE := aurum-ds-pnpm-store
 
-.PHONY: help install format tokens test watch clean outdated audit
+.PHONY: help install format tokens test watch reference clean outdated audit
 .DEFAULT_GOAL := help
 
 ##@ Development
@@ -43,6 +43,11 @@ watch: ## Run the tests again on every change, until stopped with q or Ctrl+C. B
 	docker build -f infra/Dockerfile --target test -t $(IMAGE):test .
 	docker run --rm -it -v "$(CURDIR)":/app -v /app/node_modules $(IMAGE):test \
 		pnpm exec vitest --config infra/vitest.config.ts --project node --project dom
+
+reference: ## Render the artifact's previews into reference/screenshots, to review and approve
+	docker build -f infra/Dockerfile --target browser -t $(IMAGE):browser .
+	docker run --rm -v "$(CURDIR)":/app -v /app/node_modules $(IMAGE):browser \
+		pnpm exec vitest run --config infra/vitest.config.ts --project reference
 
 clean: ## Remove the project's images, tagged or not. Keeps node_modules and the caches
 	docker image prune --all --force --filter label=org.opencontainers.image.source=$(SOURCE)

@@ -41,7 +41,9 @@ age, with its advisory.
 - **A pinned image:** copy the line `make outdated` prints into
   `infra/Dockerfile`. For pnpm, change `packageManager` in `package.json` to
   the same version and run `make install`. For Playwright, change the
-  `playwright` package to the same version (decision 0032). Then `make test`.
+  `playwright` package to the same version (decision 0032), run
+  `make reference`, and review any screenshot that changes (decision 0033).
+  Then `make test`.
 
 ## Checks made by hand
 

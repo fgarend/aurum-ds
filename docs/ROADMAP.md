@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 4.2.
+**Now:** 4.3.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -35,14 +35,11 @@ Done: 3.1, 3.2, 3.3, 3.4, 3.5, 3.6.
 
 ## 4. Visual test
 
-Done: 4.1.
+Done: 4.1, 4.2.
 
-- **4.2 · Reference screenshots.** The artifact's previews rendered and
-  approved, with `make reference`. Icons differ from the previews, since
-  Aurum draws Lucide's (decision 0029). Where the screenshots live: Vitest
-  writes them in `__screenshots__/` next to each test, inside the container.
 - **4.3 · Screenshot approval.** `make screenshots` and how a visual change is
-  reviewed.
+  reviewed. Where our components' screenshots live: Vitest writes them in
+  `__screenshots__/` next to each test, inside the container.
 
 ## 5. v0.1.0: the shell and People
 
@@ -67,7 +64,8 @@ Done: 4.1.
   three artifact names Lucide spells differently: `arrows-swap`
   (`arrow-left-right`), `more` (`ellipsis`) and `piggy` (`piggy-bank`).
   Update the guidelines' Components section as components arrive
-  (decision 0031).
+  (decision 0031). Compare each component with its reference screenshot in
+  `reference/screenshots/` (decision 0033).
 - **5.7 · Build.** The bundler and what `dist/` contains. Only tools that work
   with TypeScript 7 (decision 0024). `tsconfig.json` then emits: `noEmit`,
   `rootDir` and `outDir`. Test files and `src/test-setup.ts` stay out of the

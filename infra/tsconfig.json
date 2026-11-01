@@ -6,6 +6,6 @@
     // Node's APIs. The DOM is there only because Vitest's configuration types, with the browser provider, name DOM
     // types; these scripts never run in a browser.
     "lib": ["es2023", "dom"],
-    "types": ["node"]
+    "types": ["node", "vite/client"]
   }
 }
