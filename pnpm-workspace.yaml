@@ -1,3 +1,5 @@
 # Project settings for pnpm (decisions 0008 and 0009).
 # Versions published less than 7 days ago are refused (minutes).
 minimumReleaseAge: 10080
+# Peer dependencies are not installed on their own: the versions used here are declared in devDependencies.
+autoInstallPeers: false

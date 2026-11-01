@@ -1,3 +1,17 @@
 {
-  "packageManager": "pnpm@12.15.0"
+  "name": "@fgarend/aurum-ds",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A quiet design system for money interfaces.",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fgarend/aurum-ds.git"
+  },
+  "type": "module",
+  "packageManager": "pnpm@12.15.0",
+  "peerDependencies": {
+    "react": "^18.3.0 || ^19.0.0",
+    "react-dom": "^18.3.0 || ^19.0.0"
+  }
 }

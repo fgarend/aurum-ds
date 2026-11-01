@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 2.4.
+**Now:** 2.11.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -27,20 +27,26 @@ Done: 1.1, 1.2.
 
 ## 2. Skeleton
 
-Done: 2.1, 2.2, 2.3.
+Done: 2.1, 2.2, 2.3, 2.4.
 
-- **2.4 · Package manifest.** Name, privacy, module type, description,
-  repository, license and the React versions accepted.
+- **2.11 · Dependency report.** `make outdated`: dependencies with newer
+  versions, and the images pinned by hand (Node, pnpm), saying which are past
+  the 7-day release age.
+- **2.12 · Security audit.** `make audit`: known vulnerabilities in the
+  installed dependencies.
 - **2.5 · TypeScript.** Version, compiler options and the type check in
   `make test`.
 - **2.6 · Lint and format.** The tool, its rules, `make format`, and the check
   in `make test`.
 - **2.7 · Unit tests.** The test runner, a first test, and `make test` running
   it every time.
-- **2.8 · Component tests.** The DOM environment, the testing library, and
-  running against both React versions accepted.
+- **2.8 · Component tests.** The DOM environment, the testing library, React
+  declared in `devDependencies` (the latest 19, developed on), and a check
+  against React 18.3.
 - **2.9 · Watch container.** `make watch`: the tests again on every change.
 - **2.10 · Clean.** `make clean`: the project images only, caches kept.
+- **2.13 · Update routine.** How updates are made: one per commit, the
+  release-age rule, `make test` green, and how often to check.
 
 ## 3. Tokens and assets
 
@@ -97,7 +103,7 @@ No order between them; each becomes items when its time comes.
 - **Continuous integration.** Running `make test` on GitHub.
 - **License.** See decision 0002.
 - **Dark theme.** When the app's first screen needs it.
-- **Dependency updates.** `make outdated`, for the periodic check of security
-  fixes.
+- **Update bot.** Renovate or Dependabot opening pull requests, with the CI;
+  check first that it respects the release age and updates image digests.
 - **pnpm's update notice.** Every run says a newer pnpm exists, though the
   version is chosen by the release-age rule; `updateNotifier` turns it off.
