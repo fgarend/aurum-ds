@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 2.2.
+**Now:** 2.3.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -27,10 +27,7 @@ Done: 1.1, 1.2.
 
 ## 2. Skeleton
 
-Done: 2.1.
-
-- **2.2 · Base image.** The Node image, pinned by tag and digest, in a
-  `Dockerfile`.
+Done: 2.1, 2.2.
 - **2.3 · Package manager.** Which one, its lockfile, and `make install`.
 - **2.4 · Package manifest.** Name, privacy, module type, description,
   repository, license and the React versions accepted.
