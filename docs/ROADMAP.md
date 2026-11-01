@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 2.10.
+**Now:** 2.13.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -27,10 +27,8 @@ Done: 1.1, 1.2.
 
 ## 2. Skeleton
 
-Done: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 2.11, 2.12, 2.14.
+Done: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 2.10, 2.11, 2.12, 2.14.
 
-- **2.10 · Clean.** `make clean`: the project images only, caches kept (the
-  pnpm store volume and the build cache, which `docker builder prune` clears).
 - **2.13 · Update routine.** How updates are made: one per commit, the
   release-age rule, `make test` green, and how often to check. While
   TypeScript is left out of `make outdated`, check its 6 line by hand. Move

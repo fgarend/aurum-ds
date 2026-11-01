@@ -2,10 +2,12 @@
 # Must work with GNU Make 3.81, the version that ships with macOS.
 
 IMAGE := aurum-ds
+# The label every project image carries (decision 0022).
+SOURCE := https://github.com/fgarend/aurum-ds
 # pnpm's package store, kept in a volume so an install downloads nothing twice.
 STORE := aurum-ds-pnpm-store
 
-.PHONY: help install format test watch outdated audit
+.PHONY: help install format test watch clean outdated audit
 .DEFAULT_GOAL := help
 
 ##@ Development
@@ -34,6 +36,9 @@ watch: ## Run the tests again on every change, until stopped with q or Ctrl+C
 	docker build -f infra/Dockerfile --target test -t $(IMAGE):test .
 	docker run --rm -it -v "$(CURDIR)":/app -v /app/node_modules $(IMAGE):test \
 		pnpm exec vitest --config infra/vitest.config.ts
+
+clean: ## Remove the project's images, tagged or not. Keeps node_modules and the caches
+	docker image prune --all --force --filter label=org.opencontainers.image.source=$(SOURCE)
 
 ##@ Dependencies
 

@@ -6,6 +6,8 @@ FROM ghcr.io/pnpm/pnpm:12.15.0@sha256:d6148daf3ad2af8fa4ecd1aa06db73da32b2e37f63
 
 # Node and pnpm: every other stage starts here.
 FROM node:26.12.1-trixie-slim@sha256:94816674c62774da0d099a947bf4613b9e1972a2733abd0d0cd80e795f8411d0 AS base
+# Marks every image of the project, so make clean finds them all, tagged or not (decision 0022).
+LABEL org.opencontainers.image.source="https://github.com/fgarend/aurum-ds"
 COPY --from=pnpm /opt/pnpm /opt/pnpm
 RUN ln -s /opt/pnpm/pnpm /usr/local/bin/pnpm
 WORKDIR /app
