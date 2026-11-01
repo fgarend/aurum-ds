@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 0.3.
+**Now:** 1.1.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -19,10 +19,7 @@ in its own item.
 
 ## 0. Base
 
-Done: 0.1, 0.2.
-
-- **0.3 · Versioning policy.** What a major, minor and patch change is for a
-  design system, the `0.x` rules, tags and the changelog approach.
+Done: 0.1, 0.2, 0.3.
 
 ## 1. Reference
 
@@ -53,8 +50,8 @@ Done: 0.1, 0.2.
 
 ## 3. Tokens and assets
 
-- **3.1 · Token source.** The source format (the artifact's list or DTCG) and
-  where it lives.
+- **3.1 · Token source.** The source format (the artifact's list or DTCG),
+  where it lives, and whether token names take the repository's prefix too.
 - **3.2 · Token output.** The generated CSS, tested against what the artifact
   compiles.
 - **3.3 · Fonts.** Geist and Geist Mono, how they are shipped.
@@ -77,7 +74,9 @@ Done: 0.1, 0.2.
 - **5.1 · Consumer requirements.** `docs/consumers.md`: what the app's shell
   and People screen need.
 - **5.2 · Component conventions.** Folder layout, naming, props and exports.
-- **5.3 · Styling approach.** How component CSS is written and shipped.
+- **5.3 · Styling approach.** How component CSS is written and shipped, and
+  the class prefix. The user prefers prefixes tied to the repository, such as
+  `au-`, over the artifact's undocumented `bs-`.
 - **5.4 · Accessibility approach.** Hand-made or a library, and the locale.
 - **5.5 · Copy and language.** Default texts and how the app replaces them.
 - **5.6 · Components.** One item per component the shell and People need,
@@ -91,6 +90,8 @@ Done: 0.1, 0.2.
 
 - **6.1 · Position, Notes, Note, then the others by area.** Each screen is
   planned in items when its turn comes.
+- **6.2 · Release 1.0.0.** When every screen of the app uses Aurum and the old
+  interface is gone.
 
 ## Deferred
 
