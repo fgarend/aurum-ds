@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 5.1.
+**Now:** 5.7.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -43,18 +43,8 @@ The first release carries no component: the tokens, the fonts and the base
 styles, which the app can adopt on its own. It proves the way from this
 repository to the app with little at stake.
 
-Done: 5.12.
+Done: 5.1, 5.12.
 
-- **5.1 · Consumer requirements, inventory and component order.**
-  `docs/consumers.md`: what the app's shell and People screen need; an
-  inventory of what the prototype's screens repeat (decision 0035), each
-  part a design system component, a new component or a screen layout; and
-  the components in order of importance, use and simplicity, a component
-  after those it depends on. The list becomes the component items of
-  milestone 7. The app's bundler must
-  handle `@import` and `url()` in CSS, and its build must carry the fonts'
-  license notice (decision 0027). It puts `.au-root` where Aurum begins
-  (decision 0030).
 - **5.7 · Build.** The bundler and what `dist/` contains: at first
   `tokens.css`, `fonts.css` and `base.css`. Only tools that work with
   TypeScript 7 (decision 0024). `tsconfig.json` then emits: `noEmit`,
@@ -72,7 +62,11 @@ Done: 5.12.
 
 Each component is one item and ends in a release the app can use, a patch
 version while in `0.y.z` (decision 0004). The decisions every component
-relies on come first.
+relies on come first. The components follow the order in
+`docs/consumers.md`, each the same way: tests, the component, its visual
+test (decision 0034), a comparison with its reference screenshot (decisions
+0033 and 0035), the guidelines' Components section (decision 0031), the
+changelog, and a release.
 
 - **7.1 (was 5.2) · Component conventions.** Folder layout, naming, props and
   exports. Revisit the lint exception that lets `src/index.ts` only
@@ -87,16 +81,24 @@ relies on come first.
   in JSX.
 - **7.5 (was 5.11) · Coverage.** The tool, and whether `make test` requires a
   minimum.
-- **7.6 (was 5.6) · Components.** One item per component, in the order of
-  5.1, each the same way: tests, the component, its visual test (decision
-  0034), a comparison with its reference screenshot in
-  `reference/screenshots/` (decision 0033), the guidelines' Components
-  section (decision 0031), the changelog, and a release. The `Icon` component
-  decides how the package depends on Lucide (peer or dependency; the app is
-  on 1.59.0), the stroke width (Aurum's 1.5 or Lucide's 2), names by concept
-  as the app's `Icon` has them, and the three artifact names Lucide spells
-  differently: `arrows-swap` (`arrow-left-right`), `more` (`ellipsis`) and
-  `piggy` (`piggy-bank`).
+- **7.6 (was 5.6) · Icon.** How the package depends on Lucide (peer or
+  dependency; the app is on 1.61), the stroke width (Aurum's 1.5 or Lucide's
+  2), names by concept as the app's `Icon` has them, and the three artifact
+  names Lucide spells differently: `arrows-swap` (`arrow-left-right`), `more`
+  (`ellipsis`) and `piggy` (`piggy-bank`).
+- **7.7 · Badge.**
+- **7.8 · Avatar.**
+- **7.9 · AvatarGroup.**
+- **7.10 · ScopeChip.**
+- **7.11 · Button and IconButton.**
+- **7.12 · PageHeader.**
+- **7.13 · Sidebar.**
+- **7.14 · AppShell.** The shell is complete.
+- **7.15 · Section and Card.**
+- **7.16 · TextField, Select, SegmentedControl and Switch.** People, as the
+  prototype draws it, is complete.
+- **7.17 · Alert.**
+- **7.18 · Table.** It can move up if the app moves People keeping its table.
 
 ## 6. One version per screen
 
@@ -124,7 +126,8 @@ No order between them; each becomes items when its time comes.
   passing, and drop Vitest and `@vitest/browser-playwright` from
   `update.ignoreDeps` in the same commit.
 - **Other browsers.** WebKit, for Safari and the iPhone, and Firefox, once
-  item 5.1 says which browsers the app supports (decision 0032).
+  the app states which browsers it supports; today it states none
+  (decision 0032).
 - **Update bot.** Renovate or Dependabot opening pull requests, with the CI;
   check first that it respects the release age and updates image digests.
 - **pnpm's update notice.** Every run says a newer pnpm exists, though the
