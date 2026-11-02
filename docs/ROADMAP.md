@@ -111,13 +111,12 @@ Done: 7.21, 7.22, 7.23.
 - **7.12 · PageHeader.**
 - **7.13 · Sidebar.**
 - **7.14 · AppShell.** The shell is complete.
+- **7.18 · Table.** Right after the shell, as the app asked: People is its
+  first screen after the shell, and needs the table.
 - **7.15 · Section and Card.**
 - **7.16 · TextField, Select, SegmentedControl and Switch.** People, as the
   prototype draws it, is complete.
 - **7.17 · Alert.**
-- **7.18 · Table.** It can move up if the app moves People keeping its table.
-  The app asked for it right after AppShell (7.14), before the form
-  components: People is its first screen after the shell, and needs the table.
 
 ## 6. One version per screen
 

@@ -101,8 +101,9 @@ is one item of roadmap milestone 7 and ends in a release.
 7. PageHeader, which uses ScopeChip and Button
 8. Sidebar, which uses Icon, Badge and Avatar
 9. AppShell, which uses Sidebar: the shell is complete
-10. Section and Card
-11. TextField, Select, SegmentedControl and Switch: People, as the prototype
+10. Table, right after the shell: People, the app's first screen after it,
+    needs it
+11. Section and Card
+12. TextField, Select, SegmentedControl and Switch: People, as the prototype
     draws it, is complete
-12. Alert, which uses Icon
-13. Table, which can move up if the app moves People keeping its table
+13. Alert, which uses Icon
