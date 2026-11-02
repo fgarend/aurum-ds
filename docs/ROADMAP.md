@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 5.18.
+**Now:** 5.10.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -13,7 +13,8 @@ in its own item.
 - A new milestone takes the next free milestone number. A new item takes the
   next free number in its milestone, wherever it is placed.
 - A finished item moves to its milestone's `Done:` line, so no number is used
-  twice.
+  twice. A dropped item moves to its milestone's `Dropped:` line, with the
+  reason, so it is not raised again.
 - An item moved to another milestone takes a new ID there and keeps the old
   one in parentheses: `3.7 (was 2.4)`.
 
@@ -45,11 +46,12 @@ repository to the app with little at stake.
 
 Done: 5.1, 5.7, 5.8, 5.9, 5.12, 5.13, 5.14, 5.15, 5.16, 5.17.
 
-- **5.18 · Renders as a plain program.** Rewrite the two `.render.ts`
-  suites as a program run by Playwright, since they only borrow Vitest to open
-  the browser and check nothing (decision 0033 did not weigh it), keeping
-  their determinism (decision 0041). Their names follow: `previews` names the
-  content, `prototype` the origin.
+Dropped: 5.18, the renders rewritten as a plain program run by Playwright.
+Rendering through a browser test runner is a common pattern that decision
+0039 already names (`.render.ts`), the renders are deterministic (decision
+0041), and the rewrite would have traded the previews' React 19 for the
+snapshot's React 18 with nothing gained.
+
 - **5.10 · Release v0.1.0.** The changelog and the first tag, by the steps
   in `docs/releasing.md` (decision 0040), and the first push. The README gains
   the status, how to install and import, a short map of the four parts of the
