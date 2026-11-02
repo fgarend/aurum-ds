@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 5.17.
+**Now:** 5.15.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -43,12 +43,8 @@ The first release carries no component: the tokens, the fonts and the base
 styles, which the app can adopt on its own. It proves the way from this
 repository to the app with little at stake.
 
-Done: 5.1, 5.7, 5.8, 5.9, 5.12, 5.13, 5.14.
+Done: 5.1, 5.7, 5.8, 5.9, 5.12, 5.13, 5.14, 5.17.
 
-- **5.17 · How design system repositories are organized.** Research in
-  depth how mature design system repositories lay out their folders and
-  files, the stages of their work and their scripts, and compare with ours
-  (decision 0039), before more of the repository is built on it.
 - **5.15 · Deterministic renders.** `make reference` draws some screenshots
   differently from run to run: a spinner, transitions, a caret blinking in a
   focused field. Turn motion off before each capture, as `toMatchScreenshot`
@@ -77,7 +73,9 @@ test (decision 0034), a comparison with its reference screenshot (decisions
 changelog, and a release.
 
 - **7.1 (was 5.2) · Component conventions.** Folder layout, naming, props and
-  exports. Revisit the lint exception that lets `src/index.ts` only
+  exports. Item 5.17 found a folder per component the common layout, with
+  written rules in Primer React's ADR-013 (file structure) and GOV.UK
+  Frontend's coding standards for components. Revisit the lint exception that lets `src/index.ts` only
   re-export. When to use `memo` and `useCallback`, context values included.
 - **7.2 (was 5.3) · Styling approach.** How component CSS is written and
   shipped, and the class prefix. The user prefers prefixes tied to the
@@ -94,8 +92,7 @@ changelog, and a release.
   TypeScript 7 (decision 0024). `tsconfig.json` then emits: `noEmit`,
   `rootDir` and `outDir`. Test files and the `__screenshots__`
   folders stay out of the package. Consider the React
-  Compiler, which memoizes by itself. Whether the token compiler in
-  `src/tokens/` ships, or only `tokens.css`. The exports gain the components'
+  Compiler, which memoizes by itself. The exports gain the components'
   entry (decision 0036). The built files go in the release's tag, since the
   package runs no script when installed (decision 0037).
 - **7.6 (was 5.6) · Icon.** How the package depends on Lucide (peer or
