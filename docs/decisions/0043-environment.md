@@ -1,6 +1,6 @@
 # 0043. The environment
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0045: the image with Chromium alone
 - Date: 2026-11-02
 
 ## Context

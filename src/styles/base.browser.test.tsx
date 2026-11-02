@@ -8,7 +8,8 @@ import "./base.css";
 const canvas = "rgb(250, 249, 246)";
 const ink = "rgb(35, 38, 43)";
 const focusRing = "rgb(43, 46, 51)";
-const geistFirst = /^"Geist Variable"/u;
+// WebKit writes the family names without quotes, Chromium and Firefox with them.
+const geistFirst = /^"?Geist Variable"?,/u;
 
 // In a real browser, the base styles apply as decision 0030 describes (decision 0032).
 it("styles the root, rings the focus from the keyboard and hides screen reader text", async () => {

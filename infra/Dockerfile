@@ -20,14 +20,14 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN --mount=type=cache,id=aurum-ds-pnpm-store,target=/pnpm-store \
     pnpm install --frozen-lockfile --store-dir /pnpm-store
 
-# The browser for the browser tests (decision 0032), at the version of the playwright package. The system packages it
-# needs come from Debian as it was on the date the Node image was built, which the image notes beside each source, so
-# building again gives the same packages.
+# The browsers for the browser tests (decisions 0032 and 0045): Playwright's own, Chromium's headless shell, Firefox and
+# WebKit, at the version of the playwright package. The system packages they need come from Debian as it was on the
+# date the Node image was built, which the image notes beside each source, so building again gives the same packages.
 FROM deps AS browser
 RUN sources=/etc/apt/sources.list.d/debian.sources \
     && grep -q '^# http://snapshot.debian.org/' "$sources" \
         || { echo "The Node image no longer notes its Debian snapshot in $sources" >&2; exit 1; } \
     && sed -i -e '/^URIs:/d' -e 's|^# \(http://snapshot.debian.org/.*\)|URIs: \1|' "$sources" \
     && echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/snapshot \
-    && pnpm exec playwright install --with-deps --only-shell chromium \
+    && pnpm exec playwright install --with-deps --only-shell \
     && rm -rf /var/lib/apt/lists/*

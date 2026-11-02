@@ -1,6 +1,6 @@
 // Writes the approved screenshots again, to review a visual change in the diff (decisions 0034 and 0044). Run by
 // make screenshots. Vitest never removes the screenshot of a renamed or deleted test, so every folder of approved
-// screenshots under src/ is removed first, and the visual tests write them all again.
+// screenshots under src/ is removed first, and the visual tests write them all again, in Chromium (decision 0045).
 import { spawnSync } from "node:child_process";
 import { readdirSync, rmSync } from "node:fs";
 import { join } from "node:path";
@@ -27,7 +27,7 @@ function main(): void {
   removeScreenshots(fileURLToPath(new URL("../src/", import.meta.url)));
   const { status } = spawnSync(
     "pnpm",
-    ["exec", "vitest", "run", "--project", "browser", "--update"],
+    ["exec", "vitest", "run", "--project", "visual", "--update"],
     { stdio: "inherit" },
   );
   process.exitCode = status ?? 1;

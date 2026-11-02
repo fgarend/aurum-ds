@@ -64,7 +64,8 @@ snapshot's React 18 with nothing gained.
   screenshots leave the repository). The release process (decision 0040,
   `docs/releasing.md`) is then rethought around the CI. Done so far: the
   environment, one image in Compose with its settings (decision 0043), and
-  the commands, split by responsibility (decision 0044).
+  the commands, split by responsibility (decision 0044), and the browser
+  tests in Chromium, Firefox and WebKit (decision 0045).
 - **5.10 · Release v0.1.0.** The changelog and the first tag, by the steps
   in `docs/releasing.md` as item 5.20 leaves them. The README gains
   the status, how to install and import, a short map of the four parts of the
@@ -157,9 +158,6 @@ No order between them; each becomes items when its time comes.
 - **Vitest 5.** Move when `jest-dom`'s types accept it, with the type check
   passing, and drop Vitest and `@vitest/browser-playwright` from
   `update.ignoreDeps` in the same commit.
-- **Other browsers.** WebKit, for Safari and the iPhone, and Firefox, once
-  the app states which browsers it supports; today it states none
-  (decision 0032).
 - **Update bot.** Renovate or Dependabot opening pull requests, with the CI;
   check first that it respects the release age and updates image digests.
 - **pnpm's update notice.** Every run says a newer pnpm exists, though the

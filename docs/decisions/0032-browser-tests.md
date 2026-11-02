@@ -1,6 +1,6 @@
 # 0032. Browser tests
 
-- Status: Accepted; partly superseded by 0043: Playwright's image
+- Status: Accepted; partly superseded by 0043: Playwright's image, and by 0045: Chromium only and the name of every browser test
 - Date: 2026-11-01
 
 ## Context

@@ -15,7 +15,7 @@
     "types": "tsc && tsc -p tsconfig.node.json && tsc -p tsconfig.browser.json",
     "test": "vitest run --project node --project dom",
     "test-repository": "vitest run --project repository",
-    "test-browser": "vitest run --project browser",
+    "test-browser": "vitest run --project browser --project visual",
     "pack": "node scripts/check-package.ts /pnpm-store",
     "format": "biome check --write",
     "tokens": "node scripts/build-tokens/main.ts",

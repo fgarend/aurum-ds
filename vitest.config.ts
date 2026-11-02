@@ -1,14 +1,16 @@
-// Test settings (decisions 0020, 0032, 0039 and 0044). Its types are checked with Node's, in tsconfig.node.json, since
+// Test settings (decisions 0020, 0032, 0039, 0044 and 0045). Its types are checked with Node's, in tsconfig.node.json, since
 // Vite's types bring them along.
 import { readFileSync } from "node:fs";
 import { playwright } from "@vitest/browser-playwright";
 import { defineConfig, type ViteUserConfig } from "vitest/config";
 
-// A browser test is named *.browser.test.ts or .tsx, and the other projects leave it out.
+// A browser test, named *.browser.test.ts or .tsx, checks behaviour in every browser. A visual test, named
+// *.visual.test.ts or .tsx, compares screenshots in Chromium only. The other projects leave both out.
 const browserTests = "**/*.browser.test.{ts,tsx}";
+const visualTests = "**/*.visual.test.{ts,tsx}";
 // The checks of the repository as a whole live in test/ (decision 0039), in a project of their own.
 const repositoryChecks = "test/**/*.test.ts";
-const notBrowserTests = ["**/node_modules/**", browserTests];
+const notBrowserTests = ["**/node_modules/**", browserTests, visualTests];
 const pixels = /^(?<number>\d+)px$/u;
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -33,20 +35,33 @@ function contentMax(): number {
   return Number(width.groups["number"]);
 }
 
-const chromium = {
+const inBrowser = {
   enabled: true,
   provider: playwright(),
   headless: true,
-  instances: [{ browser: "chromium" as const }],
-  // One canvas for every visual test: the tokens' content-max wide (decision 0034).
+  // One canvas for every browser test: the tokens' content-max wide (decision 0034).
   viewport: { width: contentMax(), height: 800 },
   // A failing test's screenshot would land among the approved ones.
   screenshotFailures: false,
 };
+const chromium = {
+  ...inBrowser,
+  instances: [{ browser: "chromium" as const }],
+};
+// Playwright's own browsers: Chromium, and Firefox and WebKit, Safari's engine (decision 0045).
+const everyBrowser = {
+  ...inBrowser,
+  instances: [
+    { browser: "chromium" as const },
+    { browser: "firefox" as const },
+    { browser: "webkit" as const },
+  ],
+};
 
 const config: ViteUserConfig = defineConfig({
   test: {
-    // A test with JSX runs in a DOM, any other test runs in Node, and a browser test runs in Chromium.
+    // A test with JSX runs in a DOM, any other test runs in Node, a browser test runs in every browser, and a visual
+    // test in Chromium.
     projects: [
       {
         test: {
@@ -73,7 +88,14 @@ const config: ViteUserConfig = defineConfig({
         },
       },
       {
-        test: { name: "browser", include: [browserTests], browser: chromium },
+        test: {
+          name: "browser",
+          include: [browserTests],
+          browser: everyBrowser,
+        },
+      },
+      {
+        test: { name: "visual", include: [visualTests], browser: chromium },
       },
       // Only make reference runs it, to render the artifact's previews and the prototype's screens (decisions 0033 and
       // 0035).
