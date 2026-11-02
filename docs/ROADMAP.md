@@ -44,7 +44,7 @@ The first release carries no component: the tokens, the fonts and the base
 styles, which the app can adopt on its own. It proves the way from this
 repository to the app with little at stake.
 
-Done: 5.1, 5.7, 5.8, 5.9, 5.12, 5.13, 5.14, 5.15, 5.16, 5.17.
+Done: 5.1, 5.7, 5.8, 5.9, 5.12, 5.13, 5.14, 5.15, 5.16, 5.17, 5.19.
 
 Dropped: 5.18, the renders rewritten as a plain program run by Playwright.
 Rendering through a browser test runner is a common pattern that decision
@@ -77,7 +77,10 @@ changelog, and a release.
   shipped, and the class prefix. The user prefers prefixes tied to the
   repository, such as `au-`, over the artifact's undocumented `bs-`.
 - **7.3 (was 5.4) · Accessibility approach.** Hand-made or a library, and the
-  locale.
+  locale. How it is tested: item 5.19 found axe-core in eight of nine design
+  systems surveyed, in jsdom (jest-axe, vitest-axe) or in a real browser
+  (`@axe-core/playwright`), and color contrast is only checked in a real
+  browser, which the browser tests already have.
 - **7.4 (was 5.5) · Copy and language.** Default texts and how the app
   replaces them. Settle Biome's `noJsxLiterals`, which forbids text written
   in JSX.
@@ -87,7 +90,8 @@ changelog, and a release.
   the components, and what `dist/` contains. Only tools that work with
   TypeScript 7 (decision 0024). `tsconfig.json` then emits: `noEmit`,
   `rootDir` and `outDir`. Test files and the `__screenshots__`
-  folders stay out of the package. Consider the React
+  folders stay out of the package. Check the package with publint, `@arethetypeswrong/cli` and a size budget
+  (size-limit), as Primer and MUI do (item 5.19). Consider the React
   Compiler, which memoizes by itself. The exports gain the components'
   entry (decision 0036). The built files go in the release's tag, since the
   package runs no script when installed (decision 0037).
@@ -122,11 +126,16 @@ changelog, and a release.
 
 No order between them; each becomes items when its time comes.
 
-- **Storybook.** A component gallery, which would also serve `make run`.
+- **Storybook.** A component gallery, which would also serve `make run`. Five
+  of nine design systems surveyed use it, and MUI, GOV.UK and Ant Design do
+  not (item 5.19).
 - **Artifact mirror.** Keeping the Claude Design artifact in sync with this
   repository. Its previews load React 18.3.1, and the package supports only
   React 19 (decision 0019). Its icons must follow Lucide (decision 0029).
-- **Continuous integration.** Running `make test` on GitHub.
+- **Continuous integration.** Running `make test` on GitHub. With it, a hosted
+  visual review becomes possible: Chromatic, Percy, Argos and Happo each have
+  a free plan of 5,000 screenshots a month, and screenshots leave the
+  repository (item 5.19).
 - **License.** See decision 0002.
 - **Dark theme.** When the app's first screen needs it. The token compiler
   fails on a second theme until then (decision 0026).
