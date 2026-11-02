@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 7.1.
+**Now:** 7.22.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -62,6 +62,14 @@ test (decision 0034), a comparison with its reference screenshot (decisions
 0033 and 0035), the guidelines' Components section (decision 0031), the
 changelog, and a release.
 
+Done: 7.21.
+
+- **7.22 · Both ways to install.** Asked by the app: the README,
+  `docs/consumers.md`, `docs/guidelines.md` and decision 0037 name both forms.
+  `github:fgarend/aurum-ds#vX.Y.Z` needs `git` to resolve the tag; the tag's
+  tarball, `https://codeload.github.com/fgarend/aurum-ds/tar.gz/refs/tags/vX.Y.Z`,
+  needs none, and is the form the app uses. A candidate by commit,
+  `github:fgarend/aurum-ds#<commit>`, works without `git`.
 - **7.1 (was 5.2) · Component conventions.** Folder layout, naming, props and
   exports. Item 5.17 found a folder per component the common layout, with
   written rules in Primer React's ADR-013 (file structure) and GOV.UK
@@ -114,6 +122,8 @@ changelog, and a release.
   prototype draws it, is complete.
 - **7.17 · Alert.**
 - **7.18 · Table.** It can move up if the app moves People keeping its table.
+  The app asked for it right after AppShell (7.14), before the form
+  components: People is its first screen after the shell, and needs the table.
 
 ## 6. One version per screen
 
