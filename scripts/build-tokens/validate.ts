@@ -1,4 +1,4 @@
-// Checks shared by the readers of tokens.json (decision 0026), from the artifact type's grammar.
+// Validation shared by the readers of tokens.json (decision 0026), from the artifact type's grammar.
 
 const namePattern: RegExp = /^[A-Za-z0-9][A-Za-z0-9_.-]{0,63}$/u;
 const lengthPattern: RegExp = /^(?:-?(?:\d+\.?\d*|\.\d+)(?:px|rem|em|%)|0)$/u;

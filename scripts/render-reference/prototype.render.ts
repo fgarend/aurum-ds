@@ -1,25 +1,20 @@
 // Renders each screen of the prototype into reference/screenshots/prototype, for review (decision 0035). Run by
-// make reference, never by make test. The screens run on the files the export ships, React 18 included, and nothing
-// is fetched: Google Fonts' import gives way to Geist from Fontsource, the same files.
-
-import geist from "@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url";
-import geistMono from "@fontsource-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2?url";
+// make reference, never by make test. The screens run on the files the export ships, React 18 included.
 import { beforeAll, it } from "vitest";
 import { page } from "vitest/browser";
+import { capture, runScript, withLocalFonts } from "./capture.js";
 
 const assets = import.meta.glob<string>(
-  "../reference/prototype/assets/*.{css,js}",
+  "../../reference/prototype/assets/*.{css,js}",
   { query: "?raw", import: "default", eager: true },
 );
-const screens = import.meta.glob<string>("../reference/prototype/*.html", {
+const screens = import.meta.glob<string>("../../reference/prototype/*.html", {
   query: "?raw",
   import: "default",
   eager: true,
 });
 const asset = (name: string): string =>
-  assets[`../reference/prototype/assets/${name}`] ?? "";
-const googleFonts =
-  /^@import url\("https:\/\/fonts\.googleapis\.com[^"]*"\);\n/u;
+  assets[`../../reference/prototype/assets/${name}`] ?? "";
 const previewSize =
   /"\$preview":\{"width":(?<width>\d+),"height":(?<height>\d+)\}/u;
 const screenName = /prototype\/(?<name>[^/]+)\.html$/u;
@@ -27,33 +22,10 @@ const screenName = /prototype\/(?<name>[^/]+)\.html$/u;
 const defaultWidth = 1440;
 const defaultHeight = 900;
 
-const fontFaces = `
-@font-face { font-family: Geist; src: url(${geist}) format("woff2"); font-weight: 100 900; }
-@font-face { font-family: "Geist Mono"; src: url(${geistMono}) format("woff2"); font-weight: 100 900; }
-`;
-
-function runScript(code: string): void {
-  const script = document.createElement("script");
-  script.textContent = code;
-  document.body.append(script);
-}
-
-function nextFrames(): Promise<void> {
-  return new Promise((resolve) => {
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => resolve());
-    });
-  });
-}
-
 // What every screen loads in its head: the tokens, Aurum's components, and React 18.
 beforeAll(() => {
-  const aurumCss = asset("aurum.css");
-  if (!googleFonts.test(aurumCss)) {
-    throw new Error("aurum.css no longer imports Google Fonts as expected");
-  }
   const style = document.createElement("style");
-  style.textContent = `${fontFaces}${asset("tokens.css")}${aurumCss.replace(googleFonts, "")}`;
+  style.textContent = `${asset("tokens.css")}${withLocalFonts(asset("aurum.css"), "aurum.css")}`;
   document.head.append(style);
   document.documentElement.lang = "pt-BR";
   document.documentElement.dataset["theme"] = "light";
@@ -86,15 +58,9 @@ it.each(entries)("renders the $name screen", async ({ name, html }) => {
   }
   await page.viewport(Number(width), Number(height));
   runScript(asset("screen.js"));
-  await document.fonts.ready;
-  await nextFrames();
-  const { scrollWidth, scrollHeight } = document.documentElement;
-  await page.viewport(
-    Math.max(Number(width), scrollWidth),
-    Math.max(Number(height), scrollHeight),
+  await capture(
+    Number(width),
+    Number(height),
+    `../../reference/screenshots/prototype/${name}.png`,
   );
-  await nextFrames();
-  await page.screenshot({
-    path: `../reference/screenshots/prototype/${name}.png`,
-  });
 });

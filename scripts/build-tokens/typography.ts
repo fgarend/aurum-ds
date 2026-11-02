@@ -8,7 +8,7 @@ import {
   readLength,
   readName,
   records,
-} from "./checks.js";
+} from "./validate.js";
 
 interface TextStyle {
   name: string;

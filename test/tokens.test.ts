@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { expect, it } from "vitest";
-import { compileTokens } from "../src/tokens/compile.js";
+import { compileTokens } from "../scripts/build-tokens/compile.js";
 
 const tokensFolder = new URL("../src/tokens/", import.meta.url);
 

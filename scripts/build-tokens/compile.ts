@@ -1,7 +1,7 @@
 // Compiles tokens.json into tokens.css (decisions 0025 and 0026): the artifact type's own output, with every name
 // prefixed. The reference screenshots compile the artifact's own tokens without the prefix (decision 0033).
 import { aliasTarget, readTokens, type Token } from "./read.js";
-import type { TextStyle } from "./type.js";
+import type { TextStyle } from "./typography.js";
 
 const leadingDigit = /^[0-9]/u;
 const allDots = /\./gu;

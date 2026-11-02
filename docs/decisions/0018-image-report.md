@@ -1,6 +1,6 @@
 # 0018. Image report
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0039: where the script lives
 - Date: 2026-11-01
 
 ## Context

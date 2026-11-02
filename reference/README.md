@@ -39,7 +39,10 @@ says otherwise. The repository is the source; the artifact is not.
 | `SHA256SUMS` | The checksum of every file under `artifact/` and `prototype/` |
 | `screenshots/<Name>.png` | Each preview rendered by `make reference`, the visual target for review (decision 0033) |
 | `screenshots/prototype/<Screen>.png` | Each prototype screen rendered by `make reference` (decision 0035) |
-| `ARTIFACT-FORMAT.md` | How the artifact compiles tokens, loads the bundle and renders previews |
+
+How the artifact compiles tokens, loads the bundle and renders previews is in
+`docs/artifact-format.md`, kept with the rest of what this repository writes
+(decision 0039).
 
 ## How it was taken
 

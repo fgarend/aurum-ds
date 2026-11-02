@@ -27,37 +27,37 @@ format: ## Format the files and apply the safe lint fixes, in place
 
 tokens: ## After changing src/tokens/tokens.json: write src/tokens/tokens.css, which is never edited by hand
 	docker build -f infra/Dockerfile --target test -t $(IMAGE):test .
-	docker run --rm -v "$(CURDIR)":/app -v /app/node_modules $(IMAGE):test node infra/build-tokens.ts
+	docker run --rm -v "$(CURDIR)":/app -v /app/node_modules $(IMAGE):test node scripts/build-tokens/main.ts
 
 test: ## Run every check, from the lockfile and the repository: lint and format, types, tests, then browser tests
 	docker build -f infra/Dockerfile --target test -t $(IMAGE):test .
 	docker run --rm $(IMAGE):test pnpm exec biome ci --error-on-warnings
 	docker run --rm $(IMAGE):test pnpm exec tsc
-	docker run --rm $(IMAGE):test pnpm exec tsc -p infra
+	docker run --rm $(IMAGE):test pnpm exec tsc -p tsconfig.node.json
 	docker run --rm $(IMAGE):test pnpm exec tsc -p tsconfig.browser.json
-	docker run --rm $(IMAGE):test pnpm exec vitest run --config infra/vitest.config.ts --project node --project dom
+	docker run --rm $(IMAGE):test pnpm exec vitest run --project node --project dom
 	docker build -f infra/Dockerfile --target browser -t $(IMAGE):browser .
-	docker run --rm $(IMAGE):browser pnpm exec vitest run --config infra/vitest.config.ts --project browser
+	docker run --rm $(IMAGE):browser pnpm exec vitest run --project browser
 
 watch: ## Run the tests again on every change, until stopped with q or Ctrl+C. Browser tests run in make test
 	docker build -f infra/Dockerfile --target test -t $(IMAGE):test .
 	docker run --rm -it -v "$(CURDIR)":/app -v /app/node_modules $(IMAGE):test \
-		pnpm exec vitest --config infra/vitest.config.ts --project node --project dom
+		pnpm exec vitest --project node --project dom
 
 screenshots: ## Write the browser tests' screenshots again, to review and approve a visual change in the diff
 	docker build -f infra/Dockerfile --target browser -t $(IMAGE):browser .
 	docker run --rm -v "$(CURDIR)":/app -v /app/node_modules $(IMAGE):browser sh -c \
 		'find src -type d -name __screenshots__ -prune -exec rm -rf {} + && \
-		pnpm exec vitest run --config infra/vitest.config.ts --project browser --update'
+		pnpm exec vitest run --project browser --update'
 
 reference: ## Render the artifact's previews and the prototype's screens into reference/screenshots, to review
 	docker build -f infra/Dockerfile --target browser -t $(IMAGE):browser .
 	docker run --rm -v "$(CURDIR)":/app -v /app/node_modules $(IMAGE):browser \
-		pnpm exec vitest run --config infra/vitest.config.ts --project reference
+		pnpm exec vitest run --project reference
 
 pack: ## Before a release: pack the package, install it in a throwaway app and import every export
 	docker build -f infra/Dockerfile --target base -t $(IMAGE):base .
-	docker run --rm -v "$(CURDIR)":/app:ro -v $(STORE):/pnpm-store $(IMAGE):base node infra/check-package.ts
+	docker run --rm -v "$(CURDIR)":/app:ro -v $(STORE):/pnpm-store $(IMAGE):base node scripts/check-package.ts /pnpm-store
 
 clean: ## Remove the project's images, tagged or not. Keeps node_modules and the caches
 	docker image prune --all --force --filter label=org.opencontainers.image.source=$(SOURCE)
@@ -68,7 +68,7 @@ outdated: ## List the dependencies and pinned images with a newer version past t
 	docker build -f infra/Dockerfile --target base -t $(IMAGE):base .
 	status=0; \
 	docker run --rm -v "$(CURDIR)":/app $(IMAGE):base pnpm outdated || status=1; \
-	docker run --rm -v "$(CURDIR)":/app $(IMAGE):base node infra/outdated-images.ts || status=1; \
+	docker run --rm -v "$(CURDIR)":/app $(IMAGE):base node scripts/check-images.ts || status=1; \
 	exit $$status
 
 audit: ## List the known vulnerabilities in the dependencies, of any severity. Fails when there is one, or on an error

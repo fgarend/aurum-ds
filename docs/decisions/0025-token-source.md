@@ -1,6 +1,6 @@
 # 0025. Token source
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0039: where the compiler lives
 - Date: 2026-11-01
 
 ## Context

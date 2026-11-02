@@ -85,12 +85,12 @@
     },
     {
       // Vitest reads its configuration from a default export.
-      "includes": ["infra/vitest.config.ts"],
+      "includes": ["vitest.config.ts"],
       "linter": { "rules": { "style": { "noDefaultExport": "off" } } }
     },
     {
       // The repository's scripts run on Node: they read files, print and set the exit code.
-      "includes": ["infra/**"],
+      "includes": ["scripts/**", "test/**"],
       "linter": {
         "rules": {
           "correctness": { "noNodejsModules": "off", "noProcessGlobal": "off" },

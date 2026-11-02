@@ -1,5 +1,5 @@
 // Packs the package and installs it in a throwaway app, as the app would, then imports every export (decision 0038).
-// Run by make pack, in a container, with the repository mounted read-only.
+// Run by make pack, in a container, with the repository mounted read-only and the folder of pnpm's store as its argument.
 import { execFileSync } from "node:child_process";
 import {
   copyFileSync,
@@ -47,7 +47,7 @@ function pack(): string {
 }
 
 // A throwaway app with the same pnpm settings, and React 19, the package's peer, at the version used here.
-function install(manifest: Manifest, tarball: string): string {
+function install(manifest: Manifest, tarball: string, store: string): string {
   const app = mkdtempSync(join(tmpdir(), "app-"));
   const react = manifest.devDependencies["react"] ?? "";
   writeFileSync(
@@ -71,7 +71,7 @@ function install(manifest: Manifest, tarball: string): string {
       `react@${react}`,
       `react-dom@${react}`,
       "--store-dir",
-      "/pnpm-store",
+      store,
     ],
     app,
   );
@@ -100,8 +100,12 @@ function importEveryExport(manifest: Exported, app: string): string[] {
 }
 
 function main(): void {
+  const [store] = process.argv.slice(2);
+  if (store === undefined) {
+    throw new Error("Usage: node scripts/check-package.ts <pnpm store folder>");
+  }
   const manifest = readManifest();
-  const app = install(manifest, pack());
+  const app = install(manifest, pack(), store);
   console.log("What the app imports:");
   for (const line of importEveryExport(manifest, app)) {
     console.log(`  ${line}`);
@@ -109,7 +113,12 @@ function main(): void {
 }
 
 if (import.meta.main) {
-  main();
+  try {
+    main();
+  } catch (error) {
+    console.error(error instanceof Error ? error.message : error);
+    process.exitCode = 1;
+  }
 }
 
 export { importEveryExport, specifiers };

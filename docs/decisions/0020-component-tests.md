@@ -1,6 +1,6 @@
 # 0020. Component tests
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0039: where Vitest's settings live
 - Date: 2026-11-01
 
 ## Context

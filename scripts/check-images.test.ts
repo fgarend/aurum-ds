@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { checkImages, type Fetch } from "./outdated-images.js";
+import { checkImages, type Fetch } from "./check-images.js";
 
 // Fictitious versions, dates and digests: no real release is described here.
 const digestLength = 64;

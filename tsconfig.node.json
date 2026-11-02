@@ -1,0 +1,15 @@
+// TypeScript settings for what runs on Node: the scripts, the repository's tests and the test settings (decision 0039).
+{
+  "extends": "./tsconfig.json",
+  "include": ["scripts", "test", "vitest.config.ts"],
+  // The setup of the component tests is checked with the library (tsconfig.json): its DOM matchers clash with the
+  // browser mode's, which the renders bring here.
+  "exclude": ["test/dom-setup.ts", "test/dom-setup.test.tsx"],
+  "compilerOptions": {
+    // Node's APIs. The DOM is there only because Vitest's configuration types, with the browser provider, name DOM
+    // types; nothing here runs in a browser but the renders, which Vitest runs there.
+    "lib": ["es2023", "dom"],
+    // Vite's client types declare the files the renders import raw.
+    "types": ["node", "vite/client"]
+  }
+}

@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 5.13.
+**Now:** 5.14.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -43,16 +43,27 @@ The first release carries no component: the tokens, the fonts and the base
 styles, which the app can adopt on its own. It proves the way from this
 repository to the app with little at stake.
 
-Done: 5.1, 5.7, 5.8, 5.9, 5.12.
+Done: 5.1, 5.7, 5.8, 5.9, 5.12, 5.13.
 
-- **5.13 · Organizing `infra/`.** How the folder's files are arranged: the
-  `Dockerfile`, the scripts, their tests and the configurations.
 - **5.14 · Release process.** How design system libraries release: the
   changelog, tags, versions and the tools they use, to settle ours before the
   first release.
+- **5.15 · Deterministic renders.** `make reference` draws some screenshots
+  differently from run to run: a spinner, transitions, a caret blinking in a
+  focused field. Turn motion off before each capture, as `toMatchScreenshot`
+  does, and prove two runs give the same files. Consider rewriting the two
+  `.render.ts` suites as a plain program run by Playwright, since they only
+  borrow Vitest to open the browser and check nothing (decision 0033 did not
+  weigh it). Their names follow: `previews` names the content, `prototype`
+  the origin.
+- **5.16 · `make prototype`.** Serves `reference/prototype/` in a container,
+  to browse the prototype's screens, so `.claude/launch.json` can call it
+  with no path of one machine and be kept in the repository.
 - **5.10 · Release v0.1.0.** The changelog and the first tag, after
-  `make pack` passes (decision 0038), and the first push. The app then
-  installs it from GitHub and adopts it, in its own repository.
+  `make pack` passes (decision 0038), and the first push. The README gains
+  the status, how to install and import, a short map of the four parts of the
+  root (decision 0039) and `make help` as the way into the commands. The app
+  then installs it from GitHub and adopts it, in its own repository.
 
 ## 7. One component per release
 
@@ -80,8 +91,8 @@ changelog, and a release.
 - **7.19 · Build of components.** The bundler for the TypeScript and JSX of
   the components, and what `dist/` contains. Only tools that work with
   TypeScript 7 (decision 0024). `tsconfig.json` then emits: `noEmit`,
-  `rootDir` and `outDir`. Test files, `src/test-setup.ts` and the
-  `__screenshots__` folders stay out of the package. Consider the React
+  `rootDir` and `outDir`. Test files and the `__screenshots__`
+  folders stay out of the package. Consider the React
   Compiler, which memoizes by itself. Whether the token compiler in
   `src/tokens/` ships, or only `tokens.css`. The exports gain the components'
   entry (decision 0036). The built files go in the release's tag, since the

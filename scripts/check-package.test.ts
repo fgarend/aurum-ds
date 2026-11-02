@@ -27,14 +27,16 @@ function appWith(files: Record<string, string>): string {
   return app;
 }
 
-describe("check-package", () => {
+describe("specifiers", () => {
   it("lists what the app imports, one name per export", () => {
     expect(specifiers(manifest)).toEqual([
       "@fictional/kit/colors.css",
       "@fictional/kit/package.json",
     ]);
   });
+});
 
+describe("importEveryExport", () => {
   it("resolves every export in the app", () => {
     const app = appWith({ "src/colors.css": ":root {}" });
 

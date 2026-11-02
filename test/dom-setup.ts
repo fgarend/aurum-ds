@@ -1,4 +1,4 @@
-// Runs before every component test (decision 0020). Not part of the package.
+// Runs before every component test (decisions 0020 and 0039).
 import "@testing-library/jest-dom/vitest";
 import { cleanup } from "@testing-library/react";
 import { afterEach } from "vitest";

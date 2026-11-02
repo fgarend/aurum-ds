@@ -262,17 +262,21 @@ async function checkImages(
   return lines.filter((line) => line !== undefined);
 }
 
+async function main(): Promise<void> {
+  const dockerfile = await readFile(
+    new URL("../infra/Dockerfile", import.meta.url),
+    "utf8",
+  );
+  const lines = await checkImages(dockerfile, fetch, new Date());
+  for (const line of lines) {
+    console.log(line);
+  }
+  process.exitCode = lines.length > 0 ? 1 : 0;
+}
+
 if (import.meta.main) {
   try {
-    const dockerfile = await readFile(
-      new URL("Dockerfile", import.meta.url),
-      "utf8",
-    );
-    const lines = await checkImages(dockerfile, fetch, new Date());
-    for (const line of lines) {
-      console.log(line);
-    }
-    process.exitCode = lines.length > 0 ? 1 : 0;
+    await main();
   } catch (error) {
     console.error(error instanceof Error ? error.message : error);
     process.exitCode = 1;

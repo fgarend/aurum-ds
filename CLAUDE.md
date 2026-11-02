@@ -11,6 +11,7 @@ built in small steps, each decided with the user before it is made.
 2. `docs/decisions/`: the choices already made, and why.
 3. `docs/updating.md`: the update routine, run at the start of every roadmap
    item.
+4. Decision 0039: where each file goes.
 
 ## Rules
 

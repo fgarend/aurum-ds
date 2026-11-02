@@ -1,4 +1,5 @@
-// Test settings (decisions 0020 and 0032). It lives here because Vite's types bring Node's along (decision 0018).
+// Test settings (decisions 0020, 0032 and 0039). Its types are checked with Node's, in tsconfig.node.json, since Vite's
+// types bring them along.
 import { playwright } from "@vitest/browser-playwright";
 import { defineConfig, type ViteUserConfig } from "vitest/config";
 
@@ -34,7 +35,7 @@ const config: ViteUserConfig = defineConfig({
           include: ["**/*.test.tsx"],
           exclude: notBrowserTests,
           environment: "jsdom",
-          setupFiles: ["src/test-setup.ts"],
+          setupFiles: ["test/dom-setup.ts"],
         },
       },
       {
@@ -45,7 +46,7 @@ const config: ViteUserConfig = defineConfig({
       {
         test: {
           name: "reference",
-          include: ["infra/reference.render.ts", "infra/prototype.render.ts"],
+          include: ["scripts/render-reference/*.render.ts"],
           // A page large enough that no preview is scaled down to fit.
           browser: {
             ...chromium,
