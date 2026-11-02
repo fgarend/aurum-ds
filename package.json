@@ -16,6 +16,11 @@
     "./base.css": "./src/styles/base.css",
     "./package.json": "./package.json"
   },
+  "files": [
+    "src/tokens/tokens.css",
+    "src/fonts/fonts.css",
+    "src/styles/base.css"
+  ],
   "peerDependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

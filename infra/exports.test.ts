@@ -6,22 +6,49 @@ const root = new URL("../", import.meta.url);
 // The package resolves its own name through its exports, as the app would.
 const { resolve } = createRequire(new URL("package.json", root));
 const files = ["tokens.css", "fonts.css", "base.css"];
+const leadingDotSlash = /^\.\//u;
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+async function readManifest(): Promise<Record<string, unknown>> {
+  const manifest: unknown = JSON.parse(
+    await readFile(new URL("package.json", root), "utf8"),
+  );
+  return isRecord(manifest) ? manifest : {};
+}
+
+async function readExports(): Promise<Record<string, unknown>> {
+  const { exports } = await readManifest();
+  return isRecord(exports) ? exports : {};
+}
 
 // What the package ships is public (decisions 0004 and 0036): adding or removing a name changes the next version.
 describe("the package's exports", () => {
   it("are exactly the public files", async () => {
-    const manifest: unknown = JSON.parse(
-      await readFile(new URL("package.json", root), "utf8"),
-    );
-    const exports =
-      typeof manifest === "object" && manifest !== null && "exports" in manifest
-        ? manifest.exports
-        : undefined;
-
-    expect(Object.keys(exports ?? {})).toEqual([
+    expect(Object.keys(await readExports())).toEqual([
       ...files.map((file) => `./${file}`),
       "./package.json",
     ]);
+  });
+
+  // The app receives exactly what it can import (decision 0037).
+  it("ship exactly the files they point to", async () => {
+    const targets = Object.entries(await readExports())
+      .filter(([name]) => name !== "./package.json")
+      .map(([, path]) => String(path).replace(leadingDotSlash, ""));
+
+    expect((await readManifest())["files"]).toEqual(targets);
+  });
+
+  // Installing the package runs no code in the app (decision 0037).
+  it("run no script when installed", async () => {
+    const { scripts } = await readManifest();
+
+    for (const name of ["prepare", "preinstall", "install", "postinstall"]) {
+      expect(isRecord(scripts) ? scripts : {}).not.toHaveProperty([name]);
+    }
   });
 
   it.each(files)("resolve %s by the package's name", async (file) => {
