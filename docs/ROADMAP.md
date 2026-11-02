@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 5.7.
+**Now:** 5.8.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -43,15 +43,8 @@ The first release carries no component: the tokens, the fonts and the base
 styles, which the app can adopt on its own. It proves the way from this
 repository to the app with little at stake.
 
-Done: 5.1, 5.12.
+Done: 5.1, 5.7, 5.12.
 
-- **5.7 · Build.** The bundler and what `dist/` contains: at first
-  `tokens.css`, `fonts.css` and `base.css`. Only tools that work with
-  TypeScript 7 (decision 0024). `tsconfig.json` then emits: `noEmit`,
-  `rootDir` and `outDir`. Test files, `src/test-setup.ts` and the
-  `__screenshots__` folders stay out of the package. Consider the React
-  Compiler, which memoizes by itself. Whether the token compiler in
-  `src/tokens/` ships, or only `tokens.css`.
 - **5.8 · Delivery.** How the app gets the built code from the git dependency.
   Update the guidelines' section on using Aurum (decision 0031).
 - **5.9 · Package check.** `make pack`: what the app will receive.
@@ -81,6 +74,14 @@ changelog, and a release.
   in JSX.
 - **7.5 (was 5.11) · Coverage.** The tool, and whether `make test` requires a
   minimum.
+- **7.19 · Build of components.** The bundler for the TypeScript and JSX of
+  the components, and what `dist/` contains. Only tools that work with
+  TypeScript 7 (decision 0024). `tsconfig.json` then emits: `noEmit`,
+  `rootDir` and `outDir`. Test files, `src/test-setup.ts` and the
+  `__screenshots__` folders stay out of the package. Consider the React
+  Compiler, which memoizes by itself. Whether the token compiler in
+  `src/tokens/` ships, or only `tokens.css`. The exports gain the components'
+  entry (decision 0036).
 - **7.6 (was 5.6) · Icon.** How the package depends on Lucide (peer or
   dependency; the app is on 1.61), the stroke width (Aurum's 1.5 or Lucide's
   2), names by concept as the app's `Icon` has them, and the three artifact

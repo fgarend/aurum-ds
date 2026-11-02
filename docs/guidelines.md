@@ -111,6 +111,6 @@ Typical dashboard: `Sidebar` · page title · a `Section` (title, period switch,
 
 ## Using Aurum in a project
 
-- Load the tokens (`src/tokens/tokens.css`, or map `tokens.json` into your stack), the fonts (`src/fonts/fonts.css`) and the base styles (`src/styles/base.css`), and put the `au-root` class where Aurum begins (decisions 0026, 0027 and 0030). How the package is delivered is still to be decided.
+- Import the fonts (`@fgarend/aurum-ds/fonts.css`), the tokens (`@fgarend/aurum-ds/tokens.css`, or map `tokens.json` into your stack) and the base styles (`@fgarend/aurum-ds/base.css`), in that order, and put the `au-root` class where Aurum begins (decisions 0026, 0027, 0030 and 0036). How the package is delivered is still to be decided.
 - Without React, keep the tokens and type scale and reproduce components from their READMEs — the values all live in tokens.
 - Theme it for another product by changing `primary*`, `on-primary`, `primary-soft` and the four accents; keep the semantic finance colours and the contrast notes intact.

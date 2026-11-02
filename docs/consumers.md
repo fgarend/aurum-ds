@@ -22,8 +22,9 @@ Read from the app's repository on 2026-11-01.
 
 ## What the app must do
 
-- **Load** `tokens.css`, `fonts.css` and `base.css` (decisions 0026, 0027 and
-  0030), as delivery will describe.
+- **Import** `@fgarend/aurum-ds/fonts.css`, `@fgarend/aurum-ds/tokens.css`
+  and `@fgarend/aurum-ds/base.css`, in that order (decisions 0026, 0027, 0030
+  and 0036), once delivery says how the package is installed.
 - **Put `.au-root`** on each part of the page that uses Aurum, and at the top
   once all of it does (decision 0030).
 - **Carry the fonts' license notice** in its own build, as it ships Geist and

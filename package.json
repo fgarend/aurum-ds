@@ -10,6 +10,12 @@
   },
   "type": "module",
   "packageManager": "pnpm@12.15.0",
+  "exports": {
+    "./tokens.css": "./src/tokens/tokens.css",
+    "./fonts.css": "./src/fonts/fonts.css",
+    "./base.css": "./src/styles/base.css",
+    "./package.json": "./package.json"
+  },
   "peerDependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
