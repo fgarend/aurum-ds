@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 5.10.
+**Now:** 7.1.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -44,19 +44,13 @@ The first release carries no component: the tokens, the fonts and the base
 styles, which the app can adopt on its own. It proves the way from this
 repository to the app with little at stake.
 
-Done: 5.1, 5.7, 5.8, 5.9, 5.12, 5.13, 5.14, 5.15, 5.16, 5.17, 5.19, 5.20.
+Done: 5.1, 5.7, 5.8, 5.9, 5.10, 5.12, 5.13, 5.14, 5.15, 5.16, 5.17, 5.19, 5.20.
 
 Dropped: 5.18, the renders rewritten as a plain program run by Playwright.
 Rendering through a browser test runner is a common pattern that decision
 0039 already names (`.render.ts`), the renders are deterministic (decision
 0041), and the rewrite would have traded the previews' React 19 for the
 snapshot's React 18 with nothing gained.
-
-- **5.10 · Release v0.1.0.** The changelog and the first tag, by the steps
-  in `docs/releasing.md` as item 5.20 leaves them. The README gains
-  the status, how to install and import, a short map of the four parts of the
-  root (decision 0039) and `make help` as the way into the commands. The app
-  then installs it from GitHub and adopts it, in its own repository.
 
 ## 7. One component per release
 
