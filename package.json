@@ -17,6 +17,7 @@
     "test-repository": "vitest run --project repository",
     "test-browser": "vitest run --project browser --project visual",
     "pack": "node scripts/check-package.ts /pnpm-store",
+    "check-release": "node scripts/check-release.ts",
     "format": "biome check --write",
     "tokens": "node scripts/build-tokens/main.ts",
     "watch": "vitest --project node --project dom",

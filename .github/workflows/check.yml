@@ -1,4 +1,5 @@
-# Runs the checks of make check on every push to main, every pull request, and by hand (decision 0046). Each check is a
+# Runs the checks of make check on every push to main, every pull request, by hand, and for a release on the commit it
+# is given (decisions 0046 and 0048). Each check is a
 # step of its own, and every step runs even when one before it failed, as make -k does. The steps must stay those of
 # make check, in its order: test/workflows.test.ts compares them.
 name: check
@@ -8,6 +9,12 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
+  workflow_call:
+    inputs:
+      commit:
+        description: The commit to check, by default the one that started the run
+        type: string
+        default: ""
 
 permissions:
   contents: read
@@ -23,6 +30,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          ref: ${{ inputs.commit }}
           persist-credentials: false
       - id: images
         run: make images

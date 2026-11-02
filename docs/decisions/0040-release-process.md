@@ -1,6 +1,6 @@
 # 0040. Release process
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0048: the tag made by hand
 - Date: 2026-11-02
 
 ## Context

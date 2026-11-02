@@ -176,6 +176,19 @@ describe("checkActions", () => {
     ).toEqual([]);
   });
 
+  it("leaves out a workflow or action of the repository itself", async () => {
+    const local = "jobs:\n  check:\n    uses: ./.github/workflows/check.yml\n";
+
+    expect(
+      await checkActions(
+        [workflow, local],
+        releaseAge,
+        actionFetch(currentAction),
+        now,
+      ),
+    ).toEqual([]);
+  });
+
   it("fails on an action not pinned by commit and release", async () => {
     const loose = "    steps:\n      - uses: fictional/fetch@v3\n";
 

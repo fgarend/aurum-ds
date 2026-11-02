@@ -1,0 +1,52 @@
+# Releases a version, by hand only (decision 0048): it takes the version and the commit the app tested, runs every check
+# again on that commit, checks the version and the changelog, checks the commit is on main, and tags it. The only
+# workflow that writes, and only in its last job. The inputs reach the shell through the environment, never inline.
+name: release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: The version to release, such as 0.1.0
+        required: true
+        type: string
+      commit:
+        description: The commit of main the app tested, in full
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  check:
+    uses: ./.github/workflows/check.yml
+    with:
+      commit: ${{ inputs.commit }}
+
+  tag:
+    needs: check
+    runs-on: ubuntu-24.04-arm
+    permissions:
+      contents: write
+    env:
+      VERSION: ${{ inputs.version }}
+      COMMIT: ${{ inputs.commit }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.commit }}
+          fetch-depth: 0
+      - run: make check-release VERSION="$VERSION"
+      - name: The commit is on main
+        run: git merge-base --is-ancestor "$COMMIT" origin/main
+      - name: Tag the commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "v$VERSION" -m "v$VERSION" "$COMMIT"
+          git push origin "v$VERSION"

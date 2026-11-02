@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 5.20.
+**Now:** 5.10.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -44,7 +44,7 @@ The first release carries no component: the tokens, the fonts and the base
 styles, which the app can adopt on its own. It proves the way from this
 repository to the app with little at stake.
 
-Done: 5.1, 5.7, 5.8, 5.9, 5.12, 5.13, 5.14, 5.15, 5.16, 5.17, 5.19.
+Done: 5.1, 5.7, 5.8, 5.9, 5.12, 5.13, 5.14, 5.15, 5.16, 5.17, 5.19, 5.20.
 
 Dropped: 5.18, the renders rewritten as a plain program run by Playwright.
 Rendering through a browser test runner is a common pattern that decision
@@ -52,22 +52,6 @@ Rendering through a browser test runner is a common pattern that decision
 0041), and the rewrite would have traded the previews' React 19 for the
 snapshot's React 18 with nothing gained.
 
-- **5.20 (was 7.21) · Continuous integration.** Running the checks on GitHub
-  on every push, as all nine design systems surveyed do (item 5.19), before
-  the first release, so it ships through clear, checked steps. The first push
-  comes here. Discussed in detail, as one whole, with how the checks run
-  today: the `Makefile`, the scripts, the Dockerfile and whether Docker
-  Compose has a place. Check whether the runner draws screenshots as the Mac's
-  containers do, while there is a single visual test. It opens the way to the
-  update bot, the image scan and a hosted visual review (Chromatic, Percy,
-  Argos and Happo each have a free plan of 5,000 screenshots a month, and
-  screenshots leave the repository). The release process (decision 0040,
-  `docs/releasing.md`) is then rethought around the CI. Done so far: the
-  environment, one image in Compose with its settings (decision 0043), and
-  the commands, split by responsibility (decision 0044), and the browser
-  tests in Chromium, Firefox and WebKit (decision 0045), and the workflows
-  that run the checks on GitHub (decision 0046), on an environment built from
-  Playwright's image (decision 0047).
 - **5.10 · Release v0.1.0.** The changelog and the first tag, by the steps
   in `docs/releasing.md` as item 5.20 leaves them. The README gains
   the status, how to install and import, a short map of the four parts of the

@@ -9,7 +9,7 @@ RUN := mkdir -p node_modules .vitest-attachments && $(COMPOSE) run --rm
 # The project's name, as infra/compose.yaml gives it. Compose marks every image it builds with it (decision 0043).
 PROJECT := $(shell sed -n 's/^name: //p' infra/compose.yaml)
 
-.PHONY: help check lint types test test-repository test-browser pack install format tokens watch screenshots \
+.PHONY: help check lint types test test-repository test-browser pack check-release install format tokens watch screenshots \
 	reference prototype images clean outdated outdated-deps outdated-pins audit
 .DEFAULT_GOAL := help
 
@@ -45,6 +45,12 @@ test-browser: ## The tests in a real browser
 pack: ## Pack the package, install it in a throwaway app and import every export
 	$(COMPOSE) build tools
 	$(RUN) tools pnpm run pack
+
+##@ Releases
+
+check-release: ## Check package.json's version can be released: its dated changelog section. VERSION=X.Y.Z also compares it
+	$(COMPOSE) build tools
+	$(RUN) tools pnpm run check-release $(VERSION)
 
 ##@ Development
 

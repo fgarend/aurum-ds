@@ -30,6 +30,10 @@ function readActions(workflows: string[]): Action[] {
   for (const workflow of workflows) {
     for (const match of workflow.matchAll(usesLine)) {
       const { value = "", comment = "" } = match.groups ?? {};
+      // A workflow or action of the repository itself is its own code, not a pin.
+      if (value.startsWith("./")) {
+        continue;
+      }
       const pin = value.match(pinnedAction)?.groups;
       const version = comment.match(releaseComment)?.groups?.["version"];
       if (pin === undefined || version === undefined) {
