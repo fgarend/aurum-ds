@@ -5,11 +5,53 @@ React component library in TypeScript.
 
 It is the design system of a personal finance app, and starts as
 a conversion of the Aurum design system made in Claude Design. From then on,
-this repository is the source and the design is kept in sync with it.
+this repository is the source.
 
 ## Status
 
-Under construction. Nothing is usable yet.
+Version 0.1.0 is the base: tokens, fonts and base styles, with no component
+yet. Components arrive one per release, in the order of `docs/ROADMAP.md`.
+What changes in each version is in `CHANGELOG.md`.
+
+## Install
+
+From GitHub, at a release's tag:
+
+```json
+"@fgarend/aurum-ds": "github:fgarend/aurum-ds#v0.1.0"
+```
+
+React 19 is a peer dependency.
+
+## Use
+
+Import the fonts, the tokens and the base styles, in that order, and put the
+`au-root` class where Aurum begins:
+
+```css
+@import "@fgarend/aurum-ds/fonts.css";
+@import "@fgarend/aurum-ds/tokens.css";
+@import "@fgarend/aurum-ds/base.css";
+```
+
+How to use the tokens and text styles is in `docs/guidelines.md`.
+
+## The repository
+
+Each folder at the root belongs to one of four parts (decision 0039):
+
+- **The product, `src/`:** what the app installs and imports.
+- **The tooling:** `infra/`, the containers (the image, Compose and their
+  settings); `scripts/`, the programs `make` runs; `test/`, the checks of the
+  repository as a whole; `.github/`, continuous integration.
+- **The knowledge:** `docs/`, with the roadmap, the guides and the decisions
+  in `docs/decisions/`.
+- **The origin, `reference/`:** the design this started from, frozen.
+
+Everything runs in containers, through `make`: Docker and `make` are the only
+tools to install. `make help` lists the commands, and `make check` runs every
+check, as continuous integration does on each push. Releases follow
+`docs/releasing.md`.
 
 ## License
 
