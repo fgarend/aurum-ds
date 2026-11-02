@@ -1,45 +1,51 @@
 /* What every Aurum component relies on (decision 0030). Page-wide styles apply only inside .au-root, so screens
    that do not use Aurum yet are left alone. */
 
-.au-root {
-  font-family: var(--au-font-sans);
-  background: var(--au-canvas);
-  color: var(--au-ink);
-  -webkit-font-smoothing: antialiased;
-}
+/* Aurum's layers, in order (decision 0053): the base, then the components. The app's own CSS, outside any layer,
+   wins over both. Every component's CSS repeats this line, so the order holds whatever loads first. */
+@layer au.base, au.components;
 
-/* Every element with an Aurum class, wherever it is. */
-[class^="au-"],
-[class*=" au-"],
-[class^="au-"]::before,
-[class*=" au-"]::before,
-[class^="au-"]::after,
-[class*=" au-"]::after {
-  box-sizing: border-box;
-}
+@layer au.base {
+  .au-root {
+    font-family: var(--au-font-sans);
+    background: var(--au-canvas);
+    color: var(--au-ink);
+    -webkit-font-smoothing: antialiased;
+  }
 
-/* One focus ring everywhere. A component with a focus of its own overrides it. */
-[class^="au-"]:focus-visible,
-[class*=" au-"]:focus-visible {
-  outline: 2px solid var(--au-focus-ring);
-  outline-offset: 2px;
-}
+  /* Every element with an Aurum class, wherever it is. */
+  [class^="au-"],
+  [class*=" au-"],
+  [class^="au-"]::before,
+  [class*=" au-"]::before,
+  [class^="au-"]::after,
+  [class*=" au-"]::after {
+    box-sizing: border-box;
+  }
 
-/* Read by screen readers, hidden from the screen. */
-.au-sr {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-  border: 0;
-}
+  /* One focus ring everywhere. A component with a focus of its own overrides it. */
+  [class^="au-"]:focus-visible,
+  [class*=" au-"]:focus-visible {
+    outline: 2px solid var(--au-focus-ring);
+    outline-offset: 2px;
+  }
 
-/* Figures of one width, so amounts line up. */
-.au-num {
-  font-variant-numeric: tabular-nums;
-  font-feature-settings: "tnum" 1;
+  /* Read by screen readers, hidden from the screen. */
+  .au-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Figures of one width, so amounts line up. */
+  .au-num {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
 }

@@ -43,3 +43,21 @@ it("styles the root, rings the focus from the keyboard and hides screen reader t
     ring.outlineOffset,
   ]).toEqual(["solid", "2px", focusRing, "2px"]);
 });
+
+// The base styles sit in the layer au.base (decision 0053): the app's own CSS, outside any layer, wins over them
+// however plain its selector.
+it("gives way to the app's own CSS", async () => {
+  const appStyle = document.createElement("style");
+  appStyle.textContent = "div { color: rgb(1, 2, 3); }";
+  document.head.append(appStyle);
+  const screen = await render(
+    <div className="au-root" data-testid="root">
+      Text
+    </div>,
+  );
+
+  expect(getComputedStyle(screen.getByTestId("root").element()).color).toBe(
+    "rgb(1, 2, 3)",
+  );
+  appStyle.remove();
+});

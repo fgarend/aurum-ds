@@ -6,6 +6,11 @@ follow decision 0004.
 
 ## [Unreleased]
 
+### Changed
+
+- `@fgarend/aurum-ds/base.css` sits in the CSS layer `au.base`, so the app's
+  own CSS, outside any layer, wins over it however plain its selector.
+
 ## [0.1.1] - 2026-11-02
 
 ### Added
