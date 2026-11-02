@@ -6,6 +6,13 @@ follow decision 0004.
 
 ## [Unreleased]
 
+### Added
+
+- `Icon`: a Lucide drawing in Aurum's 1.5 stroke, at a size in pixels (20 by
+  default), in the colour of the text around it, and hidden from screen
+  readers unless it has a `label`. `lucide-react` `^1.61.0` is a peer
+  dependency.
+
 ### Changed
 
 - `@fgarend/aurum-ds/base.css` sits in the CSS layer `au.base`, so the app's

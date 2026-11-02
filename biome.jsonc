@@ -65,6 +65,14 @@
   },
   "overrides": [
     {
+      // A component's file exports its props type beside it (decision 0054). The rule guards Fast Refresh, which a
+      // type does not affect, since TypeScript erases it.
+      "includes": ["src/components/**"],
+      "linter": {
+        "rules": { "style": { "useComponentExportOnlyModules": "off" } }
+      }
+    },
+    {
       // The package's public entry only re-exports. Revisited with the component conventions.
       "includes": ["src/index.ts"],
       "linter": { "rules": { "performance": { "noBarrelFile": "off" } } }

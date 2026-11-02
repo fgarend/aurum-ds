@@ -89,7 +89,7 @@ Tokens are named here as `tokens.json` names them. In CSS, each token is a custo
 
 ## Iconography
 
-- Line icons from Lucide (decision 0029), drawn by the `Icon` component with `currentColor`: 24px grid, round caps and joins, no fills. The stroke width is set with the `Icon` component.
+- Line icons from Lucide (decision 0029), drawn by the `Icon` component with `currentColor`: 24px grid, round caps and joins, no fills. Drawn with a 1.5 stroke, at 16, 18, 20 (the default) or 22 px; the app passes the drawing: `<Icon icon={Wallet} />` (decision 0056).
 - Sizes: 16 in small controls and badges, 18–20 in inputs, rows and buttons, 22 in BottomNav.
 - Category icons sit in a 40px `radius-md` tile in their category colour (`cat-n` on `cat-n-soft`), or `surface-sunken` when uncategorised.
 - No emoji, no filled or duotone icons, no mixing in another icon family. Missing an icon? Take it from Lucide.
