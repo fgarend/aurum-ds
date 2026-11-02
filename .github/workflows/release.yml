@@ -1,6 +1,7 @@
-# Releases a version, by hand only (decision 0048): it takes the version and the commit the app tested, runs every check
-# again on that commit, checks the version and the changelog, checks the commit is on main, and tags it. The only
-# workflow that writes, and only in its last job. The inputs reach the shell through the environment, never inline.
+# Releases a version, by hand only (decisions 0048 and 0049): it takes the version and the commit the app tested, runs
+# every check again on that commit, checks the version and the changelog, checks the commit is on main, tags it, and
+# publishes its release page with the changelog's notes. The only workflow that writes, and only in its last job. The
+# inputs reach the shell through the environment, never inline.
 name: release
 
 on:
@@ -42,6 +43,8 @@ jobs:
           ref: ${{ inputs.commit }}
           fetch-depth: 0
       - run: make check-release VERSION="$VERSION"
+      - name: Take the notes from the changelog
+        run: make release-notes VERSION="$VERSION" > "$RUNNER_TEMP/notes.md"
       - name: The commit is on main
         run: git merge-base --is-ancestor "$COMMIT" origin/main
       - name: Tag the commit
@@ -50,3 +53,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git tag -a "v$VERSION" -m "v$VERSION" "$COMMIT"
           git push origin "v$VERSION"
+      - name: Publish the release page
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "v$VERSION" --verify-tag --title "v$VERSION" --notes-file "$RUNNER_TEMP/notes.md"
