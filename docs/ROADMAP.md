@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 7.23.
+**Now:** 7.22.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -62,17 +62,8 @@ test (decision 0034), a comparison with its reference screenshot (decisions
 0033 and 0035), the guidelines' Components section (decision 0031), the
 changelog, and a release.
 
-Done: 7.21.
+Done: 7.21, 7.23.
 
-- **7.23 · The package on each release page.** The app's web image has no
-  `git`, and the `github:` form needs it to resolve a tag (`git ls-remote`).
-  The tag's tarball from `codeload.github.com` needs no `git`, but it is the
-  whole repository, 9.7 MB, since pnpm applies `files` only when it packs a
-  git dependency itself (tried with pnpm 12.15.0). The `release` workflow
-  attaches the packed package to the release page, so the app installs it by
-  URL, without `git`, receiving only what `files` lists. Release immutability
-  is on, so `v0.1.0` cannot get its package: the app installs it by its commit
-  until the item ends with the release of `v0.1.1`.
 - **7.22 · Both ways to install.** Asked by the app: the README,
   `docs/consumers.md` and `docs/guidelines.md` name both forms.
   `github:fgarend/aurum-ds#vX.Y.Z` needs `git` to resolve the tag; the
