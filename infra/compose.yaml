@@ -1,4 +1,4 @@
-# Where and how each command runs (decision 0043): the image, what is mounted, and whether the code can be written.
+# Where and how each command runs (decisions 0043 and 0047): the image, what is mounted, and whether the code can be written.
 # The Makefile chooses the service; what runs is the command it passes. Values come from infra/settings.env.
 name: aurum-ds
 
@@ -6,7 +6,7 @@ x-build: &build
   context: ..
   dockerfile: infra/Dockerfile
   args:
-    NODE_IMAGE: ${NODE_IMAGE:?set in infra/settings.env}
+    PLAYWRIGHT_IMAGE: ${PLAYWRIGHT_IMAGE:?set in infra/settings.env}
     PNPM_IMAGE: ${PNPM_IMAGE:?set in infra/settings.env}
 
 # The code, read-only, over the dependencies of the image: the folder node_modules of the machine is hidden, so the
@@ -15,12 +15,9 @@ x-read: &read
   - ..:/app:ro
   - /app/node_modules
 
-x-write: &write
-  - ..:/app
-  - /app/node_modules
-
 services:
-  # The tools, checking only. The pnpm store is a cache for make pack.
+  # The tools and the browsers, checking only. The pnpm store is a cache for make pack, and a failing visual test
+  # writes its images to .vitest-attachments, the one folder it may write.
   tools:
     image: aurum-ds:deps
     build: { <<: *build, target: deps }
@@ -28,28 +25,15 @@ services:
       - ..:/app:ro
       - /app/node_modules
       - pnpm-store:/pnpm-store
+      - ../.vitest-attachments:/app/.vitest-attachments
 
-  # The tools, writing the code: make format and make tokens.
+  # The same, writing the code: make format, make tokens, make screenshots and make reference.
   tools-write:
     image: aurum-ds:deps
     build: { <<: *build, target: deps }
-    volumes: *write
-
-  # With the browser, checking only. A failing visual test writes its images to .vitest-attachments, the one folder it
-  # may write.
-  browser:
-    image: aurum-ds:browser
-    build: { <<: *build, target: browser }
     volumes:
-      - ..:/app:ro
+      - ..:/app
       - /app/node_modules
-      - ../.vitest-attachments:/app/.vitest-attachments
-
-  # With the browser, writing the screenshots.
-  browser-write:
-    image: aurum-ds:browser
-    build: { <<: *build, target: browser }
-    volumes: *write
 
   # Installs the dependencies into the machine's node_modules and the lockfile.
   install:

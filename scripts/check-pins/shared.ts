@@ -83,7 +83,6 @@ export {
   isRecord,
   leadingV,
   newerPastAge,
-  parts,
   readReleaseAge,
   stableVersion,
   unexpected,

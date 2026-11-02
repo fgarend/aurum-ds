@@ -1,6 +1,6 @@
 # 0045. Browsers
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0047: the browsers installed into the image
 - Date: 2026-11-02
 
 ## Context

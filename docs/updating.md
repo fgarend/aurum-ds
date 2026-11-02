@@ -41,14 +41,15 @@ age, with its advisory.
 - **A pinned action:** copy the line `make outdated` prints over the action's
   `uses:` line, in every workflow that uses it (decision 0046).
 - **A pinned image:** copy the line `make outdated` prints into
-  `infra/settings.env` (decision 0043). For pnpm, change `packageManager` in
-  `package.json` to the same version and run `make install`. For Node, the
-  browser's system packages follow the image's Debian snapshot: run
-  `make reference` and `make screenshots`, and review any screenshot that
-  changes (decisions 0033 and 0034). Then `make check`.
-- **Playwright:** the `playwright` package installs the browser (decision
-  0043), so after updating it run `make reference` and `make screenshots`
-  too, and review what changes.
+  `infra/settings.env` (decision 0043), and move its package with it:
+  - **pnpm:** `packageManager` in `package.json` to the same version, then
+    `make install`.
+  - **Playwright:** the `playwright` package to the same version (decision
+    0047), then `make reference` and `make screenshots`, and review any
+    screenshot that changes (decisions 0033 and 0034). The image brings Node
+    too, so its line is checked by hand, below.
+
+  A check fails while an image and its package differ. Then `make check`.
 
 ## Checks made by hand
 

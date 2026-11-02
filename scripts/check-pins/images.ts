@@ -6,9 +6,7 @@ import {
   getJson,
   httpNotFound,
   isRecord,
-  leadingV,
   newerPastAge,
-  parts,
   stableVersion,
   unexpected,
 } from "./shared.ts";
@@ -22,12 +20,12 @@ interface Pin {
   digest: string;
 }
 
-// Every variable that names an image, such as NODE_IMAGE=node:26.12.1-trixie-slim@sha256:….
+// Every variable that names an image, such as PNPM_IMAGE=ghcr.io/pnpm/pnpm:12.15.0@sha256:….
 const imageVariable = /^(?<variable>[A-Z][A-Z0-9_]*_IMAGE)=(?<value>.*)$/gmu;
 // An image pinned by tag and digest, whatever its tag looks like.
 const pinned =
   /^(?<image>[^\s:@]+):(?<tag>[^\s@]+)@(?<digest>sha256:[0-9a-f]{64})$/u;
-// A version tag, such as 26.12.1-trixie-slim, or 12.15.0 for pnpm.
+// A version tag, such as v1.64.1-noble for Playwright, or 12.15.0 for pnpm.
 const versionTag = /^(?<prefix>v?)(?<version>\d+\.\d+\.\d+)(?<suffix>.*)$/u;
 
 function readPins(settings: string): Pin[] {
@@ -47,37 +45,7 @@ function readPins(settings: string): Pin[] {
   });
 }
 
-// Node: the pinned line, or a newer line once it is LTS (decision 0007).
-async function nodeCandidates(fetchFn: Fetch, pin: Pin): Promise<Candidate[]> {
-  const url = "https://nodejs.org/dist/index.json";
-  const releases = await getJson(fetchFn, url);
-  if (!Array.isArray(releases)) {
-    throw unexpected(url);
-  }
-  const [major] = parts(pin.version);
-  return releases.flatMap((release: unknown) => {
-    if (
-      !(
-        isRecord(release) &&
-        typeof release["version"] === "string" &&
-        typeof release["date"] === "string"
-      )
-    ) {
-      throw unexpected(url);
-    }
-    const version = release["version"].replace(leadingV, "");
-    const [releaseMajor] = parts(version);
-    const sameLine = releaseMajor === major;
-    const newerLts =
-      (releaseMajor ?? 0) > (major ?? 0) && release["lts"] !== false;
-    if (!(stableVersion.test(version) && (sameLine || newerLts))) {
-      return [];
-    }
-    return [{ version, releasedAt: new Date(`${release["date"]}T00:00:00Z`) }];
-  });
-}
-
-// pnpm: any line of its npm package, stable versions only.
+// Playwright and pnpm: any line of their npm package, stable versions only.
 function npmCandidates(name: string): (fetchFn: Fetch) => Promise<Candidate[]> {
   return (fetchFn) => npmVersions(fetchFn, name);
 }
@@ -95,26 +63,6 @@ async function npmVersions(fetchFn: Fetch, name: string): Promise<Candidate[]> {
   );
 }
 
-// The digest of a Node image tag on Docker Hub, or undefined when the tag does not exist.
-async function nodeDigest(
-  fetchFn: Fetch,
-  tag: string,
-): Promise<string | undefined> {
-  const url = `https://hub.docker.com/v2/repositories/library/node/tags/${tag}`;
-  const response = await fetchFn(url);
-  if (response.status === httpNotFound) {
-    return undefined;
-  }
-  if (!response.ok) {
-    throw new Error(`${url}: HTTP ${response.status}`);
-  }
-  const document: unknown = await response.json();
-  if (!(isRecord(document) && typeof document["digest"] === "string")) {
-    throw unexpected(url);
-  }
-  return document["digest"];
-}
-
 // The digest of a pnpm image tag on GHCR, which asks for an anonymous token first.
 async function pnpmDigest(
   fetchFn: Fetch,
@@ -129,6 +77,18 @@ async function pnpmDigest(
     fetchFn,
     `https://ghcr.io/v2/pnpm/pnpm/manifests/${tag}`,
     { authorization: `Bearer ${token["token"]}` },
+  );
+}
+
+// The digest of a Playwright image tag on Microsoft's registry, which needs no token.
+function playwrightDigest(
+  fetchFn: Fetch,
+  tag: string,
+): Promise<string | undefined> {
+  return manifestDigest(
+    fetchFn,
+    `https://mcr.microsoft.com/v2/playwright/manifests/${tag}`,
+    {},
   );
 }
 
@@ -163,7 +123,11 @@ interface Source {
 }
 
 const sources: Record<string, Source> = {
-  node: { candidates: nodeCandidates, digest: nodeDigest, name: "node" },
+  "mcr.microsoft.com/playwright": {
+    candidates: npmCandidates("playwright"),
+    digest: playwrightDigest,
+    name: "playwright",
+  },
   "ghcr.io/pnpm/pnpm": {
     candidates: npmCandidates("pnpm"),
     digest: pnpmDigest,

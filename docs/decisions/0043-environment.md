@@ -1,6 +1,6 @@
 # 0043. The environment
 
-- Status: Accepted; partly superseded by 0045: the image with Chromium alone
+- Status: Accepted; partly superseded by 0045: the image with Chromium alone, and by 0047: the Node image, the Debian snapshot and the six services
 - Date: 2026-11-02
 
 ## Context

@@ -5,11 +5,11 @@ import type { Fetch } from "./shared.ts";
 // Fictitious versions, dates and digests: no real release is described here.
 const digestLength = 64;
 const pnpmDigest = `sha256:${"a".repeat(digestLength)}`;
-const nodeDigest = `sha256:${"b".repeat(digestLength)}`;
+const playwrightDigest = `sha256:${"b".repeat(digestLength)}`;
 const newDigest = `sha256:${"c".repeat(digestLength)}`;
 
 const settings = `# A comment
-NODE_IMAGE=node:40.2.0-trixie-slim@${nodeDigest}
+PLAYWRIGHT_IMAGE=mcr.microsoft.com/playwright:v7.2.0-noble@${playwrightDigest}
 PNPM_IMAGE=ghcr.io/pnpm/pnpm:5.1.0@${pnpmDigest}
 PROTOTYPE_PORT=5173
 `;
@@ -19,28 +19,23 @@ const now = new Date("2030-06-30T12:00:00Z");
 // Seven days, in minutes, as pnpm counts it.
 const releaseAge = 10_080;
 
-interface NodeRelease {
-  version: string;
-  date: string;
-  lts: string | false;
-}
-
 interface Sources {
-  node: NodeRelease[];
-  nodeTags: Record<string, string>;
+  // Each npm package's versions and release dates, and each image's tags and digests.
+  playwright: Record<string, string>;
+  playwrightTags: Record<string, string>;
   pnpm: Record<string, string>;
   pnpmTags: Record<string, string>;
 }
 
 const upToDate: Sources = {
-  node: [{ version: "v40.2.0", date: "2030-05-01", lts: "Fictional" }],
-  nodeTags: { "40.2.0-trixie-slim": nodeDigest },
+  playwright: { "7.2.0": "2030-05-01T00:00:00Z" },
+  playwrightTags: { "v7.2.0-noble": playwrightDigest },
   pnpm: { "5.1.0": "2030-05-01T00:00:00Z" },
   pnpmTags: { "5.1.0": pnpmDigest },
 };
 
-const nodeTagUrl =
-  /^https:\/\/hub\.docker\.com\/v2\/repositories\/library\/node\/tags\/(?<tag>.+)$/u;
+const playwrightTagUrl =
+  /^https:\/\/mcr\.microsoft\.com\/v2\/playwright\/manifests\/(?<tag>.+)$/u;
 const pnpmTagUrl =
   /^https:\/\/ghcr\.io\/v2\/pnpm\/pnpm\/manifests\/(?<tag>.+)$/u;
 
@@ -48,30 +43,22 @@ function json(body: unknown): Response {
   return new Response(JSON.stringify(body), { status: 200 });
 }
 
-function notFound(): Response {
-  return new Response("", { status: 404 });
-}
-
-function digestResponse(
-  digest: string | undefined,
-  asHeader: boolean,
-): Response {
+function digestResponse(digest: string | undefined): Response {
   if (digest === undefined) {
-    return notFound();
+    return new Response("", { status: 404 });
   }
-  if (asHeader) {
-    return new Response(null, {
-      status: 200,
-      headers: { "docker-content-digest": digest },
-    });
-  }
-  return json({ digest });
+  return new Response(null, {
+    status: 200,
+    headers: { "docker-content-digest": digest },
+  });
 }
 
 // Answers like each official source, from the fictitious data.
 function fakeFetch(sources: Sources): Fetch {
   const fixed: Record<string, unknown> = {
-    "https://nodejs.org/dist/index.json": sources.node,
+    "https://registry.npmjs.org/playwright": {
+      time: { created: "2030-01-01T00:00:00Z", ...sources.playwright },
+    },
     "https://registry.npmjs.org/pnpm": {
       time: { created: "2030-01-01T00:00:00Z", ...sources.pnpm },
     },
@@ -80,18 +67,31 @@ function fakeFetch(sources: Sources): Fetch {
     },
   };
   return (url) => {
-    const nodeTag = url.match(nodeTagUrl)?.groups?.["tag"];
+    const playwrightTag = url.match(playwrightTagUrl)?.groups?.["tag"];
     const pnpmTag = url.match(pnpmTagUrl)?.groups?.["tag"];
     if (url in fixed) {
       return Promise.resolve(json(fixed[url]));
     }
-    if (nodeTag !== undefined) {
-      return Promise.resolve(digestResponse(sources.nodeTags[nodeTag], false));
+    if (playwrightTag !== undefined) {
+      return Promise.resolve(
+        digestResponse(sources.playwrightTags[playwrightTag]),
+      );
     }
     if (pnpmTag !== undefined) {
-      return Promise.resolve(digestResponse(sources.pnpmTags[pnpmTag], true));
+      return Promise.resolve(digestResponse(sources.pnpmTags[pnpmTag]));
     }
     return Promise.reject(new Error(`unexpected request: ${url}`));
+  };
+}
+
+function withPlaywright(
+  versions: Record<string, string>,
+  tags: Record<string, string>,
+): Sources {
+  return {
+    ...upToDate,
+    playwright: { ...upToDate.playwright, ...versions },
+    playwrightTags: { ...upToDate.playwrightTags, ...tags },
   };
 }
 
@@ -102,85 +102,54 @@ describe("checkImages", () => {
     ).toEqual([]);
   });
 
-  it("reports a newer Node on the same line, past the release age, with its digest", async () => {
-    const sources: Sources = {
-      ...upToDate,
-      node: [
-        { version: "v40.3.0", date: "2030-06-22", lts: "Fictional" },
-        ...upToDate.node,
-      ],
-      nodeTags: { ...upToDate.nodeTags, "40.3.0-trixie-slim": newDigest },
-    };
+  it("reports a newer Playwright image, whose tag starts with v, past the release age", async () => {
+    const sources = withPlaywright(
+      { "7.3.0": "2030-06-01T00:00:00Z" },
+      { "v7.3.0-noble": newDigest },
+    );
 
     expect(
       await checkImages(settings, releaseAge, fakeFetch(sources), now),
     ).toEqual([
-      `node  40.2.0 → 40.3.0  NODE_IMAGE=node:40.3.0-trixie-slim@${newDigest}`,
+      `playwright  7.2.0 → 7.3.0  PLAYWRIGHT_IMAGE=mcr.microsoft.com/playwright:v7.3.0-noble@${newDigest}`,
     ]);
   });
 
   it("leaves out a version younger than the release age", async () => {
-    const sources: Sources = {
-      ...upToDate,
-      node: [
-        { version: "v40.3.0", date: "2030-06-25", lts: "Fictional" },
-        ...upToDate.node,
-      ],
-      nodeTags: { ...upToDate.nodeTags, "40.3.0-trixie-slim": newDigest },
-    };
+    const sources = withPlaywright(
+      { "7.3.0": "2030-06-25T00:00:00Z" },
+      { "v7.3.0-noble": newDigest },
+    );
 
     expect(
       await checkImages(settings, releaseAge, fakeFetch(sources), now),
     ).toEqual([]);
   });
 
-  it("leaves out a version with no image yet, and reports the newest one that has it", async () => {
-    const sources: Sources = {
-      ...upToDate,
-      node: [
-        { version: "v40.4.0", date: "2030-06-21", lts: "Fictional" },
-        { version: "v40.3.0", date: "2030-06-20", lts: "Fictional" },
-        ...upToDate.node,
-      ],
-      nodeTags: { ...upToDate.nodeTags, "40.3.0-trixie-slim": newDigest },
-    };
+  it("takes the release age it is given", async () => {
+    const sources = withPlaywright(
+      { "7.3.0": "2030-06-25T00:00:00Z" },
+      { "v7.3.0-noble": newDigest },
+    );
+    const threeDays = 4320;
 
     expect(
-      await checkImages(settings, releaseAge, fakeFetch(sources), now),
+      await checkImages(settings, threeDays, fakeFetch(sources), now),
     ).toEqual([
-      `node  40.2.0 → 40.3.0  NODE_IMAGE=node:40.3.0-trixie-slim@${newDigest}`,
+      `playwright  7.2.0 → 7.3.0  PLAYWRIGHT_IMAGE=mcr.microsoft.com/playwright:v7.3.0-noble@${newDigest}`,
     ]);
   });
 
-  it("leaves out a newer Node line that is not LTS", async () => {
-    const sources: Sources = {
-      ...upToDate,
-      node: [
-        { version: "v41.0.0", date: "2030-06-01", lts: false },
-        ...upToDate.node,
-      ],
-      nodeTags: { ...upToDate.nodeTags, "41.0.0-trixie-slim": newDigest },
-    };
-
-    expect(
-      await checkImages(settings, releaseAge, fakeFetch(sources), now),
-    ).toEqual([]);
-  });
-
-  it("reports a newer Node line once it is LTS", async () => {
-    const sources: Sources = {
-      ...upToDate,
-      node: [
-        { version: "v42.0.0", date: "2030-06-01", lts: "Imaginary" },
-        ...upToDate.node,
-      ],
-      nodeTags: { ...upToDate.nodeTags, "42.0.0-trixie-slim": newDigest },
-    };
+  it("leaves out a version with no image yet, and reports the newest one that has it", async () => {
+    const sources = withPlaywright(
+      { "7.4.0": "2030-06-21T00:00:00Z", "7.3.0": "2030-06-20T00:00:00Z" },
+      { "v7.3.0-noble": newDigest },
+    );
 
     expect(
       await checkImages(settings, releaseAge, fakeFetch(sources), now),
     ).toEqual([
-      `node  40.2.0 → 42.0.0  NODE_IMAGE=node:42.0.0-trixie-slim@${newDigest}`,
+      `playwright  7.2.0 → 7.3.0  PLAYWRIGHT_IMAGE=mcr.microsoft.com/playwright:v7.3.0-noble@${newDigest}`,
     ]);
   });
 
@@ -209,25 +178,25 @@ describe("checkImages", () => {
   it("reports an image rebuilt under the same version", async () => {
     const sources: Sources = {
       ...upToDate,
-      nodeTags: { "40.2.0-trixie-slim": newDigest },
+      playwrightTags: { "v7.2.0-noble": newDigest },
     };
 
     expect(
       await checkImages(settings, releaseAge, fakeFetch(sources), now),
     ).toEqual([
-      `node  40.2.0 rebuilt  NODE_IMAGE=node:40.2.0-trixie-slim@${newDigest}`,
+      `playwright  7.2.0 rebuilt  PLAYWRIGHT_IMAGE=mcr.microsoft.com/playwright:v7.2.0-noble@${newDigest}`,
     ]);
   });
 
   it("fails on a source that does not answer", async () => {
     const failing: Fetch = (url) =>
-      url === "https://nodejs.org/dist/index.json"
+      url === "https://registry.npmjs.org/playwright"
         ? Promise.resolve(new Response("", { status: 503 }))
         : fakeFetch(upToDate)(url);
 
     await expect(
       checkImages(settings, releaseAge, failing, now),
-    ).rejects.toThrow("https://nodejs.org/dist/index.json: HTTP 503");
+    ).rejects.toThrow("https://registry.npmjs.org/playwright: HTTP 503");
   });
 
   it("fails on an answer in an unexpected shape", async () => {
@@ -242,7 +211,7 @@ describe("checkImages", () => {
   });
 
   it("fails on an image it does not know how to check", async () => {
-    const unknown = `OTHER_IMAGE=debian:13.0@${nodeDigest}\n`;
+    const unknown = `OTHER_IMAGE=debian:13.0@${playwrightDigest}\n`;
 
     await expect(
       checkImages(unknown, releaseAge, fakeFetch(upToDate), now),
@@ -250,28 +219,11 @@ describe("checkImages", () => {
   });
 
   it("fails on an image not pinned by tag and digest", async () => {
-    const unpinned = "NODE_IMAGE=node:40.2.0-trixie-slim\n";
+    const unpinned =
+      "PLAYWRIGHT_IMAGE=mcr.microsoft.com/playwright:v7.2.0-noble\n";
 
     await expect(
       checkImages(unpinned, releaseAge, fakeFetch(upToDate), now),
-    ).rejects.toThrow("NODE_IMAGE");
-  });
-
-  it("takes the release age it is given", async () => {
-    const sources: Sources = {
-      ...upToDate,
-      node: [
-        { version: "v40.3.0", date: "2030-06-25", lts: "Fictional" },
-        ...upToDate.node,
-      ],
-      nodeTags: { ...upToDate.nodeTags, "40.3.0-trixie-slim": newDigest },
-    };
-    const threeDays = 4320;
-
-    expect(
-      await checkImages(settings, threeDays, fakeFetch(sources), now),
-    ).toEqual([
-      `node  40.2.0 → 40.3.0  NODE_IMAGE=node:40.3.0-trixie-slim@${newDigest}`,
-    ]);
+    ).rejects.toThrow("PLAYWRIGHT_IMAGE");
   });
 });

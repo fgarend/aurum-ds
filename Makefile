@@ -39,8 +39,8 @@ test-repository: ## The checks of the repository as a whole, in test/
 	$(RUN) tools pnpm run test-repository
 
 test-browser: ## The tests in a real browser
-	$(COMPOSE) build browser
-	$(RUN) browser pnpm run test-browser
+	$(COMPOSE) build tools
+	$(RUN) tools pnpm run test-browser
 
 pack: ## Pack the package, install it in a throwaway app and import every export
 	$(COMPOSE) build tools
@@ -65,12 +65,12 @@ watch: ## Run the tests of the code again on every change, until stopped with q 
 	$(RUN) tools pnpm run watch
 
 screenshots: ## Write the approved screenshots again, to review and approve a visual change in the diff
-	$(COMPOSE) build browser-write
-	$(RUN) browser-write pnpm run screenshots
+	$(COMPOSE) build tools-write
+	$(RUN) tools-write pnpm run screenshots
 
 reference: ## Render the artifact's previews and the prototype's screens into reference/screenshots, to review
-	$(COMPOSE) build browser-write
-	$(RUN) browser-write pnpm run reference
+	$(COMPOSE) build tools-write
+	$(RUN) tools-write pnpm run reference
 
 prototype: ## Serve the prototype's screens at http://localhost:5173 (PROTOTYPE_PORT), until stopped with Ctrl+C
 	$(COMPOSE) build prototype

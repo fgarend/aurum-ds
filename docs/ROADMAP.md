@@ -66,7 +66,8 @@ snapshot's React 18 with nothing gained.
   environment, one image in Compose with its settings (decision 0043), and
   the commands, split by responsibility (decision 0044), and the browser
   tests in Chromium, Firefox and WebKit (decision 0045), and the workflows
-  that run the checks on GitHub (decision 0046).
+  that run the checks on GitHub (decision 0046), on an environment built from
+  Playwright's image (decision 0047).
 - **5.10 · Release v0.1.0.** The changelog and the first tag, by the steps
   in `docs/releasing.md` as item 5.20 leaves them. The README gains
   the status, how to install and import, a short map of the four parts of the

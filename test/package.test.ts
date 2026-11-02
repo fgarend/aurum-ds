@@ -8,6 +8,8 @@ const { resolve } = createRequire(new URL("package.json", root));
 const files = ["tokens.css", "fonts.css", "base.css"];
 const leadingDotSlash = /^\.\//u;
 const pnpmImage = /^PNPM_IMAGE=ghcr\.io\/pnpm\/pnpm:(?<version>[^@\s]+)@/mu;
+const playwrightImage =
+  /^PLAYWRIGHT_IMAGE=mcr\.microsoft\.com\/playwright:v(?<version>\d+\.\d+\.\d+)-/mu;
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -70,5 +72,21 @@ describe("the package manager", () => {
     const image = settings.match(pnpmImage)?.groups?.["version"];
 
     expect(`pnpm@${image}`).toBe(packageManager);
+  });
+});
+
+// The browsers come from Playwright's image (decision 0047), and the playwright package must drive the same version.
+describe("the browsers", () => {
+  it("come from the image of the version the playwright package names", async () => {
+    const { devDependencies } = await readManifest();
+    const settings = await readFile(
+      new URL("infra/settings.env", root),
+      "utf8",
+    );
+    const image = settings.match(playwrightImage)?.groups?.["version"];
+
+    expect(isRecord(devDependencies) && devDependencies["playwright"]).toBe(
+      image,
+    );
   });
 });
