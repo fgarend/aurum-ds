@@ -4,7 +4,8 @@
 # if any failed. Must work with GNU Make 3.81, the version that ships with macOS.
 
 COMPOSE := docker compose --env-file infra/settings.env -f infra/compose.yaml
-RUN := $(COMPOSE) run --rm
+# The code is mounted read-only, and the folders mounted over it must exist in it first, even in a fresh clone.
+RUN := mkdir -p node_modules .vitest-attachments && $(COMPOSE) run --rm
 # The project's name, as infra/compose.yaml gives it. Compose marks every image it builds with it (decision 0043).
 PROJECT := $(shell sed -n 's/^name: //p' infra/compose.yaml)
 
