@@ -1,4 +1,4 @@
-// Test settings (decisions 0020, 0032, 0039, 0044 and 0045). Its types are checked with Node's, in tsconfig.node.json, since
+// Test settings (decisions 0020, 0032, 0039, 0044, 0045 and 0052). Its types are checked with Node's, in tsconfig.node.json, since
 // Vite's types bring them along.
 import { readFileSync } from "node:fs";
 import { playwright } from "@vitest/browser-playwright";
@@ -60,8 +60,8 @@ const everyBrowser = {
 
 const config: ViteUserConfig = defineConfig({
   test: {
-    // A test with JSX runs in a DOM, any other test runs in Node, a browser test runs in every browser, and a visual
-    // test in Chromium.
+    // A test of logic runs in Node, a browser test in every browser, and a visual test in Chromium. Components are
+    // tested in the browser only (decision 0052).
     projects: [
       {
         test: {
@@ -76,15 +76,6 @@ const config: ViteUserConfig = defineConfig({
           name: "repository",
           include: [repositoryChecks],
           environment: "node",
-        },
-      },
-      {
-        test: {
-          name: "dom",
-          include: ["**/*.test.tsx"],
-          exclude: notBrowserTests,
-          environment: "jsdom",
-          setupFiles: ["test/dom-setup.ts"],
         },
       },
       {

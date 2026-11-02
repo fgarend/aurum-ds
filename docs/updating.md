@@ -56,12 +56,9 @@ age, with its advisory.
 `make outdated` cannot see these. Each says when it goes away.
 
 - **Vitest on its 4 line**, with `@vitest/browser-playwright`. Left out of the
-  report until `jest-dom` accepts Vitest 5 (decision 0020):
-  `docker run --rm aurum-ds:base pnpm view vitest@4 version`.
-  Goes away with the move to Vitest 5.
-- **Does `jest-dom` accept Vitest 5?** When `@testing-library/jest-dom` has a
-  new version, try it with Vitest 5: the type check is the proof. Goes away
-  with the move to Vitest 5.
+  report until the move to Vitest 5, its own step now that `jest-dom` is gone
+  (decision 0052): `docker run --rm aurum-ds:base pnpm view vitest@4 version`.
+  Goes away with that move.
 - **`@types/node` on the image's Node line.** The report suggests newer lines
   as they appear, but the types must match the Node in the image. Stays.
 - **The year of `target` and `lib` in `tsconfig.json`.** Moved up one year

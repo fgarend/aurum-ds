@@ -1,7 +1,6 @@
 // TypeScript settings (decision 0013). Only types are checked: the build decides what is emitted.
 {
-  // The setup of the component tests, and its own test, are checked with the library, whose tests use its matchers.
-  "include": ["src", "test/dom-setup.ts", "test/dom-setup.test.tsx"],
+  "include": ["src"],
   // The browser tests have their own settings, in tsconfig.browser.json (decision 0032).
   "exclude": [
     "src/**/*.browser.test.ts",

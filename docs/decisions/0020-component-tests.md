@@ -1,6 +1,6 @@
 # 0020. Component tests
 
-- Status: Accepted; partly superseded by 0039: where Vitest's settings live
+- Status: Accepted; partly superseded by 0039: where Vitest's settings live, and by 0052: jsdom, Testing Library and jest-dom
 - Date: 2026-11-01
 
 ## Context

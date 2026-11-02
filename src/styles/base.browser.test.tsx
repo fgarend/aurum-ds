@@ -1,6 +1,6 @@
-import { render, screen } from "@testing-library/react";
 import { expect, it } from "vitest";
 import { userEvent } from "vitest/browser";
+import { render } from "vitest-browser-react";
 import "../tokens/tokens.css";
 import "./base.css";
 
@@ -13,7 +13,7 @@ const geistFirst = /^"?Geist Variable"?,/u;
 
 // In a real browser, the base styles apply as decision 0030 describes (decision 0032).
 it("styles the root, rings the focus from the keyboard and hides screen reader text", async () => {
-  render(
+  const screen = await render(
     <div className="au-root" data-testid="root">
       <button className="au-probe" type="button">
         Save
@@ -21,10 +21,11 @@ it("styles the root, rings the focus from the keyboard and hides screen reader t
       <span className="au-sr">Only for screen readers</span>
     </div>,
   );
-  const root = getComputedStyle(screen.getByTestId("root"));
+  const root = getComputedStyle(screen.getByTestId("root").element());
   const button = screen.getByRole("button", { name: "Save" });
   const hidden = screen
     .getByText("Only for screen readers")
+    .element()
     .getBoundingClientRect();
 
   expect([root.backgroundColor, root.color]).toEqual([canvas, ink]);
@@ -32,9 +33,9 @@ it("styles the root, rings the focus from the keyboard and hides screen reader t
   expect([hidden.width, hidden.height]).toEqual([1, 1]);
 
   await userEvent.tab();
-  const ring = getComputedStyle(button);
+  const ring = getComputedStyle(button.element());
 
-  expect(button).toHaveFocus();
+  await expect.element(button).toHaveFocus();
   expect([
     ring.outlineStyle,
     ring.outlineWidth,

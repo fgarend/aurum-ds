@@ -1,6 +1,6 @@
 # 0021. Watch
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0052: the projects it runs
 - Date: 2026-11-01
 
 ## Context
