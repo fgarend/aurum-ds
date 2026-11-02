@@ -35,7 +35,8 @@ function nextFrames(): Promise<void> {
 }
 
 // Waits for the page to draw, grows the window to fit its content, and saves the screenshot at a path relative to
-// the render that calls it.
+// the render that calls it. Motion is stopped for the capture, as toMatchScreenshot does (decision 0041): transitions
+// jump to their end and the spinner to its start, so two runs save the same files.
 async function capture(
   width: number,
   height: number,
@@ -49,7 +50,7 @@ async function capture(
     Math.max(height, scrollHeight),
   );
   await nextFrames();
-  await page.screenshot({ path });
+  await page.screenshot({ path, animations: "disabled" });
 }
 
 export { capture, runScript, withLocalFonts };

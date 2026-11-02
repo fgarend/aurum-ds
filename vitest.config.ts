@@ -47,11 +47,15 @@ const config: ViteUserConfig = defineConfig({
         test: {
           name: "reference",
           include: ["scripts/render-reference/*.render.ts"],
-          // A page large enough that no preview is scaled down to fit.
           browser: {
             ...chromium,
             provider: playwright({
+              // A page large enough that no preview is scaled down to fit.
               contextOptions: { viewport: { width: 3000, height: 3000 } },
+              // One raster thread, redrawing the whole page, so two runs draw every pixel alike (decision 0041).
+              launchOptions: {
+                args: ["--num-raster-threads=1", "--disable-partial-raster"],
+              },
             }),
           },
         },
