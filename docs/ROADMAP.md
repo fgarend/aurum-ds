@@ -138,9 +138,6 @@ No order between them; each becomes items when its time comes.
   fails on a second theme until then (decision 0026).
 - **Image vulnerability scan.** The system packages inside the images (the
   Debian of the Node image), which `make audit` does not cover.
-- **Vitest 5.** Nothing holds it back since `jest-dom` left (decision 0052): the
-  move comes next, with Vitest and `@vitest/browser-playwright` dropped from
-  `update.ignoreDeps` in the same commit.
 - **Update bot.** Renovate or Dependabot opening pull requests, with the CI;
   check first that it respects the release age and updates image digests.
 - **pnpm's update notice.** Every run says a newer pnpm exists, though the

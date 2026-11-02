@@ -44,10 +44,14 @@ const inBrowser = {
   // A failing test's screenshot would land among the approved ones.
   screenshotFailures: false,
 };
-const chromium = {
+// A function, so each project gets objects of its own: Vitest 5 writes each project's name into its instances, and
+// projects that shared one instance took each other's tests.
+const chromium = (): typeof inBrowser & {
+  instances: { browser: "chromium" }[];
+} => ({
   ...inBrowser,
-  instances: [{ browser: "chromium" as const }],
-};
+  instances: [{ browser: "chromium" }],
+});
 // Playwright's own browsers: Chromium, and Firefox and WebKit, Safari's engine (decision 0045).
 const everyBrowser = {
   ...inBrowser,
@@ -86,7 +90,7 @@ const config: ViteUserConfig = defineConfig({
         },
       },
       {
-        test: { name: "visual", include: [visualTests], browser: chromium },
+        test: { name: "visual", include: [visualTests], browser: chromium() },
       },
       // Only make reference runs it, to render the artifact's previews and the prototype's screens (decisions 0033 and
       // 0035).
@@ -95,7 +99,7 @@ const config: ViteUserConfig = defineConfig({
           name: "reference",
           include: ["scripts/render-reference/*.render.ts"],
           browser: {
-            ...chromium,
+            ...chromium(),
             provider: playwright({
               // A page large enough that no preview is scaled down to fit.
               contextOptions: { viewport: { width: 3000, height: 3000 } },

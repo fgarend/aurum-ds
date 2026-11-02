@@ -7,9 +7,3 @@ minimumReleaseAgeIgnoreMissingTime: false
 autoInstallPeers: false
 # Dependencies are saved with their exact version (decision 0015).
 saveExact: true
-update:
-  ignoreDeps:
-    # Left out until the move to Vitest 5, its own step now that jest-dom is gone (decision 0052), with its browser
-    # provider.
-    - vitest
-    - "@vitest/browser-playwright"
