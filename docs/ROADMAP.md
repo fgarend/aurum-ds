@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 5.10.
+**Now:** 5.20.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -52,8 +52,19 @@ Rendering through a browser test runner is a common pattern that decision
 0041), and the rewrite would have traded the previews' React 19 for the
 snapshot's React 18 with nothing gained.
 
+- **5.20 (was 7.21) · Continuous integration.** Running the checks on GitHub
+  on every push, as all nine design systems surveyed do (item 5.19), before
+  the first release, so it ships through clear, checked steps. The first push
+  comes here. Discussed in detail, as one whole, with how the checks run
+  today: the `Makefile`, the scripts, the Dockerfile and whether Docker
+  Compose has a place. Check whether the runner draws screenshots as the Mac's
+  containers do, while there is a single visual test. It opens the way to the
+  update bot, the image scan and a hosted visual review (Chromatic, Percy,
+  Argos and Happo each have a free plan of 5,000 screenshots a month, and
+  screenshots leave the repository). The release process (decision 0040,
+  `docs/releasing.md`) is then rethought around the CI.
 - **5.10 · Release v0.1.0.** The changelog and the first tag, by the steps
-  in `docs/releasing.md` (decision 0040), and the first push. The README gains
+  in `docs/releasing.md` as item 5.20 leaves them. The README gains
   the status, how to install and import, a short map of the four parts of the
   root (decision 0039) and `make help` as the way into the commands. The app
   then installs it from GitHub and adopts it, in its own repository.
@@ -68,15 +79,6 @@ test (decision 0034), a comparison with its reference screenshot (decisions
 0033 and 0035), the guidelines' Components section (decision 0031), the
 changelog, and a release.
 
-- **7.21 · Continuous integration.** Running the checks on GitHub on every
-  push, once the repository is public (item 5.10), as all nine design systems
-  surveyed do (item 5.19). Discussed in detail, as one whole, with how the
-  checks run today: the `Makefile`, the scripts, the Dockerfile and whether
-  Docker Compose has a place. Check whether the runner draws screenshots as
-  the Mac's containers do, while there is a single visual test. It opens the
-  way to the update bot, the image scan and a hosted visual review (Chromatic,
-  Percy, Argos and Happo each have a free plan of 5,000 screenshots a month,
-  and screenshots leave the repository).
 - **7.1 (was 5.2) · Component conventions.** Folder layout, naming, props and
   exports. Item 5.17 found a folder per component the common layout, with
   written rules in Primer React's ADR-013 (file structure) and GOV.UK
