@@ -1,6 +1,6 @@
 # 0014. Test command
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0043: the test stage
 - Date: 2026-11-01
 
 ## Context

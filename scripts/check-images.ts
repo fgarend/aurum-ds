@@ -1,10 +1,11 @@
-// Reports the images pinned by hand in the Dockerfile that have something to look at (decisions 0018 and 0032):
+// Reports the images pinned by hand in infra/settings.env that have something to look at (decisions 0018 and 0043):
 // a newer version past the release age, or the same version rebuilt. Run by make outdated.
 import { readFile } from "node:fs/promises";
 
 type Fetch = (url: string, init?: RequestInit) => Promise<Response>;
 
 interface Pin {
+  variable: string;
   image: string;
   prefix: string;
   version: string;
@@ -23,23 +24,30 @@ const msPerDay = 86_400_000;
 const releaseAgeMs = releaseAgeDays * msPerDay;
 const httpNotFound = 404;
 
-// Every image pinned by tag and digest, whatever its tag looks like.
-const pinPattern =
-  /^FROM\s+(?<image>[^\s:@]+):(?<tag>[^\s@]+)@(?<digest>sha256:[0-9a-f]{64})/gmu;
-// A version tag, such as 26.12.1-trixie-slim, or v1.64.1-noble for Playwright.
+// Every variable that names an image, such as NODE_IMAGE=node:26.12.1-trixie-slim@sha256:….
+const imageVariable = /^(?<variable>[A-Z][A-Z0-9_]*_IMAGE)=(?<value>.*)$/gmu;
+// An image pinned by tag and digest, whatever its tag looks like.
+const pinned =
+  /^(?<image>[^\s:@]+):(?<tag>[^\s@]+)@(?<digest>sha256:[0-9a-f]{64})$/u;
+// A version tag, such as 26.12.1-trixie-slim, or 12.15.0 for pnpm.
 const versionTag = /^(?<prefix>v?)(?<version>\d+\.\d+\.\d+)(?<suffix>.*)$/u;
 const stableVersion = /^\d+\.\d+\.\d+$/u;
 const leadingV = /^v/u;
 
-function readPins(dockerfile: string): Pin[] {
-  return [...dockerfile.matchAll(pinPattern)].map((match) => {
-    const { image = "", tag = "", digest = "" } = match.groups ?? {};
+function readPins(settings: string): Pin[] {
+  return [...settings.matchAll(imageVariable)].map((match) => {
+    const { variable = "", value = "" } = match.groups ?? {};
+    const pin = value.match(pinned)?.groups;
+    if (pin === undefined) {
+      throw new Error(`${variable}: not pinned by tag and digest`);
+    }
+    const { image = "", tag = "", digest = "" } = pin;
     const {
       prefix = "",
       version = "",
       suffix = "",
     } = tag.match(versionTag)?.groups ?? {};
-    return { image, prefix, version, suffix, digest };
+    return { variable, image, prefix, version, suffix, digest };
   });
 }
 
@@ -108,7 +116,7 @@ async function nodeCandidates(fetchFn: Fetch, pin: Pin): Promise<Candidate[]> {
   });
 }
 
-// pnpm and Playwright: any line of their npm package, stable versions only.
+// pnpm: any line of its npm package, stable versions only.
 function npmCandidates(name: string): (fetchFn: Fetch) => Promise<Candidate[]> {
   return (fetchFn) => npmVersions(fetchFn, name);
 }
@@ -163,18 +171,6 @@ async function pnpmDigest(
   );
 }
 
-// The digest of a Playwright image tag on Microsoft's registry, which needs no token.
-function playwrightDigest(
-  fetchFn: Fetch,
-  tag: string,
-): Promise<string | undefined> {
-  return manifestDigest(
-    fetchFn,
-    `https://mcr.microsoft.com/v2/playwright/manifests/${tag}`,
-    {},
-  );
-}
-
 // A registry's digest for a tag, read from the headers of its manifest, or undefined when the tag does not exist.
 async function manifestDigest(
   fetchFn: Fetch,
@@ -212,11 +208,6 @@ const sources: Record<string, Source> = {
     digest: pnpmDigest,
     name: "pnpm",
   },
-  "mcr.microsoft.com/playwright": {
-    candidates: npmCandidates("playwright"),
-    digest: playwrightDigest,
-    name: "playwright",
-  },
 };
 
 async function checkPin(
@@ -240,34 +231,34 @@ async function checkPin(
     // biome-ignore lint/performance/noAwaitInLoops: each request depends on the previous one finding no image.
     const digest = await source.digest(fetchFn, tag);
     if (digest !== undefined) {
-      return `${source.name}  ${pin.version} → ${version}  ${pin.image}:${tag}@${digest}`;
+      return `${source.name}  ${pin.version} → ${version}  ${pin.variable}=${pin.image}:${tag}@${digest}`;
     }
   }
   const tag = `${pin.prefix}${pin.version}${pin.suffix}`;
   const digest = await source.digest(fetchFn, tag);
   if (digest !== undefined && digest !== pin.digest) {
-    return `${source.name}  ${pin.version} rebuilt  ${pin.image}:${tag}@${digest}`;
+    return `${source.name}  ${pin.version} rebuilt  ${pin.variable}=${pin.image}:${tag}@${digest}`;
   }
   return undefined;
 }
 
 async function checkImages(
-  dockerfile: string,
+  settings: string,
   fetchFn: Fetch,
   now: Date,
 ): Promise<string[]> {
   const lines = await Promise.all(
-    readPins(dockerfile).map((pin) => checkPin(fetchFn, pin, now)),
+    readPins(settings).map((pin) => checkPin(fetchFn, pin, now)),
   );
   return lines.filter((line) => line !== undefined);
 }
 
 async function main(): Promise<void> {
-  const dockerfile = await readFile(
-    new URL("../infra/Dockerfile", import.meta.url),
+  const settings = await readFile(
+    new URL("../infra/settings.env", import.meta.url),
     "utf8",
   );
-  const lines = await checkImages(dockerfile, fetch, new Date());
+  const lines = await checkImages(settings, fetch, new Date());
   for (const line of lines) {
     console.log(line);
   }

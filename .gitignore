@@ -11,6 +11,9 @@
 # Dependencies, installed by make install
 node_modules/
 
-# Environment files: never versioned
+# Environment files with secrets: never versioned. infra/settings.env holds none, and is versioned (decision 0043).
 .env
 .env.*
+
+# The images a failing visual test writes, to look at (decision 0043)
+.vitest-attachments/

@@ -1,4 +1,6 @@
-# Kept out of the build context of infra/Dockerfile. The build context is the repository root.
-# Each tool adds its own lines in the commit that introduces it.
-.git
-node_modules
+# What the build of infra/Dockerfile receives from the repository root: only what installs the dependencies
+# (decision 0043). The code is mounted by each command instead.
+*
+!package.json
+!pnpm-lock.yaml
+!pnpm-workspace.yaml

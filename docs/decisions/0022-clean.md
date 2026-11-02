@@ -1,6 +1,6 @@
 # 0022. Clean
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0043: the label
 - Date: 2026-11-01
 
 ## Context

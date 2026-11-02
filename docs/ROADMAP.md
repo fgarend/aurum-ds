@@ -62,7 +62,8 @@ snapshot's React 18 with nothing gained.
   update bot, the image scan and a hosted visual review (Chromatic, Percy,
   Argos and Happo each have a free plan of 5,000 screenshots a month, and
   screenshots leave the repository). The release process (decision 0040,
-  `docs/releasing.md`) is then rethought around the CI.
+  `docs/releasing.md`) is then rethought around the CI. Done so far: the
+  environment, one image in Compose with its settings (decision 0043).
 - **5.10 · Release v0.1.0.** The changelog and the first tag, by the steps
   in `docs/releasing.md` as item 5.20 leaves them. The README gains
   the status, how to install and import, a short map of the four parts of the

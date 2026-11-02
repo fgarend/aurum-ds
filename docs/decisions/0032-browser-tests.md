@@ -1,6 +1,6 @@
 # 0032. Browser tests
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0043: Playwright's image
 - Date: 2026-11-01
 
 ## Context

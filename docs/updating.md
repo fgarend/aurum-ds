@@ -39,11 +39,14 @@ age, with its advisory.
   `make install` runs pnpm, then `make test`. A runtime dependency keeps its
   range: `pnpm add <package>@^<version>` (decision 0028).
 - **A pinned image:** copy the line `make outdated` prints into
-  `infra/Dockerfile`. For pnpm, change `packageManager` in `package.json` to
-  the same version and run `make install`. For Playwright, change the
-  `playwright` package to the same version (decision 0032), run
+  `infra/settings.env` (decision 0043). For pnpm, change `packageManager` in
+  `package.json` to the same version and run `make install`. For Node, the
+  browser's system packages follow the image's Debian snapshot: run
   `make reference` and `make screenshots`, and review any screenshot that
   changes (decisions 0033 and 0034). Then `make test`.
+- **Playwright:** the `playwright` package installs the browser (decision
+  0043), so after updating it run `make reference` and `make screenshots`
+  too, and review what changes.
 
 ## Checks made by hand
 
