@@ -89,11 +89,19 @@
       "linter": { "rules": { "style": { "noDefaultExport": "off" } } }
     },
     {
-      // The repository's scripts run on Node: they read files, print and set the exit code.
-      "includes": ["scripts/**", "test/**"],
+      // The repository's scripts and test settings run on Node: they read files, print and set the exit code. Node
+      // runs them as they are, so they import each other by their .ts names (decision 0044).
+      "includes": ["scripts/**", "test/**", "vitest.config.ts"],
       "linter": {
         "rules": {
-          "correctness": { "noNodejsModules": "off", "noProcessGlobal": "off" },
+          "correctness": {
+            "noNodejsModules": "off",
+            "noProcessGlobal": "off",
+            "useImportExtensions": {
+              "level": "on",
+              "options": { "extensionMappings": {} }
+            }
+          },
           "suspicious": { "noConsole": "off" }
         }
       }

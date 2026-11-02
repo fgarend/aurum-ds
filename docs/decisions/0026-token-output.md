@@ -1,6 +1,6 @@
 # 0026. Token output
 
-- Status: Accepted; partly superseded by 0039: where the compiler lives
+- Status: Accepted; partly superseded by 0039: where the compiler lives, and by 0044: loading through Vite
 - Date: 2026-11-01
 
 ## Context

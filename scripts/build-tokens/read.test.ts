@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { readTokens } from "./read.js";
+import { readTokens } from "./read.ts";
 
 // Fictitious tokens, each breaking one rule of the artifact type's grammar (decision 0026).
 const minimal = {

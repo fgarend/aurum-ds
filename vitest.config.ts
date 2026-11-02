@@ -1,18 +1,45 @@
-// Test settings (decisions 0020, 0032 and 0039). Its types are checked with Node's, in tsconfig.node.json, since Vite's
-// types bring them along.
+// Test settings (decisions 0020, 0032, 0039 and 0044). Its types are checked with Node's, in tsconfig.node.json, since
+// Vite's types bring them along.
+import { readFileSync } from "node:fs";
 import { playwright } from "@vitest/browser-playwright";
 import { defineConfig, type ViteUserConfig } from "vitest/config";
 
 // A browser test is named *.browser.test.ts or .tsx, and the other projects leave it out.
 const browserTests = "**/*.browser.test.{ts,tsx}";
+// The checks of the repository as a whole live in test/ (decision 0039), in a project of their own.
+const repositoryChecks = "test/**/*.test.ts";
 const notBrowserTests = ["**/node_modules/**", browserTests];
+const pixels = /^(?<number>\d+)px$/u;
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+// The tokens' content-max, in pixels, the width of every visual test (decision 0034).
+function contentMax(): number {
+  const tokens: unknown = JSON.parse(
+    readFileSync(new URL("src/tokens/tokens.json", import.meta.url), "utf8"),
+  );
+  const layout = isRecord(tokens) ? tokens["layout"] : undefined;
+  const list = isRecord(layout) ? layout["tokens"] : undefined;
+  const token = Array.isArray(list)
+    ? list.find((entry) => isRecord(entry) && entry["name"] === "content-max")
+    : undefined;
+  const value = isRecord(token) ? token["value"] : undefined;
+  const width = typeof value === "string" ? value.match(pixels) : null;
+  if (width?.groups === undefined) {
+    throw new Error("src/tokens/tokens.json has no content-max in pixels");
+  }
+  return Number(width.groups["number"]);
+}
+
 const chromium = {
   enabled: true,
   provider: playwright(),
   headless: true,
   instances: [{ browser: "chromium" as const }],
   // One canvas for every visual test: the tokens' content-max wide (decision 0034).
-  viewport: { width: 1200, height: 800 },
+  viewport: { width: contentMax(), height: 800 },
   // A failing test's screenshot would land among the approved ones.
   screenshotFailures: false,
 };
@@ -25,7 +52,14 @@ const config: ViteUserConfig = defineConfig({
         test: {
           name: "node",
           include: ["**/*.test.ts"],
-          exclude: notBrowserTests,
+          exclude: [...notBrowserTests, repositoryChecks],
+          environment: "node",
+        },
+      },
+      {
+        test: {
+          name: "repository",
+          include: [repositoryChecks],
           environment: "node",
         },
       },

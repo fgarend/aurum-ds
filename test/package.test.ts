@@ -7,6 +7,7 @@ const root = new URL("../", import.meta.url);
 const { resolve } = createRequire(new URL("package.json", root));
 const files = ["tokens.css", "fonts.css", "base.css"];
 const leadingDotSlash = /^\.\//u;
+const pnpmImage = /^PNPM_IMAGE=ghcr\.io\/pnpm\/pnpm:(?<version>[^@\s]+)@/mu;
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -55,5 +56,19 @@ describe("the package's exports", () => {
     const path = resolve(`@fgarend/aurum-ds/${file}`);
 
     await expect(access(path)).resolves.toBeUndefined();
+  });
+});
+
+// pnpm's binary comes from its image (decision 0043), and pnpm itself checks it is the version packageManager names.
+describe("the package manager", () => {
+  it("comes from an image of the version packageManager names", async () => {
+    const { packageManager } = await readManifest();
+    const settings = await readFile(
+      new URL("infra/settings.env", root),
+      "utf8",
+    );
+    const image = settings.match(pnpmImage)?.groups?.["version"];
+
+    expect(`pnpm@${image}`).toBe(packageManager);
   });
 });

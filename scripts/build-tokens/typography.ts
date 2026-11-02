@@ -8,7 +8,7 @@ import {
   readLength,
   readName,
   records,
-} from "./validate.js";
+} from "./validate.ts";
 
 interface TextStyle {
   name: string;

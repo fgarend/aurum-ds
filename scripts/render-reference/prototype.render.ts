@@ -2,7 +2,7 @@
 // make reference, never by make test. The screens run on the files the export ships, React 18 included.
 import { beforeAll, it } from "vitest";
 import { page } from "vitest/browser";
-import { capture, runScript, withLocalFonts } from "./capture.js";
+import { capture, runScript, withLocalFonts } from "./capture.ts";
 
 const assets = import.meta.glob<string>(
   "../../reference/prototype/assets/*.{css,js}",

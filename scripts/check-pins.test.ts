@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { checkImages, type Fetch } from "./check-images.js";
+import { checkPins, type Fetch, readReleaseAge } from "./check-pins.ts";
 
 // Fictitious versions, dates and digests: no real release is described here.
 const digestLength = 64;
@@ -15,6 +15,8 @@ PROTOTYPE_PORT=5173
 
 // Eight days after the newest release below that should be reported.
 const now = new Date("2030-06-30T12:00:00Z");
+// Seven days, in minutes, as pnpm counts it.
+const releaseAge = 10_080;
 
 interface NodeRelease {
   version: string;
@@ -92,9 +94,11 @@ function fakeFetch(sources: Sources): Fetch {
   };
 }
 
-describe("checkImages", () => {
+describe("checkPins", () => {
   it("reports nothing when every image is current", async () => {
-    expect(await checkImages(settings, fakeFetch(upToDate), now)).toEqual([]);
+    expect(
+      await checkPins(settings, releaseAge, fakeFetch(upToDate), now),
+    ).toEqual([]);
   });
 
   it("reports a newer Node on the same line, past the release age, with its digest", async () => {
@@ -107,7 +111,9 @@ describe("checkImages", () => {
       nodeTags: { ...upToDate.nodeTags, "40.3.0-trixie-slim": newDigest },
     };
 
-    expect(await checkImages(settings, fakeFetch(sources), now)).toEqual([
+    expect(
+      await checkPins(settings, releaseAge, fakeFetch(sources), now),
+    ).toEqual([
       `node  40.2.0 → 40.3.0  NODE_IMAGE=node:40.3.0-trixie-slim@${newDigest}`,
     ]);
   });
@@ -122,7 +128,9 @@ describe("checkImages", () => {
       nodeTags: { ...upToDate.nodeTags, "40.3.0-trixie-slim": newDigest },
     };
 
-    expect(await checkImages(settings, fakeFetch(sources), now)).toEqual([]);
+    expect(
+      await checkPins(settings, releaseAge, fakeFetch(sources), now),
+    ).toEqual([]);
   });
 
   it("leaves out a version with no image yet, and reports the newest one that has it", async () => {
@@ -136,7 +144,9 @@ describe("checkImages", () => {
       nodeTags: { ...upToDate.nodeTags, "40.3.0-trixie-slim": newDigest },
     };
 
-    expect(await checkImages(settings, fakeFetch(sources), now)).toEqual([
+    expect(
+      await checkPins(settings, releaseAge, fakeFetch(sources), now),
+    ).toEqual([
       `node  40.2.0 → 40.3.0  NODE_IMAGE=node:40.3.0-trixie-slim@${newDigest}`,
     ]);
   });
@@ -151,7 +161,9 @@ describe("checkImages", () => {
       nodeTags: { ...upToDate.nodeTags, "41.0.0-trixie-slim": newDigest },
     };
 
-    expect(await checkImages(settings, fakeFetch(sources), now)).toEqual([]);
+    expect(
+      await checkPins(settings, releaseAge, fakeFetch(sources), now),
+    ).toEqual([]);
   });
 
   it("reports a newer Node line once it is LTS", async () => {
@@ -164,7 +176,9 @@ describe("checkImages", () => {
       nodeTags: { ...upToDate.nodeTags, "42.0.0-trixie-slim": newDigest },
     };
 
-    expect(await checkImages(settings, fakeFetch(sources), now)).toEqual([
+    expect(
+      await checkPins(settings, releaseAge, fakeFetch(sources), now),
+    ).toEqual([
       `node  40.2.0 → 42.0.0  NODE_IMAGE=node:42.0.0-trixie-slim@${newDigest}`,
     ]);
   });
@@ -184,7 +198,9 @@ describe("checkImages", () => {
       },
     };
 
-    expect(await checkImages(settings, fakeFetch(sources), now)).toEqual([
+    expect(
+      await checkPins(settings, releaseAge, fakeFetch(sources), now),
+    ).toEqual([
       `pnpm  5.1.0 → 6.0.0  PNPM_IMAGE=ghcr.io/pnpm/pnpm:6.0.0@${newDigest}`,
     ]);
   });
@@ -195,7 +211,9 @@ describe("checkImages", () => {
       nodeTags: { "40.2.0-trixie-slim": newDigest },
     };
 
-    expect(await checkImages(settings, fakeFetch(sources), now)).toEqual([
+    expect(
+      await checkPins(settings, releaseAge, fakeFetch(sources), now),
+    ).toEqual([
       `node  40.2.0 rebuilt  NODE_IMAGE=node:40.2.0-trixie-slim@${newDigest}`,
     ]);
   });
@@ -206,7 +224,7 @@ describe("checkImages", () => {
         ? Promise.resolve(new Response("", { status: 503 }))
         : fakeFetch(upToDate)(url);
 
-    await expect(checkImages(settings, failing, now)).rejects.toThrow(
+    await expect(checkPins(settings, releaseAge, failing, now)).rejects.toThrow(
       "https://nodejs.org/dist/index.json: HTTP 503",
     );
   });
@@ -217,7 +235,7 @@ describe("checkImages", () => {
         ? Promise.resolve(json({ versions: [] }))
         : fakeFetch(upToDate)(url);
 
-    await expect(checkImages(settings, odd, now)).rejects.toThrow(
+    await expect(checkPins(settings, releaseAge, odd, now)).rejects.toThrow(
       "https://registry.npmjs.org/pnpm",
     );
   });
@@ -226,7 +244,7 @@ describe("checkImages", () => {
     const unknown = `OTHER_IMAGE=debian:13.0@${nodeDigest}\n`;
 
     await expect(
-      checkImages(unknown, fakeFetch(upToDate), now),
+      checkPins(unknown, releaseAge, fakeFetch(upToDate), now),
     ).rejects.toThrow("debian");
   });
 
@@ -234,7 +252,40 @@ describe("checkImages", () => {
     const unpinned = "NODE_IMAGE=node:40.2.0-trixie-slim\n";
 
     await expect(
-      checkImages(unpinned, fakeFetch(upToDate), now),
+      checkPins(unpinned, releaseAge, fakeFetch(upToDate), now),
     ).rejects.toThrow("NODE_IMAGE");
+  });
+
+  it("takes the release age it is given", async () => {
+    const sources: Sources = {
+      ...upToDate,
+      node: [
+        { version: "v40.3.0", date: "2030-06-25", lts: "Fictional" },
+        ...upToDate.node,
+      ],
+      nodeTags: { ...upToDate.nodeTags, "40.3.0-trixie-slim": newDigest },
+    };
+    const threeDays = 4320;
+
+    expect(
+      await checkPins(settings, threeDays, fakeFetch(sources), now),
+    ).toEqual([
+      `node  40.2.0 → 40.3.0  NODE_IMAGE=node:40.3.0-trixie-slim@${newDigest}`,
+    ]);
+  });
+});
+
+describe("readReleaseAge", () => {
+  it("reads pnpm's minimum release age, in minutes", () => {
+    const workspace =
+      "# A comment\nminimumReleaseAge: 10080\nsaveExact: true\n";
+
+    expect(readReleaseAge(workspace)).toBe(releaseAge);
+  });
+
+  it("fails when pnpm's settings do not set it", () => {
+    expect(() => readReleaseAge("saveExact: true\n")).toThrow(
+      "minimumReleaseAge",
+    );
   });
 });

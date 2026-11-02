@@ -1,6 +1,6 @@
 # 0018. Image report
 
-- Status: Accepted; partly superseded by 0039: where the script lives, and by 0043: where the pins are read
+- Status: Accepted; partly superseded by 0039: where the script lives, and by 0043: where the pins are read, and by 0044: the release age
 - Date: 2026-11-01
 
 ## Context

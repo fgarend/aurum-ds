@@ -6,8 +6,8 @@ import { createRoot } from "react-dom/client";
 import { beforeAll, it } from "vitest";
 import { page } from "vitest/browser";
 import tokens from "../../reference/artifact/tokens.json?raw";
-import { compileTokens } from "../build-tokens/compile.js";
-import { capture, runScript, withLocalFonts } from "./capture.js";
+import { compileTokens } from "../build-tokens/compile.ts";
+import { capture, runScript, withLocalFonts } from "./capture.ts";
 
 const previews = import.meta.glob<string>(
   "../../reference/artifact/components/*/preview.html",
@@ -22,8 +22,29 @@ const bundleCss =
 const bundleJs = bundle["../../reference/artifact/components/bundle.js"] ?? "";
 const cardHeight = /@dsCard[^>]*\bheight=(?<height>\d+)/u;
 const previewName = /components\/(?<name>[^/]+)\/preview\.html$/u;
-// The artifact gives no width: the tokens' content-max, grown when the content is wider.
-const width = 1200;
+const pixels = /^(?<number>\d+)px$/u;
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+// The artifact gives no width: its tokens' content-max, grown when the content is wider.
+function contentMax(source: string): number {
+  const parsed: unknown = JSON.parse(source);
+  const layout = isRecord(parsed) ? parsed["layout"] : undefined;
+  const list = isRecord(layout) ? layout["tokens"] : undefined;
+  const token = Array.isArray(list)
+    ? list.find((entry) => isRecord(entry) && entry["name"] === "content-max")
+    : undefined;
+  const value = isRecord(token) ? token["value"] : undefined;
+  const width = typeof value === "string" ? value.match(pixels) : null;
+  if (width?.groups === undefined) {
+    throw new Error("The artifact's tokens.json has no content-max in pixels");
+  }
+  return Number(width.groups["number"]);
+}
+
+const width = contentMax(tokens);
 const defaultHeight = 120;
 
 // What the artifact's frame loads before a preview: its tokens, its components' CSS and script, and React.

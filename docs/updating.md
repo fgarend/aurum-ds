@@ -22,7 +22,7 @@ updated first, in commits of its own, so the item starts from a current base.
   with `packageManager` (decision 0008); the Node image alone.
 - **Only versions past the release age** (decision 0009). `pnpm add` refuses a
   younger one, and `make outdated` lists only those old enough.
-- **`make test` passes.** A small fix the update needs goes in the same commit.
+- **`make check` passes.** A small fix the update needs goes in the same commit.
   An update that needs more waits: its package goes into `update.ignoreDeps`
   in `pnpm-workspace.yaml`, with the reason, and the move becomes a deferred
   roadmap item.
@@ -36,14 +36,14 @@ age, with its advisory.
 ## How
 
 - **A dependency:** `pnpm add -D <package>@<version>` in a container, as
-  `make install` runs pnpm, then `make test`. A runtime dependency keeps its
+  `make install` runs pnpm, then `make check`. A runtime dependency keeps its
   range: `pnpm add <package>@^<version>` (decision 0028).
 - **A pinned image:** copy the line `make outdated` prints into
   `infra/settings.env` (decision 0043). For pnpm, change `packageManager` in
   `package.json` to the same version and run `make install`. For Node, the
   browser's system packages follow the image's Debian snapshot: run
   `make reference` and `make screenshots`, and review any screenshot that
-  changes (decisions 0033 and 0034). Then `make test`.
+  changes (decisions 0033 and 0034). Then `make check`.
 - **Playwright:** the `playwright` package installs the browser (decision
   0043), so after updating it run `make reference` and `make screenshots`
   too, and review what changes.

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { compileTokens } from "./compile.js";
+import { compileTokens } from "./compile.ts";
 
 // Fictitious tokens, a few per rule. The rules follow the artifact type's own compiler (decision 0026).
 const minimal = {

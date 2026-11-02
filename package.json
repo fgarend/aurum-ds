@@ -10,6 +10,23 @@
   },
   "type": "module",
   "packageManager": "pnpm@12.15.0",
+  "scripts": {
+    "lint": "biome ci --error-on-warnings",
+    "types": "tsc && tsc -p tsconfig.node.json && tsc -p tsconfig.browser.json",
+    "test": "vitest run --project node --project dom",
+    "test-repository": "vitest run --project repository",
+    "test-browser": "vitest run --project browser",
+    "pack": "node scripts/check-package.ts /pnpm-store",
+    "format": "biome check --write",
+    "tokens": "node scripts/build-tokens/main.ts",
+    "watch": "vitest --project node --project dom",
+    "screenshots": "node scripts/update-screenshots.ts",
+    "reference": "vitest run --project reference",
+    "prototype": "vite reference/prototype --host 0.0.0.0 --port \"$PROTOTYPE_PORT\" --strictPort",
+    "outdated-deps": "pnpm outdated",
+    "outdated-pins": "node scripts/check-pins.ts",
+    "audit": "pnpm audit"
+  },
   "exports": {
     "./tokens.css": "./src/tokens/tokens.css",
     "./fonts.css": "./src/fonts/fonts.css",

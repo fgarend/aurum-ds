@@ -1,7 +1,7 @@
 // Reads tokens.json into what the compiler writes (decision 0026), checking each token against the artifact type's
 // grammar. A token the artifact would leave out fails here instead, naming its family and name.
 
-import { readFamilies, readStyles, type TextStyle } from "./typography.js";
+import { readFamilies, readStyles, type TextStyle } from "./typography.ts";
 import {
   fail,
   isRecord,
@@ -9,7 +9,7 @@ import {
   readLength,
   readName,
   records,
-} from "./validate.js";
+} from "./validate.ts";
 
 interface Token {
   name: string;

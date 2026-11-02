@@ -1,6 +1,6 @@
 # 0039. Repository layout
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0044: the name of the image report
 - Date: 2026-11-02
 
 ## Context

@@ -12,8 +12,8 @@ GitHub at its tag (decision 0037), so the tag is the release.
    each breaking change is marked **Breaking:** with its upgrade steps.
 3. **Change `version` in `package.json`** to the same number.
 4. **Check the package:**
-   - `make test` passes.
-   - `make pack` passes: the app can import every export (decision 0038).
+   - `make check` passes, `make pack` included: the app can import every
+     export (decisions 0038 and 0044).
    - The files the app receives, those `files` lists in `package.json`, are
      compared with the previous tag, and the changelog tells every change:
      `git diff vA.B.C -- <each file in files>`. The first release has no

@@ -1,6 +1,6 @@
 # 0038. Package check
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0044: when it runs
 - Date: 2026-11-02
 
 ## Context

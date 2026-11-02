@@ -1,5 +1,5 @@
-// Reports the images pinned by hand in infra/settings.env that have something to look at (decisions 0018 and 0043):
-// a newer version past the release age, or the same version rebuilt. Run by make outdated.
+// Reports the images pinned by hand in infra/settings.env that have something to look at (decisions 0018, 0043 and
+// 0044): a newer version past pnpm's release age, or the same version rebuilt. Run by make outdated-pins.
 import { readFile } from "node:fs/promises";
 
 type Fetch = (url: string, init?: RequestInit) => Promise<Response>;
@@ -18,10 +18,9 @@ interface Candidate {
   releasedAt: Date;
 }
 
-// Decision 0009: seven days, counted from the release of the version.
-const releaseAgeDays = 7;
-const msPerDay = 86_400_000;
-const releaseAgeMs = releaseAgeDays * msPerDay;
+const msPerMinute = 60_000;
+// pnpm's setting, in minutes (decision 0009), the one source of the release age.
+const releaseAgeSetting = /^minimumReleaseAge:\s*(?<minutes>\d+)\s*$/mu;
 const httpNotFound = 404;
 
 // Every variable that names an image, such as NODE_IMAGE=node:26.12.1-trixie-slim@sha256:….
@@ -210,9 +209,19 @@ const sources: Record<string, Source> = {
   },
 };
 
+// The release age pnpm-workspace.yaml sets, in minutes.
+function readReleaseAge(workspace: string): number {
+  const minutes = workspace.match(releaseAgeSetting)?.groups?.["minutes"];
+  if (minutes === undefined) {
+    throw new Error("pnpm-workspace.yaml sets no minimumReleaseAge");
+  }
+  return Number(minutes);
+}
+
 async function checkPin(
   fetchFn: Fetch,
   pin: Pin,
+  releaseAgeMs: number,
   now: Date,
 ): Promise<string | undefined> {
   const source = sources[pin.image];
@@ -242,13 +251,15 @@ async function checkPin(
   return undefined;
 }
 
-async function checkImages(
+async function checkPins(
   settings: string,
+  releaseAgeMinutes: number,
   fetchFn: Fetch,
   now: Date,
 ): Promise<string[]> {
+  const releaseAgeMs = releaseAgeMinutes * msPerMinute;
   const lines = await Promise.all(
-    readPins(settings).map((pin) => checkPin(fetchFn, pin, now)),
+    readPins(settings).map((pin) => checkPin(fetchFn, pin, releaseAgeMs, now)),
   );
   return lines.filter((line) => line !== undefined);
 }
@@ -258,7 +269,16 @@ async function main(): Promise<void> {
     new URL("../infra/settings.env", import.meta.url),
     "utf8",
   );
-  const lines = await checkImages(settings, fetch, new Date());
+  const workspace = await readFile(
+    new URL("../pnpm-workspace.yaml", import.meta.url),
+    "utf8",
+  );
+  const lines = await checkPins(
+    settings,
+    readReleaseAge(workspace),
+    fetch,
+    new Date(),
+  );
   for (const line of lines) {
     console.log(line);
   }
@@ -274,4 +294,4 @@ if (import.meta.main) {
   }
 }
 
-export { checkImages, type Fetch };
+export { checkPins, type Fetch, readReleaseAge };

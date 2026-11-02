@@ -10,6 +10,8 @@
     // types; nothing here runs in a browser but the renders, which Vitest runs there.
     "lib": ["es2023", "dom"],
     // Vite's client types declare the files the renders import raw.
-    "types": ["node", "vite/client"]
+    "types": ["node", "vite/client"],
+    // Node runs these files as they are, so they import each other by their .ts names (decision 0044).
+    "allowImportingTsExtensions": true
   }
 }

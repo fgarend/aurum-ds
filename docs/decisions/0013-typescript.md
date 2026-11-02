@@ -1,6 +1,6 @@
 # 0013. TypeScript
 
-- Status: Accepted; partly superseded by 0024: the TypeScript line
+- Status: Accepted; partly superseded by 0024: the TypeScript line, and by 0044: imports in scripts and checks
 - Date: 2026-11-01
 
 ## Context

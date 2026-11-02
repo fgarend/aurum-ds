@@ -1,6 +1,6 @@
 # 0014. Test command
 
-- Status: Accepted; partly superseded by 0043: the test stage
+- Status: Accepted; partly superseded by 0043: the test stage, and by 0044: the list of checks and the first failure
 - Date: 2026-11-01
 
 ## Context
