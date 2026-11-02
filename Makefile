@@ -9,7 +9,7 @@ RUN := mkdir -p node_modules .vitest-attachments && $(COMPOSE) run --rm
 # The project's name, as infra/compose.yaml gives it. Compose marks every image it builds with it (decision 0043).
 PROJECT := $(shell sed -n 's/^name: //p' infra/compose.yaml)
 
-.PHONY: help check lint types test test-repository test-browser pack check-release release-notes install format tokens watch screenshots \
+.PHONY: help check lint types test test-repository test-browser pack check-release release-notes release-package install format tokens watch screenshots \
 	reference prototype images clean outdated outdated-deps outdated-pins audit
 .DEFAULT_GOAL := help
 
@@ -55,6 +55,10 @@ check-release: ## Check package.json's version can be released: its dated change
 release-notes: ## Print a version's notes from CHANGELOG.md, and nothing else on standard output. VERSION=X.Y.Z
 	@$(COMPOSE) build --quiet tools >&2
 	@$(RUN) -T tools pnpm --silent run release-notes $(VERSION)
+
+release-package: ## Write the packed package, as make pack checks it, on standard output and nothing else
+	@$(COMPOSE) build --quiet tools >&2
+	@$(RUN) -T tools pnpm --silent run release-package
 
 ##@ Development
 

@@ -1,6 +1,6 @@
 # Releasing
 
-How a version is released (decisions 0004, 0040, 0048 and 0049). The app installs
+How a version is released (decisions 0004, 0040, 0048, 0049 and 0051). The app installs
 it from GitHub at its tag (decision 0037), so the tag is the release. It is
 created by the `release` workflow, never by hand: GitHub then refuses to move
 or delete it.
@@ -27,7 +27,9 @@ or delete it.
    version and the full commit. It runs every check again on that commit,
    runs `make check-release`, checks the commit is on `main`, creates the
    annotated tag `vX.Y.Z` on it, and publishes the release page with the
-   version's notes from the changelog (decision 0049).
+   version's notes from the changelog (decision 0049) and the packed package,
+   `fgarend-aurum-ds-X.Y.Z.tgz` (decision 0051). The release is immutable once
+   published: its tag and its package never change.
 7. **The app moves to the tag**, `github:fgarend/aurum-ds#vX.Y.Z`, in its own
    repository.
 

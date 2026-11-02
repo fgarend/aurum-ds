@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 7.22.
+**Now:** 7.23.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -64,12 +64,21 @@ changelog, and a release.
 
 Done: 7.21.
 
+- **7.23 · The package on each release page.** The app's web image has no
+  `git`, and the `github:` form needs it to resolve a tag (`git ls-remote`).
+  The tag's tarball from `codeload.github.com` needs no `git`, but it is the
+  whole repository, 9.7 MB, since pnpm applies `files` only when it packs a
+  git dependency itself (tried with pnpm 12.15.0). The `release` workflow
+  attaches the packed package to the release page, so the app installs it by
+  URL, without `git`, receiving only what `files` lists. Release immutability
+  is on, so `v0.1.0` cannot get its package: the app installs it by its commit
+  until the item ends with the release of `v0.1.1`.
 - **7.22 · Both ways to install.** Asked by the app: the README,
-  `docs/consumers.md`, `docs/guidelines.md` and decision 0037 name both forms.
-  `github:fgarend/aurum-ds#vX.Y.Z` needs `git` to resolve the tag; the tag's
-  tarball, `https://codeload.github.com/fgarend/aurum-ds/tar.gz/refs/tags/vX.Y.Z`,
-  needs none, and is the form the app uses. A candidate by commit,
-  `github:fgarend/aurum-ds#<commit>`, works without `git`.
+  `docs/consumers.md` and `docs/guidelines.md` name both forms.
+  `github:fgarend/aurum-ds#vX.Y.Z` needs `git` to resolve the tag; the
+  package on the release page (7.23) needs none. A candidate by commit,
+  `github:fgarend/aurum-ds#<commit>`, works without `git`. The tag's tarball
+  from `codeload.github.com`, the form the app uses now, is not one of them.
 - **7.1 (was 5.2) · Component conventions.** Folder layout, naming, props and
   exports. Item 5.17 found a folder per component the common layout, with
   written rules in Primer React's ADR-013 (file structure) and GOV.UK

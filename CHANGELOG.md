@@ -6,6 +6,11 @@ follow decision 0004.
 
 ## [Unreleased]
 
+### Added
+
+- The release page carries the packed package, `fgarend-aurum-ds-X.Y.Z.tgz`,
+  which installs by its URL with no `git`.
+
 ## [0.1.0] - 2026-11-02
 
 The base, with no component yet.
