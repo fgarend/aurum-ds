@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "prototype",
+      "runtimeExecutable": "make",
+      "runtimeArgs": ["prototype"],
+      "port": 5173
+    }
+  ]
+}

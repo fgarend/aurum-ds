@@ -7,7 +7,7 @@ SOURCE := https://github.com/fgarend/aurum-ds
 # pnpm's package store, kept in a volume so an install downloads nothing twice.
 STORE := aurum-ds-pnpm-store
 
-.PHONY: help install format tokens test watch screenshots reference pack clean outdated audit
+.PHONY: help install format tokens test watch screenshots reference prototype pack clean outdated audit
 .DEFAULT_GOAL := help
 
 ##@ Development
@@ -54,6 +54,11 @@ reference: ## Render the artifact's previews and the prototype's screens into re
 	docker build -f infra/Dockerfile --target browser -t $(IMAGE):browser .
 	docker run --rm -v "$(CURDIR)":/app -v /app/node_modules $(IMAGE):browser \
 		pnpm exec vitest run --project reference
+
+prototype: ## Serve the prototype's screens at http://localhost:5173, until stopped with Ctrl+C
+	docker build -f infra/Dockerfile --target test -t $(IMAGE):test .
+	docker run --rm --init -p 5173:5173 -v "$(CURDIR)":/app:ro -v /app/node_modules $(IMAGE):test \
+		pnpm exec vite reference/prototype --host 0.0.0.0 --port 5173 --strictPort
 
 pack: ## Before a release: pack the package, install it in a throwaway app and import every export
 	docker build -f infra/Dockerfile --target base -t $(IMAGE):base .

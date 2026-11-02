@@ -40,6 +40,9 @@ says otherwise. The repository is the source; the artifact is not.
 | `screenshots/<Name>.png` | Each preview rendered by `make reference`, the visual target for review (decision 0033) |
 | `screenshots/prototype/<Screen>.png` | Each prototype screen rendered by `make reference` (decision 0035) |
 
+`make prototype` serves the prototype's screens at `http://localhost:5173`,
+to browse them (decision 0042).
+
 How the artifact compiles tokens, loads the bundle and renders previews is in
 `docs/artifact-format.md`, kept with the rest of what this repository writes
 (decision 0039).

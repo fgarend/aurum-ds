@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 5.16.
+**Now:** 5.18.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -43,11 +43,8 @@ The first release carries no component: the tokens, the fonts and the base
 styles, which the app can adopt on its own. It proves the way from this
 repository to the app with little at stake.
 
-Done: 5.1, 5.7, 5.8, 5.9, 5.12, 5.13, 5.14, 5.15, 5.17.
+Done: 5.1, 5.7, 5.8, 5.9, 5.12, 5.13, 5.14, 5.15, 5.16, 5.17.
 
-- **5.16 · `make prototype`.** Serves `reference/prototype/` in a container,
-  to browse the prototype's screens, so `.claude/launch.json` can call it
-  with no path of one machine and be kept in the repository.
 - **5.18 · Renders as a plain program.** Rewrite the two `.render.ts`
   suites as a program run by Playwright, since they only borrow Vitest to open
   the browser and check nothing (decision 0033 did not weigh it), keeping
