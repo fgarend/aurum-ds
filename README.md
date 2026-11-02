@@ -15,11 +15,19 @@ What changes in each version is in `CHANGELOG.md`.
 
 ## Install
 
-From GitHub, at a release's tag:
+From the package on a release's page, with no `git` needed:
 
 ```json
-"@fgarend/aurum-ds": "github:fgarend/aurum-ds#v0.1.0"
+"@fgarend/aurum-ds": "https://github.com/fgarend/aurum-ds/releases/download/vX.Y.Z/fgarend-aurum-ds-X.Y.Z.tgz"
 ```
+
+Or from GitHub at the release's tag, which needs `git`:
+
+```json
+"@fgarend/aurum-ds": "github:fgarend/aurum-ds#vX.Y.Z"
+```
+
+`X.Y.Z` is a version from `CHANGELOG.md`.
 
 React 19 is a peer dependency.
 

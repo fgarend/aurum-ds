@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 7.22.
+**Now:** 7.1.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -62,14 +62,8 @@ test (decision 0034), a comparison with its reference screenshot (decisions
 0033 and 0035), the guidelines' Components section (decision 0031), the
 changelog, and a release.
 
-Done: 7.21, 7.23.
+Done: 7.21, 7.22, 7.23.
 
-- **7.22 · Both ways to install.** Asked by the app: the README,
-  `docs/consumers.md` and `docs/guidelines.md` name both forms.
-  `github:fgarend/aurum-ds#vX.Y.Z` needs `git` to resolve the tag; the
-  package on the release page (7.23) needs none. A candidate by commit,
-  `github:fgarend/aurum-ds#<commit>`, works without `git`. The tag's tarball
-  from `codeload.github.com`, the form the app uses now, is not one of them.
 - **7.1 (was 5.2) · Component conventions.** Folder layout, naming, props and
   exports. Item 5.17 found a folder per component the common layout, with
   written rules in Primer React's ADR-013 (file structure) and GOV.UK

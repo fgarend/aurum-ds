@@ -22,9 +22,13 @@ Read from the app's repository on 2026-11-01.
 
 ## What the app must do
 
-- **Install** the package from GitHub at a release's tag, such as
-  `"@fgarend/aurum-ds": "github:fgarend/aurum-ds#v0.1.0"`, and move to a new
-  release by changing the tag (decision 0037).
+- **Install** the package from a release's page, with no `git` needed:
+  `"@fgarend/aurum-ds": "https://github.com/fgarend/aurum-ds/releases/download/vX.Y.Z/fgarend-aurum-ds-X.Y.Z.tgz"`,
+  or from GitHub at the release's tag, which needs `git`:
+  `"@fgarend/aurum-ds": "github:fgarend/aurum-ds#vX.Y.Z"`. Move to a new
+  release by changing the version, one from `CHANGELOG.md` (decisions 0037
+  and 0051). Not the tag's tarball from `codeload.github.com`: it holds the
+  whole repository, not only the package's files.
 - **Import** `@fgarend/aurum-ds/fonts.css`, `@fgarend/aurum-ds/tokens.css`
   and `@fgarend/aurum-ds/base.css`, in that order (decisions 0026, 0027, 0030
   and 0036).

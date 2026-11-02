@@ -111,6 +111,6 @@ Typical dashboard: `Sidebar` · page title · a `Section` (title, period switch,
 
 ## Using Aurum in a project
 
-- Import the fonts (`@fgarend/aurum-ds/fonts.css`), the tokens (`@fgarend/aurum-ds/tokens.css`) and the base styles (`@fgarend/aurum-ds/base.css`), in that order, and put the `au-root` class where Aurum begins (decisions 0026, 0027, 0030 and 0036). Install it from GitHub at a release's tag: `"@fgarend/aurum-ds": "github:fgarend/aurum-ds#v0.1.0"` (decision 0037).
+- Import the fonts (`@fgarend/aurum-ds/fonts.css`), the tokens (`@fgarend/aurum-ds/tokens.css`) and the base styles (`@fgarend/aurum-ds/base.css`), in that order, and put the `au-root` class where Aurum begins (decisions 0026, 0027, 0030 and 0036). Install it from a release's page, with no `git` needed: `"@fgarend/aurum-ds": "https://github.com/fgarend/aurum-ds/releases/download/vX.Y.Z/fgarend-aurum-ds-X.Y.Z.tgz"`, or from GitHub at the release's tag, which needs `git`: `"@fgarend/aurum-ds": "github:fgarend/aurum-ds#vX.Y.Z"`, where `X.Y.Z` is a version from `CHANGELOG.md` (decisions 0037 and 0051).
 - Without React, keep the tokens and type scale and reproduce components from their READMEs — the values all live in tokens.
 - Theme it for another product by changing `primary*`, `on-primary`, `primary-soft` and the four accents; keep the semantic finance colours and the contrast notes intact.
