@@ -68,6 +68,15 @@ test (decision 0034), a comparison with its reference screenshot (decisions
 0033 and 0035), the guidelines' Components section (decision 0031), the
 changelog, and a release.
 
+- **7.21 · Continuous integration.** Running the checks on GitHub on every
+  push, once the repository is public (item 5.10), as all nine design systems
+  surveyed do (item 5.19). Discussed in detail, as one whole, with how the
+  checks run today: the `Makefile`, the scripts, the Dockerfile and whether
+  Docker Compose has a place. Check whether the runner draws screenshots as
+  the Mac's containers do, while there is a single visual test. It opens the
+  way to the update bot, the image scan and a hosted visual review (Chromatic,
+  Percy, Argos and Happo each have a free plan of 5,000 screenshots a month,
+  and screenshots leave the repository).
 - **7.1 (was 5.2) · Component conventions.** Folder layout, naming, props and
   exports. Item 5.17 found a folder per component the common layout, with
   written rules in Primer React's ADR-013 (file structure) and GOV.UK
@@ -136,10 +145,6 @@ No order between them; each becomes items when its time comes.
 - **Artifact mirror.** Keeping the Claude Design artifact in sync with this
   repository. Its previews load React 18.3.1, and the package supports only
   React 19 (decision 0019). Its icons must follow Lucide (decision 0029).
-- **Continuous integration.** Running `make test` on GitHub. With it, a hosted
-  visual review becomes possible: Chromatic, Percy, Argos and Happo each have
-  a free plan of 5,000 screenshots a month, and screenshots leave the
-  repository (item 5.19).
 - **License.** See decision 0002.
 - **Dark theme.** When the app's first screen needs it. The token compiler
   fails on a second theme until then (decision 0026).
