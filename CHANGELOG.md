@@ -6,6 +6,8 @@ follow decision 0004.
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-11-02
+
 ### Added
 
 - The release page carries the packed package, `fgarend-aurum-ds-X.Y.Z.tgz`,
@@ -28,5 +30,6 @@ The base, with no component yet.
   `"@fgarend/aurum-ds": "github:fgarend/aurum-ds#v0.1.0"`. React 19 is a peer
   dependency.
 
-[Unreleased]: https://github.com/fgarend/aurum-ds/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/fgarend/aurum-ds/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/fgarend/aurum-ds/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/fgarend/aurum-ds/tree/v0.1.0
