@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 5.9.
+**Now:** 5.13.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -43,11 +43,16 @@ The first release carries no component: the tokens, the fonts and the base
 styles, which the app can adopt on its own. It proves the way from this
 repository to the app with little at stake.
 
-Done: 5.1, 5.7, 5.8, 5.12.
+Done: 5.1, 5.7, 5.8, 5.9, 5.12.
 
-- **5.9 · Package check.** `make pack`: what the app will receive.
-- **5.10 · Release v0.1.0.** The changelog and the first tag. The app then
-  installs it and adopts it, in its own repository.
+- **5.13 · Organizing `infra/`.** How the folder's files are arranged: the
+  `Dockerfile`, the scripts, their tests and the configurations.
+- **5.14 · Release process.** How design system libraries release: the
+  changelog, tags, versions and the tools they use, to settle ours before the
+  first release.
+- **5.10 · Release v0.1.0.** The changelog and the first tag, after
+  `make pack` passes (decision 0038), and the first push. The app then
+  installs it from GitHub and adopts it, in its own repository.
 
 ## 7. One component per release
 
