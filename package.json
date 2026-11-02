@@ -24,7 +24,7 @@
     "reference": "vitest run --project reference",
     "prototype": "vite reference/prototype --host 0.0.0.0 --port \"$PROTOTYPE_PORT\" --strictPort",
     "outdated-deps": "pnpm outdated",
-    "outdated-pins": "node scripts/check-pins.ts",
+    "outdated-pins": "node scripts/check-pins/main.ts",
     "audit": "pnpm audit"
   },
   "exports": {

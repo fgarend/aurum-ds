@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { checkPins, type Fetch, readReleaseAge } from "./check-pins.ts";
+import { checkImages } from "./images.ts";
+import type { Fetch } from "./shared.ts";
 
 // Fictitious versions, dates and digests: no real release is described here.
 const digestLength = 64;
@@ -94,10 +95,10 @@ function fakeFetch(sources: Sources): Fetch {
   };
 }
 
-describe("checkPins", () => {
+describe("checkImages", () => {
   it("reports nothing when every image is current", async () => {
     expect(
-      await checkPins(settings, releaseAge, fakeFetch(upToDate), now),
+      await checkImages(settings, releaseAge, fakeFetch(upToDate), now),
     ).toEqual([]);
   });
 
@@ -112,7 +113,7 @@ describe("checkPins", () => {
     };
 
     expect(
-      await checkPins(settings, releaseAge, fakeFetch(sources), now),
+      await checkImages(settings, releaseAge, fakeFetch(sources), now),
     ).toEqual([
       `node  40.2.0 → 40.3.0  NODE_IMAGE=node:40.3.0-trixie-slim@${newDigest}`,
     ]);
@@ -129,7 +130,7 @@ describe("checkPins", () => {
     };
 
     expect(
-      await checkPins(settings, releaseAge, fakeFetch(sources), now),
+      await checkImages(settings, releaseAge, fakeFetch(sources), now),
     ).toEqual([]);
   });
 
@@ -145,7 +146,7 @@ describe("checkPins", () => {
     };
 
     expect(
-      await checkPins(settings, releaseAge, fakeFetch(sources), now),
+      await checkImages(settings, releaseAge, fakeFetch(sources), now),
     ).toEqual([
       `node  40.2.0 → 40.3.0  NODE_IMAGE=node:40.3.0-trixie-slim@${newDigest}`,
     ]);
@@ -162,7 +163,7 @@ describe("checkPins", () => {
     };
 
     expect(
-      await checkPins(settings, releaseAge, fakeFetch(sources), now),
+      await checkImages(settings, releaseAge, fakeFetch(sources), now),
     ).toEqual([]);
   });
 
@@ -177,7 +178,7 @@ describe("checkPins", () => {
     };
 
     expect(
-      await checkPins(settings, releaseAge, fakeFetch(sources), now),
+      await checkImages(settings, releaseAge, fakeFetch(sources), now),
     ).toEqual([
       `node  40.2.0 → 42.0.0  NODE_IMAGE=node:42.0.0-trixie-slim@${newDigest}`,
     ]);
@@ -199,7 +200,7 @@ describe("checkPins", () => {
     };
 
     expect(
-      await checkPins(settings, releaseAge, fakeFetch(sources), now),
+      await checkImages(settings, releaseAge, fakeFetch(sources), now),
     ).toEqual([
       `pnpm  5.1.0 → 6.0.0  PNPM_IMAGE=ghcr.io/pnpm/pnpm:6.0.0@${newDigest}`,
     ]);
@@ -212,7 +213,7 @@ describe("checkPins", () => {
     };
 
     expect(
-      await checkPins(settings, releaseAge, fakeFetch(sources), now),
+      await checkImages(settings, releaseAge, fakeFetch(sources), now),
     ).toEqual([
       `node  40.2.0 rebuilt  NODE_IMAGE=node:40.2.0-trixie-slim@${newDigest}`,
     ]);
@@ -224,9 +225,9 @@ describe("checkPins", () => {
         ? Promise.resolve(new Response("", { status: 503 }))
         : fakeFetch(upToDate)(url);
 
-    await expect(checkPins(settings, releaseAge, failing, now)).rejects.toThrow(
-      "https://nodejs.org/dist/index.json: HTTP 503",
-    );
+    await expect(
+      checkImages(settings, releaseAge, failing, now),
+    ).rejects.toThrow("https://nodejs.org/dist/index.json: HTTP 503");
   });
 
   it("fails on an answer in an unexpected shape", async () => {
@@ -235,7 +236,7 @@ describe("checkPins", () => {
         ? Promise.resolve(json({ versions: [] }))
         : fakeFetch(upToDate)(url);
 
-    await expect(checkPins(settings, releaseAge, odd, now)).rejects.toThrow(
+    await expect(checkImages(settings, releaseAge, odd, now)).rejects.toThrow(
       "https://registry.npmjs.org/pnpm",
     );
   });
@@ -244,7 +245,7 @@ describe("checkPins", () => {
     const unknown = `OTHER_IMAGE=debian:13.0@${nodeDigest}\n`;
 
     await expect(
-      checkPins(unknown, releaseAge, fakeFetch(upToDate), now),
+      checkImages(unknown, releaseAge, fakeFetch(upToDate), now),
     ).rejects.toThrow("debian");
   });
 
@@ -252,7 +253,7 @@ describe("checkPins", () => {
     const unpinned = "NODE_IMAGE=node:40.2.0-trixie-slim\n";
 
     await expect(
-      checkPins(unpinned, releaseAge, fakeFetch(upToDate), now),
+      checkImages(unpinned, releaseAge, fakeFetch(upToDate), now),
     ).rejects.toThrow("NODE_IMAGE");
   });
 
@@ -268,24 +269,9 @@ describe("checkPins", () => {
     const threeDays = 4320;
 
     expect(
-      await checkPins(settings, threeDays, fakeFetch(sources), now),
+      await checkImages(settings, threeDays, fakeFetch(sources), now),
     ).toEqual([
       `node  40.2.0 → 40.3.0  NODE_IMAGE=node:40.3.0-trixie-slim@${newDigest}`,
     ]);
-  });
-});
-
-describe("readReleaseAge", () => {
-  it("reads pnpm's minimum release age, in minutes", () => {
-    const workspace =
-      "# A comment\nminimumReleaseAge: 10080\nsaveExact: true\n";
-
-    expect(readReleaseAge(workspace)).toBe(releaseAge);
-  });
-
-  it("fails when pnpm's settings do not set it", () => {
-    expect(() => readReleaseAge("saveExact: true\n")).toThrow(
-      "minimumReleaseAge",
-    );
   });
 });

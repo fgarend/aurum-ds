@@ -1,0 +1,47 @@
+# Runs the checks of make check on every push to main, every pull request, and by hand (decision 0046). Each check is a
+# step of its own, and every step runs even when one before it failed, as make -k does. The steps must stay those of
+# make check, in its order: test/workflows.test.ts compares them.
+name: check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    # ARM, as the machines the approved screenshots were taken on.
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - id: images
+        run: make images
+      - if: ${{ !cancelled() && steps.images.outcome == 'success' }}
+        run: make lint
+      - if: ${{ !cancelled() && steps.images.outcome == 'success' }}
+        run: make types
+      - if: ${{ !cancelled() && steps.images.outcome == 'success' }}
+        run: make test
+      - if: ${{ !cancelled() && steps.images.outcome == 'success' }}
+        run: make test-repository
+      - if: ${{ !cancelled() && steps.images.outcome == 'success' }}
+        run: make test-browser
+      - if: ${{ !cancelled() && steps.images.outcome == 'success' }}
+        run: make pack
+      # The images a failing visual test writes, to download from the run's page.
+      - if: ${{ failure() }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: vitest-attachments
+          path: .vitest-attachments/
+          if-no-files-found: ignore

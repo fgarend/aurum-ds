@@ -38,6 +38,8 @@ age, with its advisory.
 - **A dependency:** `pnpm add -D <package>@<version>` in a container, as
   `make install` runs pnpm, then `make check`. A runtime dependency keeps its
   range: `pnpm add <package>@^<version>` (decision 0028).
+- **A pinned action:** copy the line `make outdated` prints over the action's
+  `uses:` line, in every workflow that uses it (decision 0046).
 - **A pinned image:** copy the line `make outdated` prints into
   `infra/settings.env` (decision 0043). For pnpm, change `packageManager` in
   `package.json` to the same version and run `make install`. For Node, the

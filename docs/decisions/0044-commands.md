@@ -1,6 +1,6 @@
 # 0044. Commands
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0046: the image report as one file
 - Date: 2026-11-02
 
 ## Context

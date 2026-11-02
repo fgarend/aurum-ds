@@ -1,0 +1,20 @@
+# Lists the known vulnerabilities in the dependencies every week, and by hand (decision 0046). GitHub stops a schedule
+# after 60 days without activity in the repository.
+name: audit
+
+on:
+  schedule:
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: make audit
