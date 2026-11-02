@@ -86,6 +86,13 @@ changelog, and a release.
   in JSX.
 - **7.5 (was 5.11) · Coverage.** The tool, and whether `make test` requires a
   minimum.
+- **7.20 · Storybook.** Whether to adopt it, before the first component, since
+  its stories would live in each component's folder and could become its
+  tests: a gallery of each component in every state (a `make run`), the
+  Vitest addon running stories as browser tests, and the accessibility addon
+  failing a test on axe-core violations. Five of nine design systems surveyed
+  use it, and MUI, GOV.UK and Ant Design do not (item 5.19). Check it works
+  with React 19, TypeScript 7 (decision 0024) and the containers.
 - **7.19 · Build of components.** The bundler for the TypeScript and JSX of
   the components, and what `dist/` contains. Only tools that work with
   TypeScript 7 (decision 0024). `tsconfig.json` then emits: `noEmit`,
@@ -126,9 +133,6 @@ changelog, and a release.
 
 No order between them; each becomes items when its time comes.
 
-- **Storybook.** A component gallery, which would also serve `make run`. Five
-  of nine design systems surveyed use it, and MUI, GOV.UK and Ant Design do
-  not (item 5.19).
 - **Artifact mirror.** Keeping the Claude Design artifact in sync with this
   repository. Its previews load React 18.3.1, and the package supports only
   React 19 (decision 0019). Its icons must follow Lucide (decision 0029).
