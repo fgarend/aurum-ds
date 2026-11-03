@@ -6,6 +6,8 @@ follow decision 0004.
 
 ## [Unreleased]
 
+## [0.1.3] - 2026-11-03
+
 ### Added
 
 - `AurumRoot`: wraps where Aurum begins, once, above any layout. It brings the
@@ -17,6 +19,11 @@ follow decision 0004.
   their own CSS: `test: { server: { deps: { inline: ["@fgarend/aurum-ds"] } } }`,
   in the README. Without it, a test that imports a component fails with
   `Unknown file extension ".css"`.
+
+### Changed
+
+- `.au-root` sets `color-scheme: light`, so the browser's controls and scroll
+  bars inside it follow Aurum's theme.
 
 ### Deprecated
 
@@ -64,7 +71,8 @@ The base, with no component yet.
   `"@fgarend/aurum-ds": "github:fgarend/aurum-ds#v0.1.0"`. React 19 is a peer
   dependency.
 
-[Unreleased]: https://github.com/fgarend/aurum-ds/compare/v0.1.2...HEAD
+[Unreleased]: https://github.com/fgarend/aurum-ds/compare/v0.1.3...HEAD
+[0.1.3]: https://github.com/fgarend/aurum-ds/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/fgarend/aurum-ds/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/fgarend/aurum-ds/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/fgarend/aurum-ds/tree/v0.1.0
