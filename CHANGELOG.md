@@ -6,6 +6,14 @@ follow decision 0004.
 
 ## [Unreleased]
 
+### Removed
+
+- **Breaking:** the exports `@fgarend/aurum-ds/fonts.css`,
+  `@fgarend/aurum-ds/tokens.css` and `@fgarend/aurum-ds/base.css`, deprecated
+  in 0.1.3. To upgrade: wrap where Aurum begins in `AurumRoot`, which brings all
+  three, and drop their imports. The tokens' variables and classes still reach
+  the app's own CSS through the root.
+
 ## [0.1.5] - 2026-11-03
 
 ### Added

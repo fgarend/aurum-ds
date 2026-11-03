@@ -1,6 +1,6 @@
 # 0064. Component exports
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0074: the three style sheets among the exports
 - Date: 2026-11-03
 
 ## Context

@@ -1,6 +1,6 @@
 # 0070. AurumRoot
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0074: the three exports, gone
 - Date: 2026-11-03
 
 ## Context

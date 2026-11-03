@@ -31,8 +31,7 @@ Read from the app's repository on 2026-11-01.
   whole repository, not only the package's files.
 - **Wrap where Aurum begins in `AurumRoot`**, once, above any layout: it
   brings the fonts, the tokens and the base styles, and draws no box of its
-  own (decision 0070). It replaces the imports of `fonts.css`, `tokens.css`
-  and `base.css`, deprecated, which leave in the next version that may break.
+  own (decisions 0070 and 0074).
 - **Import each component by its own path**, `@fgarend/aurum-ds/Icon`; the
   package's entry, `@fgarend/aurum-ds`, exports them all too (decision 0064).
 - **Hand the package to Vite in its Vitest settings**,

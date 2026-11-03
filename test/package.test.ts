@@ -5,7 +5,6 @@ import { describe, expect, it } from "vitest";
 const root = new URL("../", import.meta.url);
 // The package resolves its own name through its exports, as the app would.
 const { resolve } = createRequire(new URL("package.json", root));
-const files = ["tokens.css", "fonts.css", "base.css"];
 // The components, each importable by its own path as well as from the entry (decision 0064).
 const components = ["AppLayout", "AurumRoot", "Icon"];
 const leadingDotSlash = /^\.\//u;
@@ -32,10 +31,9 @@ async function readExports(): Promise<Record<string, unknown>> {
 
 // What the package ships is public (decisions 0004 and 0036): adding or removing a name changes the next version.
 describe("the package's exports", () => {
-  it("are exactly the entry, the public files and a path per component", async () => {
+  it("are exactly the entry and a path per component", async () => {
     expect(Object.keys(await readExports())).toEqual([
       ".",
-      ...files.map((file) => `./${file}`),
       "./*",
       "./package.json",
     ]);
@@ -68,7 +66,6 @@ describe("the package's exports", () => {
 
   it.each([
     "@fgarend/aurum-ds",
-    ...files.map((file) => `@fgarend/aurum-ds/${file}`),
     ...components.map((component) => `@fgarend/aurum-ds/${component}`),
   ])("resolve %s", async (specifier) => {
     await expect(access(resolve(specifier))).resolves.toBeUndefined();

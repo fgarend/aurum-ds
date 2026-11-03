@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 7.36.
+**Now:** 7.7.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -63,7 +63,7 @@ comparison with its reference screenshot (decisions 0033 and 0035), the
 guidelines' Components section (decision 0031), the changelog, and a
 release.
 
-Done: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.19, 7.20, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27, 7.28, 7.29, 7.31, 7.32, 7.33, 7.34, 7.35.
+Done: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.19, 7.20, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27, 7.28, 7.29, 7.31, 7.32, 7.33, 7.34, 7.35, 7.36.
 
 Dropped: 7.30, the gallery's title in the browser's tab. Storybook writes
 "⋅ Storybook" after each story's name in its own code, with no setting, and
@@ -71,13 +71,6 @@ the first title comes from a setting it does not document; changing it would
 mean a script fighting Storybook at every navigation, for a tab's text, while
 the gallery already shows Aurum's brand mark.
 
-- **7.36 · Release 0.2.0, after the client migrates.** First the client
-  (`wealth`) moves to a release with `AurumRoot` and the layers' order
-  (decision 0072), 0.1.4 or later, wraps itself in it
-  and drops its three imports from `index.css`. Then the deprecated exports
-  `fonts.css`, `tokens.css` and `base.css` go, `make pack` stops importing
-  them, and 0.2.0 is released, the version that may break (decisions 0004 and
-  0070).
 - **7.7 · Badge.**
 - **7.8 · Avatar.**
 - **7.9 · AvatarGroup.**

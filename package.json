@@ -36,9 +36,6 @@
   },
   "exports": {
     ".": "./dist/index.js",
-    "./tokens.css": "./dist/tokens/tokens.css",
-    "./fonts.css": "./dist/components/AurumRoot/fonts.css",
-    "./base.css": "./dist/components/AurumRoot/AurumRoot.css",
     "./*": "./dist/components/*/*.js",
     "./package.json": "./package.json"
   },

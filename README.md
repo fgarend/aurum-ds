@@ -43,9 +43,6 @@ import { AurumRoot } from "@fgarend/aurum-ds/AurumRoot";
 <AurumRoot>…</AurumRoot>;
 ```
 
-The style sheets `fonts.css`, `tokens.css` and `base.css` are still exported,
-and deprecated: `AurumRoot` replaces them.
-
 Import each component by its own path, so the app loads only what it uses;
 the package's entry exports them all too:
 
