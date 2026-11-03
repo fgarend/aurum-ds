@@ -30,7 +30,7 @@ types: ## The types, with TypeScript
 	$(COMPOSE) build tools
 	$(RUN) tools pnpm run types
 
-test: ## The tests of the code, in Node and in a simulated DOM
+test: ## The tests of logic, in Node
 	$(COMPOSE) build tools
 	$(RUN) tools pnpm run test
 

@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 7.26.
+**Now:** 7.27.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -63,13 +63,8 @@ comparison with its reference screenshot (decisions 0033 and 0035), the
 guidelines' Components section (decision 0031), the changelog, and a
 release.
 
-Done: 7.21, 7.22, 7.23, 7.24, 7.25.
+Done: 7.21, 7.22, 7.23, 7.24, 7.25, 7.26.
 
-- **7.26 · Tests' repetitions.** The base styles' browser test checks Geist
-  again, which `test/fonts.test.ts` and `src/fonts/fonts.browser.test.ts`
-  already cover. The Makefile's help still says `make test` runs "in a
-  simulated DOM", gone with decision 0052. Anything else repeated after 7.24
-  and 7.25.
 - **7.27 · Text styles' screenshot rewritten differently.** `make screenshots`
   writes `text-styles-chromium-linux.png` with other bytes than the approved
   one, already at f4f7807, though `make check` passes against it. Decision
