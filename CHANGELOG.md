@@ -6,6 +6,8 @@ follow decision 0004.
 
 ## [Unreleased]
 
+## [0.1.4] - 2026-11-03
+
 ### Fixed
 
 - With Tailwind, its reset no longer wins over a component's padding and margin,
@@ -78,7 +80,8 @@ The base, with no component yet.
   `"@fgarend/aurum-ds": "github:fgarend/aurum-ds#v0.1.0"`. React 19 is a peer
   dependency.
 
-[Unreleased]: https://github.com/fgarend/aurum-ds/compare/v0.1.3...HEAD
+[Unreleased]: https://github.com/fgarend/aurum-ds/compare/v0.1.4...HEAD
+[0.1.4]: https://github.com/fgarend/aurum-ds/compare/v0.1.3...v0.1.4
 [0.1.3]: https://github.com/fgarend/aurum-ds/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/fgarend/aurum-ds/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/fgarend/aurum-ds/compare/v0.1.0...v0.1.1
