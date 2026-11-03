@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 7.2.
+**Now:** 7.20.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -63,19 +63,8 @@ comparison with its reference screenshot (decisions 0033 and 0035), the
 guidelines' Components section (decision 0031), the changelog, and a
 release.
 
-Done: 7.1, 7.5, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27.
+Done: 7.1, 7.2, 7.3, 7.4, 7.5, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27.
 
-- **7.2 (was 5.3) · Styling approach.** How component CSS is written and
-  shipped, and the class prefix. The user prefers prefixes tied to the
-  repository, such as `au-`, over the artifact's undocumented `bs-`.
-- **7.3 (was 5.4) · Accessibility approach.** Hand-made or a library, and the
-  locale. How it is tested: item 5.19 found axe-core in eight of nine design
-  systems surveyed, in jsdom (jest-axe, vitest-axe) or in a real browser
-  (`@axe-core/playwright`), and color contrast is only checked in a real
-  browser, which the browser tests already have.
-- **7.4 (was 5.5) · Copy and language.** Default texts and how the app
-  replaces them. Settle Biome's `noJsxLiterals`, which forbids text written
-  in JSX.
 - **7.20 · Storybook.** Whether to adopt it, before the first component, since
   its stories would live in each component's folder and could become its
   tests: a gallery of each component in every state (a `make run`), the
@@ -87,19 +76,20 @@ Done: 7.1, 7.5, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27.
   `storybook-static/` ignored by git, and a job of the release workflow that
   publishes the gallery on GitHub Pages at each release, the latest version
   only.
-- **7.19 · Build of components.** The bundler for the TypeScript and JSX of
-  the components, and what `dist/` contains. Only tools that work with
-  TypeScript 7 (decision 0024). `tsconfig.json` then emits: `noEmit`,
-  `rootDir` and `outDir`. Test files and the `__screenshots__`
-  folders stay out of the package. Check the package with publint, `@arethetypeswrong/cli` and a size budget
-  (size-limit), as Primer and MUI do (item 5.19). Consider the React
-  Compiler, which memoizes by itself. The exports gain the components:
-  the single entry, `src/index.ts`, and a path per component through a
-  wildcard (`./*`, as `@fgarend/aurum-ds/Icon`), as five of eight design
-  systems surveyed offer; the guide recommends the path per component.
-  `sideEffects` marks only the CSS files, which each component imports
-  (decision 0036). The built files go in the release's tag, since the
-  package runs no script when installed (decision 0037). `make pack`'s
+- **7.19 · Build of components.** What `dist/` contains, with tools that
+  work with TypeScript 7 (decision 0024). Planned with the user: TypeScript 7
+  emits the JavaScript and declarations, with no bundler (`tsconfig.json`
+  then sets `noEmit`, `rootDir` and `outDir`), a script copies each
+  component's CSS beside it, and no React Compiler until a measured need.
+  Test files and the `__screenshots__` folders stay out of the package.
+  Check the package with publint, `@arethetypeswrong/cli` and a size budget
+  (size-limit), as Primer and MUI do (item 5.19). The exports gain the
+  components: the single entry, `src/index.ts`, and a path per component
+  through a wildcard (`./*`, as `@fgarend/aurum-ds/Icon`), as five of eight
+  design systems surveyed offer; the guide recommends the path per
+  component. `sideEffects` marks only the CSS files, which each component
+  imports (decision 0036). The built files go in the release's tag, since
+  the package runs no script when installed (decision 0037). `make pack`'s
   throwaway app then installs `lucide-react`, the package's peer, at the
   version used here, as it installs React: until then pnpm warns of a
   missing peer.
