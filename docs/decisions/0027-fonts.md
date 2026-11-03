@@ -1,6 +1,6 @@
 # 0027. Fonts
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0070: fonts.css, beside AurumRoot
 - Date: 2026-11-01
 
 ## Context

@@ -33,14 +33,18 @@ React 19 and `lucide-react` 1 are peer dependencies.
 
 ## Use
 
-Import the fonts, the tokens and the base styles, in that order, and put the
-`au-root` class where Aurum begins:
+Wrap where Aurum begins in its root, once, above any layout. It brings the
+fonts, the tokens and the base styles, and draws no box of its own, so the
+app's layout stays as it is:
 
-```css
-@import "@fgarend/aurum-ds/fonts.css";
-@import "@fgarend/aurum-ds/tokens.css";
-@import "@fgarend/aurum-ds/base.css";
+```tsx
+import { AurumRoot } from "@fgarend/aurum-ds/AurumRoot";
+
+<AurumRoot>…</AurumRoot>;
 ```
+
+The style sheets `fonts.css`, `tokens.css` and `base.css` are still exported,
+and deprecated: `AurumRoot` replaces them.
 
 Import each component by its own path, so the app loads only what it uses;
 the package's entry exports them all too:

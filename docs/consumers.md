@@ -29,17 +29,16 @@ Read from the app's repository on 2026-11-01.
   release by changing the version, one from `CHANGELOG.md` (decisions 0037
   and 0051). Not the tag's tarball from `codeload.github.com`: it holds the
   whole repository, not only the package's files.
-- **Import** `@fgarend/aurum-ds/fonts.css`, `@fgarend/aurum-ds/tokens.css`
-  and `@fgarend/aurum-ds/base.css`, in that order (decisions 0026, 0027, 0030
-  and 0036).
+- **Wrap where Aurum begins in `AurumRoot`**, once, above any layout: it
+  brings the fonts, the tokens and the base styles, and draws no box of its
+  own (decision 0070). It replaces the imports of `fonts.css`, `tokens.css`
+  and `base.css`, deprecated, which leave in the next version that may break.
 - **Import each component by its own path**, `@fgarend/aurum-ds/Icon`; the
   package's entry, `@fgarend/aurum-ds`, exports them all too (decision 0064).
 - **Hand the package to Vite in its Vitest settings**,
   `test: { server: { deps: { inline: ["@fgarend/aurum-ds"] } } }`: each
   component imports its own CSS, on which Node alone fails, `Unknown file
   extension ".css"` (decision 0069).
-- **Put `.au-root`** on each part of the page that uses Aurum, and at the top
-  once all of it does (decision 0030).
 - **Carry the fonts' license notice** in its own build, as it ships Geist and
   Geist Mono (decision 0027).
 - **Accept React 19 only** as the peer (decision 0019), and provide

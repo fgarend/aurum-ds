@@ -1,5 +1,5 @@
-/* What every Aurum component relies on (decision 0030). Page-wide styles apply only inside .au-root, so screens
-   that do not use Aurum yet are left alone. */
+/* What every Aurum component relies on (decisions 0030 and 0070), which AurumRoot brings: page-wide styles apply only
+   inside .au-root, so screens that do not use Aurum yet are left alone. */
 
 /* Aurum's layers, in order (decision 0053): the base, then the components. The app's own CSS, outside any layer,
    wins over both. Every component's CSS repeats this line, so the order holds whatever loads first. */
@@ -11,6 +11,16 @@
     background: var(--au-canvas);
     color: var(--au-ink);
     -webkit-font-smoothing: antialiased;
+    /* The browser's own controls and scroll bars in Aurum's light theme. */
+    color-scheme: light;
+  }
+
+  /* AurumRoot draws no box, so it leaves the app's layout as it is: its children lay out as its parent's, and still
+     inherit its font and colour. The class alone, on an element of the app's, keeps its box and paints the canvas. */
+  .au-root[data-au-root] {
+    /* biome-ignore lint/suspicious/useBaseline: every browser lays it out; Baseline holds it back over elements with a
+       role losing it for screen readers, and this div has none (decision 0070). */
+    display: contents;
   }
 
   /* Every element with an Aurum class, wherever it is. */
@@ -36,7 +46,7 @@
     width: 1px;
     height: 1px;
     padding: 0;
-    margin: -1px;
+    margin: -1px; /* tokens-exception: hides the element visually */
     overflow: hidden;
     clip-path: inset(50%);
     white-space: nowrap;

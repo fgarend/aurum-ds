@@ -1,8 +1,8 @@
 import { expect, it } from "vitest";
 import { userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
-import "../tokens/tokens.css";
-import "./base.css";
+import "../../tokens/tokens.css";
+import "./AurumRoot.css";
 
 // The tokens' values, as the browser computes them: canvas #faf9f6, ink #23262b, focus-ring #2b2e33.
 const canvas = "rgb(250, 249, 246)";

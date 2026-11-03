@@ -1,6 +1,6 @@
 # 0036. The first package
 
-- Status: Accepted; partly superseded by 0064: the exports, now with the components and from dist/
+- Status: Accepted; partly superseded by 0064: the exports, now with the components and from dist/; and by 0070: the three style sheets, deprecated for AurumRoot
 - Date: 2026-11-02
 
 ## Context

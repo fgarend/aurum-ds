@@ -90,6 +90,12 @@ the gallery already shows Aurum's brand mark.
   app's two versions live together, it goes around the new shell, not the
   whole app, whose current screens would take Aurum's font and colours (the
   app's decision 0185).
+- **7.36 · Release 0.2.0, after the client migrates.** First the client
+  (`wealth`) moves to the release that brings `AurumRoot`, wraps itself in it
+  and drops its three imports from `index.css`. Then the deprecated exports
+  `fonts.css`, `tokens.css` and `base.css` go, `make pack` stops importing
+  them, and 0.2.0 is released, the version that may break (decisions 0004 and
+  0070).
 - **7.33 · Aurum's layers after Tailwind's.** Decision 0053 counts on the
   app's CSS being outside layers. Tailwind 4 puts its utilities in a layer,
   declared before Aurum's in the app's `index.css`, so a component's rule

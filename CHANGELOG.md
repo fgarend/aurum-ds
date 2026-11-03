@@ -8,10 +8,21 @@ follow decision 0004.
 
 ### Added
 
+- `AurumRoot`: wraps where Aurum begins, once, above any layout. It brings the
+  fonts, the tokens and the base styles, sets `color-scheme: light`, and draws
+  no box of its own (`display: contents`), so the app's layout stays as it is;
+  its children take Aurum's font and colour. It replaces the three style
+  sheets below.
 - The line the app's Vitest needs to import the components, which import
   their own CSS: `test: { server: { deps: { inline: ["@fgarend/aurum-ds"] } } }`,
   in the README. Without it, a test that imports a component fails with
   `Unknown file extension ".css"`.
+
+### Deprecated
+
+- `@fgarend/aurum-ds/fonts.css`, `@fgarend/aurum-ds/tokens.css` and
+  `@fgarend/aurum-ds/base.css`: wrap the app in `AurumRoot` instead, and drop
+  the three imports. They leave in the next version that may break.
 
 ## [0.1.2] - 2026-11-03
 

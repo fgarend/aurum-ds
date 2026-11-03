@@ -32,7 +32,10 @@ async function firstFamilies(): Promise<string[]> {
 
 // The fonts are served by the package (decision 0027): a family the tokens name first must be the one loaded.
 it("loads, from a dependency, the family each font token names first", async () => {
-  const fonts = await readFile(new URL("src/fonts/fonts.css", root), "utf8");
+  const fonts = await readFile(
+    new URL("src/components/AurumRoot/fonts.css", root),
+    "utf8",
+  );
   const manifest = await readJson("package.json");
   const dependencies = isRecord(manifest)
     ? manifest["dependencies"]

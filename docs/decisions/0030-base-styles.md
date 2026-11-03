@@ -1,6 +1,6 @@
 # 0030. Base styles
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0070: the base styles, brought by AurumRoot
 - Date: 2026-11-01
 
 ## Context

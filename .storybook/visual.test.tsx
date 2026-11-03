@@ -18,12 +18,12 @@ it.each(stories.map((story) => [story.id, story] as const))(
   async (id, Story) => {
     const screen = await render(<Story />);
     await document.fonts.ready;
-    // The story inside the root every story runs in (.storybook/preview.tsx).
-    const root = screen.container.querySelector(".au-root");
-    if (root === null) {
-      throw new Error(`${id} is not inside .au-root`);
+    // The story on the canvas every story runs on (.storybook/preview.tsx).
+    const canvas = screen.container.querySelector("[data-story-canvas]");
+    if (canvas === null) {
+      throw new Error(`${id} is not on the stories' canvas`);
     }
 
-    await expect.element(page.elementLocator(root)).toMatchScreenshot(id);
+    await expect.element(page.elementLocator(canvas)).toMatchScreenshot(id);
   },
 );

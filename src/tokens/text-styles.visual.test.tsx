@@ -1,8 +1,8 @@
 import { expect, it } from "vitest";
 import { page } from "vitest/browser";
 import { render } from "vitest-browser-react";
-import "../fonts/fonts.css";
-import "../styles/base.css";
+import "../components/AurumRoot/AurumRoot.css";
+import "../components/AurumRoot/fonts.css";
 import "./tokens.css";
 import tokens from "./tokens.json" with { type: "json" };
 
