@@ -65,6 +65,12 @@
   },
   "overrides": [
     {
+      // A test takes a component's stories as one module, as Storybook composes them; tests and Storybook's settings
+      // never reach the app's bundle (decision 0057).
+      "includes": ["**/*.test.tsx", ".storybook/**"],
+      "linter": { "rules": { "performance": { "noNamespaceImport": "off" } } }
+    },
+    {
       // A component's file exports its props type beside it (decision 0054). The rule guards Fast Refresh, which a
       // type does not affect, since TypeScript erases it.
       "includes": ["src/components/**"],
@@ -92,8 +98,8 @@
       }
     },
     {
-      // Vitest reads its configuration from a default export.
-      "includes": ["vitest.config.ts"],
+      // Vitest reads its configuration, Storybook its settings and each component's stories from a default export.
+      "includes": ["vitest.config.ts", ".storybook/**", "**/*.stories.tsx"],
       "linter": { "rules": { "style": { "noDefaultExport": "off" } } }
     },
     {

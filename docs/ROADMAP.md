@@ -89,6 +89,10 @@ Done: 7.21, 7.22, 7.23.
   failing a test on axe-core violations. Five of nine design systems surveyed
   use it, and MUI, GOV.UK and Ant Design do not (item 5.19). Check it works
   with React 19, TypeScript 7 (decision 0024) and the containers.
+  Adopted with the Icon (decision 0057). Left: `make storybook-build`, into
+  `storybook-static/` ignored by git, and a job of the release workflow that
+  publishes the gallery on GitHub Pages at each release, the latest version
+  only.
 - **7.19 · Build of components.** The bundler for the TypeScript and JSX of
   the components, and what `dist/` contains. Only tools that work with
   TypeScript 7 (decision 0024). `tsconfig.json` then emits: `noEmit`,
@@ -135,7 +139,9 @@ No order between them; each becomes items when its time comes.
   React 19 (decision 0019). Its icons must follow Lucide (decision 0029).
 - **License.** See decision 0002.
 - **Dark theme.** When the app's first screen needs it. The token compiler
-  fails on a second theme until then (decision 0026).
+  fails on a second theme until then (decision 0026). Storybook's interface
+  then follows the system's light or dark mode, with a theme for each, from
+  the tokens (decision 0057).
 - **Image vulnerability scan.** The system packages inside the images (the
   Debian of the Node image), which `make audit` does not cover.
 - **Update bot.** Renovate or Dependabot opening pull requests, with the CI;

@@ -6,7 +6,8 @@
     "src/**/*.browser.test.ts",
     "src/**/*.browser.test.tsx",
     "src/**/*.visual.test.ts",
-    "src/**/*.visual.test.tsx"
+    "src/**/*.visual.test.tsx",
+    "src/**/*.stories.tsx"
   ],
   "compilerOptions": {
     "noEmit": true,

@@ -1,6 +1,7 @@
 // Test settings (decisions 0020, 0032, 0039, 0044, 0045 and 0052). Its types are checked with Node's, in tsconfig.node.json, since
 // Vite's types bring them along.
 import { readFileSync } from "node:fs";
+import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
 import { playwright } from "@vitest/browser-playwright";
 import { defineConfig, type ViteUserConfig } from "vitest/config";
 
@@ -10,6 +11,8 @@ const browserTests = "**/*.browser.test.{ts,tsx}";
 const visualTests = "**/*.visual.test.{ts,tsx}";
 // The checks of the repository as a whole live in test/ (decision 0039), in a project of their own.
 const repositoryChecks = "test/**/*.test.ts";
+// The tests that import stories get what every story runs in.
+const storySetup = ".storybook/vitest.setup.ts";
 const notBrowserTests = ["**/node_modules/**", browserTests, visualTests];
 const pixels = /^(?<number>\d+)px$/u;
 
@@ -52,15 +55,17 @@ const chromium = (): typeof inBrowser & {
   ...inBrowser,
   instances: [{ browser: "chromium" }],
 });
-// Playwright's own browsers: Chromium, and Firefox and WebKit, Safari's engine (decision 0045).
-const everyBrowser = {
+// Playwright's own browsers: Chromium, and Firefox and WebKit, Safari's engine (decision 0045). A function too.
+const everyBrowser = (): typeof inBrowser & {
+  instances: { browser: "chromium" | "firefox" | "webkit" }[];
+} => ({
   ...inBrowser,
   instances: [
-    { browser: "chromium" as const },
-    { browser: "firefox" as const },
-    { browser: "webkit" as const },
+    { browser: "chromium" },
+    { browser: "firefox" },
+    { browser: "webkit" },
   ],
-};
+});
 
 const config: ViteUserConfig = defineConfig({
   test: {
@@ -86,11 +91,22 @@ const config: ViteUserConfig = defineConfig({
         test: {
           name: "browser",
           include: [browserTests],
-          browser: everyBrowser,
+          browser: everyBrowser(),
+          setupFiles: [storySetup],
         },
       },
+      // Every story, rendered in the three browsers, with axe checking it (decision 0057).
       {
-        test: { name: "visual", include: [visualTests], browser: chromium() },
+        plugins: [storybookTest({ configDir: ".storybook" })],
+        test: { name: "storybook", browser: everyBrowser() },
+      },
+      {
+        test: {
+          name: "visual",
+          include: [visualTests],
+          browser: chromium(),
+          setupFiles: [storySetup],
+        },
       },
       // Only make reference runs it, to render the artifact's previews and the prototype's screens (decisions 0033 and
       // 0035).

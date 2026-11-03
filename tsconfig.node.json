@@ -1,7 +1,7 @@
 // TypeScript settings for what runs on Node: the scripts, the repository's tests and the test settings (decision 0039).
 {
   "extends": "./tsconfig.json",
-  "include": ["scripts", "test", "vitest.config.ts"],
+  "include": ["scripts", "test", "vitest.config.ts", ".storybook"],
   "compilerOptions": {
     // Node's APIs. The DOM is there only because Vitest's configuration types, with the browser provider, name DOM
     // types; nothing here runs in a browser but the renders, which Vitest runs there.
@@ -9,6 +9,9 @@
     // Vite's client types declare the files the renders import raw.
     "types": ["node", "vite/client"],
     // Node runs these files as they are, so they import each other by their .ts names (decision 0044).
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+    // Storybook's own declaration files, which .storybook/ imports, do not pass TypeScript 7 yet; our use of them is
+    // still checked. Goes away when Storybook supports TypeScript 7 (decision 0057).
+    "skipLibCheck": true
   }
 }

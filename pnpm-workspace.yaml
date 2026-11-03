@@ -7,3 +7,7 @@ minimumReleaseAgeIgnoreMissingTime: false
 autoInstallPeers: false
 # Dependencies are saved with their exact version (decision 0015).
 saveExact: true
+# Build scripts of dependencies, refused unless listed true here. esbuild's only checks the binary that arrives as its
+# own package, so it is refused, said out loud so pnpm does not ask again (decision 0057).
+allowBuilds:
+  esbuild: false

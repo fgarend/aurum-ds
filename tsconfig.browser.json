@@ -1,16 +1,24 @@
-// TypeScript settings for the browser tests (decisions 0032 and 0052). They need Vite's client types and a Node type
-// that Vitest's browser types name, which the library's code must never see, so they are checked apart.
+// TypeScript settings for the browser tests and the stories (decisions 0032, 0052 and 0057). They need Vite's client
+// types and a Node type that Vitest's browser types name, which the library's code must never see, so they are
+// checked apart.
 {
   "extends": "./tsconfig.json",
   "include": [
     "src/**/*.browser.test.ts",
     "src/**/*.browser.test.tsx",
     "src/**/*.visual.test.ts",
-    "src/**/*.visual.test.tsx"
+    "src/**/*.visual.test.tsx",
+    "src/**/*.stories.tsx"
   ],
   "exclude": [],
   "compilerOptions": {
     // Vite's client types declare the CSS files the tests import, and Vitest's browser types name a Node type.
-    "types": ["vite/client", "node"]
+    "types": ["vite/client", "node"],
+    // Storybook's own declaration files do not pass TypeScript 7 yet; our use of them is still checked. Goes away
+    // when Storybook supports TypeScript 7 (decision 0057).
+    "skipLibCheck": true,
+    // Tests and stories emit no declarations, so they may infer the types of what they export, as a story's
+    // satisfies Meta does.
+    "isolatedDeclarations": false
   }
 }

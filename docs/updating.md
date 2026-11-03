@@ -55,6 +55,10 @@ age, with its advisory.
 
 `make outdated` cannot see these. Each says when it goes away.
 
+- **Does Storybook pass TypeScript 7?** Turn `skipLibCheck` off in
+  `tsconfig.browser.json` and `tsconfig.node.json` and run `make types`
+  (decision 0057). Goes away when it passes, with `skipLibCheck` removed.
+
 - **`@types/node` on the image's Node line.** The report suggests newer lines
   as they appear, but the types must match the Node in the image. Stays.
 - **The year of `target` and `lib` in `tsconfig.json`.** Moved up one year

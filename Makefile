@@ -10,7 +10,7 @@ RUN := mkdir -p node_modules .vitest-attachments && $(COMPOSE) run --rm
 PROJECT := $(shell sed -n 's/^name: //p' infra/compose.yaml)
 
 .PHONY: help check lint types test test-repository test-browser pack check-release release-notes release-package install format tokens watch screenshots \
-	reference prototype images clean outdated outdated-deps outdated-pins audit
+	reference prototype storybook images clean outdated outdated-deps outdated-pins audit
 .DEFAULT_GOAL := help
 
 help: ## List the targets
@@ -89,6 +89,10 @@ reference: ## Render the artifact's previews and the prototype's screens into re
 prototype: ## Serve the prototype's screens at http://localhost:5173 (PROTOTYPE_PORT), until stopped with Ctrl+C
 	$(COMPOSE) build prototype
 	$(RUN) --service-ports prototype pnpm run prototype
+
+storybook: ## Serve the gallery of components at http://localhost:6006 (STORYBOOK_PORT), until stopped with Ctrl+C
+	$(COMPOSE) build storybook
+	$(RUN) --service-ports storybook pnpm run storybook
 
 images: ## Build the images every command runs in
 	$(COMPOSE) build

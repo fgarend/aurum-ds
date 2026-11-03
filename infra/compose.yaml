@@ -43,7 +43,7 @@ services:
       - ..:/app
       - pnpm-store:/pnpm-store
 
-  # Serves the prototype's screens: the only service with a port.
+  # Serves the prototype's screens, with a port of its own.
   prototype:
     image: aurum-ds:deps
     build: { <<: *build, target: deps }
@@ -52,6 +52,17 @@ services:
       PROTOTYPE_PORT: ${PROTOTYPE_PORT}
     ports:
       - ${PROTOTYPE_PORT:?set in infra/settings.env}:${PROTOTYPE_PORT}
+    volumes: *read
+
+  # Serves the gallery of components, Storybook (decision 0057), with a port of its own.
+  storybook:
+    image: aurum-ds:deps
+    build: { <<: *build, target: deps }
+    init: true
+    environment:
+      STORYBOOK_PORT: ${STORYBOOK_PORT}
+    ports:
+      - ${STORYBOOK_PORT:?set in infra/settings.env}:${STORYBOOK_PORT}
     volumes: *read
 
 volumes:
