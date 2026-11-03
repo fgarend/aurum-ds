@@ -99,21 +99,21 @@ screen's own. Muted text, tabular figures and code already exist as the
 
 ## Component order
 
-By importance, use and simplicity, each component after those it uses. Each
-is one item of roadmap milestone 7 and ends in a release.
+By what the app waits for: its shell, then People, its first screen after it
+(the app's order: the shell, People, Position, Notes, Note). Each comes after
+those it uses, and each is one item of roadmap milestone 7 and ends in a
+release. Done: Icon, AppLayout, AurumRoot.
 
-1. Icon
-2. Badge
-3. Avatar
-4. AvatarGroup, which uses Avatar
-5. ScopeChip, which uses AvatarGroup
-6. Button and IconButton, which use Icon
-7. PageHeader, which uses ScopeChip and Button
-8. Sidebar, which uses Icon, Badge and Avatar
-9. AppShell, which uses Sidebar: the shell is complete
-10. Table, right after the shell: People, the app's first screen after it,
-    needs it
-11. Section and Card
-12. TextField, Select, SegmentedControl and Switch: People, as the prototype
-    draws it, is complete
-13. Alert, which uses Icon
+1. Sidebar, which uses Icon, without the switch of people, which the app does
+   not use: its top bar chooses the person. The shell is complete
+2. Badge: the shell's environment and People's default holder
+3. Section and Card: People
+4. Table: People
+5. Avatar: People
+6. Alert, which uses Icon: People is complete
+7. Button and IconButton, which use Icon
+8. PageHeader, which uses Button
+9. TextField, Select, SegmentedControl and Switch
+10. AvatarGroup, which uses Avatar; ScopeChip, which uses AvatarGroup; and the
+    Sidebar's switch of people, when a screen asks for them
+11. The side panel and BottomNav, when a screen asks for them

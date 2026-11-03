@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 7.7.
+**Now:** 7.13.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -69,28 +69,30 @@ Dropped: 7.30, the gallery's title in the browser's tab. Storybook writes
 "⋅ Storybook" after each story's name in its own code, with no setting, and
 the first title comes from a setting it does not document; changing it would
 mean a script fighting Storybook at every navigation, for a tab's text, while
-the gallery already shows Aurum's brand mark.
+the gallery already shows Aurum's brand mark. 7.14, the Sidebar in the shell:
+it is the Sidebar's own item, in the `navigation` of `AppLayout`.
 
-- **7.7 · Badge.**
-- **7.8 · Avatar.**
-- **7.9 · AvatarGroup.**
-- **7.10 · ScopeChip.**
+- **7.13 · Sidebar.** First, since the app's shell waits for it, in the
+  `navigation` of `AppLayout`. Without the switch of people (7.39): the app's
+  top bar chooses the person.
+- **7.7 · Badge.** The shell's environment and People's default holder.
+- **7.15 · Section and Card.** People.
+- **7.18 · Table.** People, as the app asked before that screen.
+- **7.8 · Avatar.** People.
+- **7.17 · Alert.** People is complete.
 - **7.11 · Button and IconButton.**
 - **7.12 · PageHeader.**
-- **7.13 · Sidebar.**
-- **7.14 · The Sidebar in the shell.** `AppLayout` takes the Sidebar in its
-  `navigation`: the shell is complete.
+- **7.16 · TextField, Select, SegmentedControl and Switch.**
+- **7.9 · AvatarGroup.** When a screen asks for it.
+- **7.10 · ScopeChip.** When a screen asks for it.
+- **7.39 · The Sidebar's switch of people.** With Avatar and AvatarGroup, when
+  the app asks for it.
 - **7.37 · The side panel.** The app's opens over the page, in a portal, so it
-  is a component of its own, not an area of `AppLayout` (decision 0073).
+  is a component of its own, not an area of `AppLayout` (decision 0073). When a
+  screen asks for it.
 - **7.38 · BottomNav.** The guidelines' navigation below `breakpoint-md`, in
   `AppLayout` as an optional prop, where the navigation sits at the top until
-  then (decision 0073).
-- **7.18 · Table.** Right after the shell, as the app asked: People is its
-  first screen after the shell, and needs the table.
-- **7.15 · Section and Card.**
-- **7.16 · TextField, Select, SegmentedControl and Switch.** People, as the
-  prototype draws it, is complete.
-- **7.17 · Alert.**
+  then (decision 0073). When a screen asks for it.
 
 ## 6. One version per screen
 
