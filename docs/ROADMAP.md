@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 7.27.
+**Now:** 7.1.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -63,12 +63,8 @@ comparison with its reference screenshot (decisions 0033 and 0035), the
 guidelines' Components section (decision 0031), the changelog, and a
 release.
 
-Done: 7.5, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26.
+Done: 7.5, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27.
 
-- **7.27 · Text styles' screenshot rewritten differently.** `make screenshots`
-  writes `text-styles-chromium-linux.png` with other bytes than the approved
-  one, already at f4f7807, though `make check` passes against it. Decision
-  0034 expects an unchanged screen written byte for byte the same. Find why.
 - **7.1 (was 5.2) · Component conventions.** Folder layout, naming, props and
   exports. Item 5.17 found a folder per component the common layout, with
   written rules in Primer React's ADR-013 (file structure) and GOV.UK
