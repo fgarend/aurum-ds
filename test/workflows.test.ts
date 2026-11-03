@@ -10,6 +10,11 @@ const scopeSlash = /^@(?<scope>[^/]+)\//u;
 const jobHeading = /^ {2}(?<name>[\w-]+):$/gmu;
 const needsLine = /^ {4}needs: (?:\[(?<list>[^\]]+)\]|(?<one>[\w-]+))$/mu;
 const pagesPermissions = /^ +(?:pages|id-token): write$/mu;
+// The commit the checks ran on, as a workflow writes it.
+// biome-ignore lint/suspicious/noTemplateCurlyInString: an expression of GitHub's, not a template of JavaScript's.
+const checkedOutCommit = "ref: ${{ github.event.workflow_run.head_sha }}";
+const releaseTrigger =
+  /^on:\n {2}workflow_run:\n {4}workflows: \[check\]\n {4}types: \[completed\]\n {4}branches: \[main\]$/mu;
 
 // Each job of a workflow, by name, with its lines.
 function jobs(workflow: string): Map<string, string> {
@@ -78,6 +83,40 @@ it("attaches the packed package to the release page", async () => {
   expect(workflow.match(releaseCreate)?.groups?.["args"]).toContain(
     `"${path}"`,
   );
+});
+
+// A release starts by itself when the checks pass on a push to main of this repository, never from a pull request,
+// and takes the commit those checks ran on (decision 0066).
+it("releases from the checks that passed on a push to main", async () => {
+  const workflow = await readFile(
+    new URL(".github/workflows/release.yml", root),
+    "utf8",
+  );
+  const release = jobs(workflow);
+  const first = [...release].find(([, job]) => !needsLine.test(job))?.[1] ?? "";
+
+  expect(workflow).toMatch(releaseTrigger);
+  expect(workflow).not.toContain("workflow_dispatch");
+  expect(first).toContain("github.event.workflow_run.conclusion == 'success'");
+  expect(first).toContain("github.event.workflow_run.event == 'push'");
+  expect(first).toContain(
+    "github.event.workflow_run.head_repository.full_name == github.repository",
+  );
+  for (const [, job] of release) {
+    expect(job.includes("uses: actions/checkout@")).toBe(
+      job.includes(checkedOutCommit),
+    );
+  }
+});
+
+// The checks run once, on the push; the release does not run them again, so the check workflow is not reused.
+it("does not run the checks again for a release", async () => {
+  const check = await readFile(
+    new URL(".github/workflows/check.yml", root),
+    "utf8",
+  );
+
+  expect(check).not.toContain("workflow_call");
 });
 
 // A release publishes the gallery of components on GitHub Pages (decision 0062): it is built before the tag, so no

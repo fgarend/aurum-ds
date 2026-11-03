@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 7.6.
+**Now:** 7.29.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -63,14 +63,20 @@ comparison with its reference screenshot (decisions 0033 and 0035), the
 guidelines' Components section (decision 0031), the changelog, and a
 release.
 
-Done: 7.1, 7.2, 7.3, 7.4, 7.5, 7.19, 7.20, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27.
+Done: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.19, 7.20, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27, 7.28.
 
-- **7.6 (was 5.6) · Icon.** How the package depends on Lucide (peer or
-  dependency; the app is on 1.61), the stroke width (Aurum's 1.5 or Lucide's
-  2), names by concept as the app's `Icon` has them, and the three artifact
-  names Lucide spells differently: `arrows-swap` (`arrow-left-right`), `more`
-  (`ellipsis`) and `piggy` (`piggy-bank`). Decided (decision 0056) and
-  built, with its stories, changelog and guidelines; left: the release.
+- **7.29 · Docker's build check warning.** Every image build warns
+  `InvalidDefaultArgInFrom`: the Dockerfile's image arguments have no
+  default, since `infra/settings.env` gives them. A `# check=skip=` line in
+  the Dockerfile silences it, tried.
+- **7.30 · The gallery's title.** The browser's tab shows "storybook -
+  Storybook" instead of Aurum's name.
+- **7.31 · The shell's frame.** Before the other components, as the app
+  waits for it: the page's layout with slots for the side navigation (a strip
+  at the top below `md`), the top bar, the side panel and the content up to a
+  maximum width. The app puts its own navigation in the slot until the
+  Sidebar comes. To decide: its name, and the least setup the app needs to
+  use the components, close to none.
 - **7.7 · Badge.**
 - **7.8 · Avatar.**
 - **7.9 · AvatarGroup.**
@@ -78,7 +84,8 @@ Done: 7.1, 7.2, 7.3, 7.4, 7.5, 7.19, 7.20, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7
 - **7.11 · Button and IconButton.**
 - **7.12 · PageHeader.**
 - **7.13 · Sidebar.**
-- **7.14 · AppShell.** The shell is complete.
+- **7.14 · The Sidebar in the shell.** The frame of 7.31 takes the Sidebar
+  in its navigation slot: the shell is complete.
 - **7.18 · Table.** Right after the shell, as the app asked: People is its
   first screen after the shell, and needs the table.
 - **7.15 · Section and Card.**

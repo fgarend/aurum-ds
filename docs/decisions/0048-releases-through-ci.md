@@ -1,6 +1,6 @@
 # 0048. Releases through continuous integration
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0066: the release starts from the checks, by itself
 - Date: 2026-11-02
 
 ## Context
