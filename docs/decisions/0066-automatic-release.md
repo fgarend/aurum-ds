@@ -1,6 +1,6 @@
 # 0066. Releases that start from the checks
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0067: the release in the same pipeline as the checks
 - Date: 2026-11-03
 
 ## Context

@@ -63,7 +63,7 @@ comparison with its reference screenshot (decisions 0033 and 0035), the
 guidelines' Components section (decision 0031), the changelog, and a
 release.
 
-Done: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.19, 7.20, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27, 7.28.
+Done: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.19, 7.20, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27, 7.28, 7.35.
 
 - **7.29 · Docker's build check warning.** Every image build warns
   `InvalidDefaultArgInFrom`: the Dockerfile's image arguments have no

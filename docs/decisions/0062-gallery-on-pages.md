@@ -1,6 +1,6 @@
 # 0062. The gallery on GitHub Pages
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0067: the gallery built in the job that checks
 - Date: 2026-11-03
 
 ## Context

@@ -1,10 +1,9 @@
 # Releasing
 
 How a version is released (decisions 0004, 0040, 0048, 0049, 0051, 0062 and
-0066). The
-app installs the package on the release's page, or from GitHub at its tag
-(decisions 0037 and 0051), so the tag is the release. It is created by the
-`release` workflow, never by hand: GitHub then refuses to move or delete it.
+0067). The app installs the package on the release's page, or from GitHub at
+its tag (decisions 0037 and 0051), so the tag is the release. It is created by
+the `ci` pipeline, never by hand: GitHub then refuses to move or delete it.
 
 ## Steps
 
@@ -20,29 +19,30 @@ app installs the package on the release's page, or from GitHub at its tag
 3. **Check and push:** `make check` and `make check-release` pass, then
    commit the changelog and the version alone, as `chore: release vX.Y.Z`,
    and push. The commit is the release: nothing else is run by hand.
-4. **Continuous integration releases it** (decision 0066). When the checks
-   pass on that push, the `release` workflow starts by itself. It finds the
-   commit is a release, its version without a tag and `make check-release`
-   passing; builds the gallery of components; creates the annotated tag
-   `vX.Y.Z` on the commit and publishes the release page with the version's
+4. **Continuous integration releases it** (decision 0067). On that push, the
+   `ci` pipeline runs the checks and, when they all pass, finds the commit is
+   a release: its version has no tag and `make check-release` passes. It then
+   runs `make audit`, so no release leaves with a vulnerability not yet
+   reviewed, and prepares, once, the gallery of components, the version's
    notes from the changelog (decision 0049) and the packed package,
-   `fgarend-aurum-ds-X.Y.Z.tgz` (decision 0051); and publishes the gallery on
-   GitHub Pages, at `https://fgarend.github.io/aurum-ds/` (decision 0062).
-   Any other commit stops at its first job, with the reason on the run's
-   page. The release is immutable once published: its tag and its package
-   never change.
+   `fgarend-aurum-ds-X.Y.Z.tgz` (decision 0051). Its job `tag` creates the
+   annotated tag `vX.Y.Z` on the commit and publishes the release page with
+   the notes and the package; its job `pages` publishes the gallery on GitHub
+   Pages, at `https://fgarend.github.io/aurum-ds/` (decision 0062). On any
+   other commit, those two jobs are skipped, and the run's page says why. The
+   release is immutable once published: its tag and its package never change.
 5. **The app moves to the release**, by the package on its page,
    `https://github.com/fgarend/aurum-ds/releases/download/vX.Y.Z/fgarend-aurum-ds-X.Y.Z.tgz`,
    in its own repository, and runs its own tests there (decision 0051).
 
 ## When a release run fails
 
-- **Before the tag** (the checks, the gallery): fix it in a new commit; it is
-  a release again while its version has no tag.
-- **A passing push whose checks were cancelled**, by a newer push: re-run
-  them on GitHub; a re-run push starts the release as the first would.
+- **Before the tag** (the checks, the audit, the gallery): fix it in a new
+  commit; it is a release again while its version has no tag.
+- **A release commit whose checks were cancelled**, by a newer push: re-run
+  its `ci` run on GitHub; it releases as the first run would have.
 - **A step of GitHub's that failed** (the network, Pages): re-run the failed
-  jobs of the `release` run.
+  jobs of the `ci` run.
 
 ## Once: turning Pages on
 
