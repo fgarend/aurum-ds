@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 7.1.
+**Now:** 7.2.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -63,13 +63,8 @@ comparison with its reference screenshot (decisions 0033 and 0035), the
 guidelines' Components section (decision 0031), the changelog, and a
 release.
 
-Done: 7.5, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27.
+Done: 7.1, 7.5, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27.
 
-- **7.1 (was 5.2) · Component conventions.** Folder layout, naming, props and
-  exports. Item 5.17 found a folder per component the common layout, with
-  written rules in Primer React's ADR-013 (file structure) and GOV.UK
-  Frontend's coding standards for components. Revisit the lint exception that lets `src/index.ts` only
-  re-export. When to use `memo` and `useCallback`, context values included.
 - **7.2 (was 5.3) · Styling approach.** How component CSS is written and
   shipped, and the class prefix. The user prefers prefixes tied to the
   repository, such as `au-`, over the artifact's undocumented `bs-`.
@@ -98,8 +93,12 @@ Done: 7.5, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27.
   `rootDir` and `outDir`. Test files and the `__screenshots__`
   folders stay out of the package. Check the package with publint, `@arethetypeswrong/cli` and a size budget
   (size-limit), as Primer and MUI do (item 5.19). Consider the React
-  Compiler, which memoizes by itself. The exports gain the components'
-  entry (decision 0036). The built files go in the release's tag, since the
+  Compiler, which memoizes by itself. The exports gain the components:
+  the single entry, `src/index.ts`, and a path per component through a
+  wildcard (`./*`, as `@fgarend/aurum-ds/Icon`), as five of eight design
+  systems surveyed offer; the guide recommends the path per component.
+  `sideEffects` marks only the CSS files, which each component imports
+  (decision 0036). The built files go in the release's tag, since the
   package runs no script when installed (decision 0037). `make pack`'s
   throwaway app then installs `lucide-react`, the package's peer, at the
   version used here, as it installs React: until then pnpm warns of a

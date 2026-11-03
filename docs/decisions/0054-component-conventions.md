@@ -1,6 +1,6 @@
 # 0054. Component conventions
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0059 and 0060: a component's test files, now its stories
 - Date: 2026-11-02
 
 ## Context

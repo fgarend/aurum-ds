@@ -79,7 +79,8 @@
       }
     },
     {
-      // The package's public entry only re-exports. Revisited with the component conventions.
+      // The package's public entry only re-exports: the app sees only what the package exports, so the entry cannot
+      // send it to the files that define each name, as the rule advises (decision 0054).
       "includes": ["src/index.ts"],
       "linter": { "rules": { "performance": { "noBarrelFile": "off" } } }
     },
