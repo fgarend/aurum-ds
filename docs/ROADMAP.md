@@ -71,12 +71,50 @@ Done: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.19, 7.20, 7.21, 7.22, 7.23, 7.24, 7.25, 7.
   the Dockerfile silences it, tried.
 - **7.30 · The gallery's title.** The browser's tab shows "storybook -
   Storybook" instead of Aurum's name.
+- **7.34 · The components' CSS in the app's tests.** Each component imports
+  its own CSS (decision 0055), and Vitest 5.0.5, the app's, hands a package's
+  modules to Node, which fails on it: `Unknown file extension ".css"`, tried
+  with the Icon of `dist/`. The app's tests of behaviour, in jsdom, need
+  `server.deps.inline` for the package, or the `vmThreads` pool, both tried;
+  `make pack` only resolves the exports, so it did not see it. Chosen with
+  the user: the components keep importing their CSS, as Primer and
+  Cloudscape do; the guides give the app the line for its tests
+  (`server.deps.inline`), and `make pack` proves it, with a test in jsdom in
+  its throwaway app. One test line, against one CSS line had the components
+  stopped importing it, and a failure that shows at once instead of
+  components with no style. Found while planning 7.32.
+- **7.32 · The root.** A component around whatever uses Aurum, drawing only
+  the page's font, background and colour: it imports the fonts, the tokens
+  and the base styles, gives `.au-root`, and takes `className`; the three
+  style sheets stay exported for whoever has no bundler. Chosen with the
+  user, from the app's suggestion, so the app needs the dependency, the root
+  and the line for its tests, and drops its three imports from `index.css`. Later, the place of
+  the theme and of the portals' container (dialogs, menus), which otherwise
+  land on `document.body`, outside `.au-root`. The stories take it in a
+  decorator. Its name is `AurumRoot`, with the class `.au-root`, chosen with
+  the user. `Root` names the place where Aurum begins, which stays true
+  whatever it comes to carry, where `Provider` (context, which it is not
+  only), `Theme` (none yet) or `BaseStyles` (only part of it) name a job. The
+  prefix, as Mantine, Fluent and Chakra give their root alone, because it is
+  the one component at the border, in the app's own code, where nothing else
+  says it is Aurum's. The class follows decision 0055 written as: `au-` and
+  the component's name without `Aurum`, which `au-` already says. While the
+  app's two versions live together, it goes around the new shell, not the
+  whole app, whose current screens would take Aurum's font and colours (the
+  app's decision 0185).
+- **7.33 · Aurum's layers after Tailwind's.** Decision 0053 counts on the
+  app's CSS being outside layers. Tailwind 4 puts its utilities in a layer,
+  declared before Aurum's in the app's `index.css`, so a component's rule
+  wins over a utility in its `className`. Found while planning 7.32.
 - **7.31 · The shell's frame.** Before the other components, as the app
   waits for it: the page's layout with slots for the side navigation (a strip
   at the top below `md`), the top bar, the side panel and the content up to a
   maximum width. The app puts its own navigation in the slot until the
-  Sidebar comes. To decide: its name, and the least setup the app needs to
-  use the components, close to none.
+  Sidebar comes. To decide: its name (`AppLayout` or `AppShell`); a top bar,
+  which the app has (path and filters) and the prototype does not; below
+  `md`, the app's strip at the top or the guidelines' `BottomNav`; and the
+  wider content of the app's note page (1440px against 1240px; the prototype
+  has 1200px on every screen).
 - **7.7 · Badge.**
 - **7.8 · Avatar.**
 - **7.9 · AvatarGroup.**
