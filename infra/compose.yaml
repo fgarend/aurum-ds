@@ -16,8 +16,8 @@ x-read: &read
   - /app/node_modules
 
 services:
-  # The tools and the browsers, checking only. The pnpm store is a cache for make pack, and a failing visual test
-  # writes its images to .vitest-attachments, the one folder it may write.
+  # The tools and the browsers, checking only. The pnpm store is a cache for make pack, a failing visual test writes
+  # its images to .vitest-attachments, and make coverage its report to coverage, the only folders they may write.
   tools:
     image: aurum-ds:deps
     build: { <<: *build, target: deps }
@@ -26,6 +26,7 @@ services:
       - /app/node_modules
       - pnpm-store:/pnpm-store
       - ../.vitest-attachments:/app/.vitest-attachments
+      - ../coverage:/app/coverage
 
   # The same, writing the code: make format, make tokens, make screenshots and make reference.
   tools-write:

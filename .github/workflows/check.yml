@@ -45,6 +45,16 @@ jobs:
       - if: ${{ !cancelled() && steps.images.outcome == 'success' }}
         run: make test-browser
       - if: ${{ !cancelled() && steps.images.outcome == 'success' }}
+        run: make coverage
+      # The coverage table, on the run's page (decision 0061).
+      - if: ${{ !cancelled() && hashFiles('coverage/coverage.txt') != '' }}
+        run: |
+          {
+            echo '```'
+            cat coverage/coverage.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - if: ${{ !cancelled() && steps.images.outcome == 'success' }}
         run: make pack
       # The images a failing visual test writes, to download from the run's page.
       - if: ${{ failure() }}

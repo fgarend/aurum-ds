@@ -71,6 +71,22 @@ const everyBrowser = (): typeof inBrowser & {
 
 const config: ViteUserConfig = defineConfig({
   test: {
+    // What make coverage measures (decision 0061): every line of the package's code, which its tests must all run.
+    // The table lists only files below 100%, in the terminal and in coverage/coverage.txt for the run's page in
+    // continuous integration, and coverage/index.html colours each line.
+    coverage: {
+      provider: "istanbul",
+      include: ["src/**/*.{ts,tsx}"],
+      exclude: ["**/*.test.{ts,tsx}", "**/*.stories.tsx", "**/*.d.ts"],
+      reporter: [
+        ["text", { skipFull: true }],
+        ["text", { skipFull: true, file: "coverage.txt" }],
+        "html",
+      ],
+      thresholds: { 100: true },
+      // coverage/ is mounted into the container, which cannot remove it: make coverage empties it first.
+      clean: false,
+    },
     // A test of logic runs in Node, a browser test in every browser, and a visual test in Chromium. Components are
     // tested in the browser only (decision 0052), in their stories (decision 0059).
     projects: [

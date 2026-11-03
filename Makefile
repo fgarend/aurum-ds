@@ -5,11 +5,11 @@
 
 COMPOSE := docker compose --env-file infra/settings.env -f infra/compose.yaml
 # The code is mounted read-only, and the folders mounted over it must exist in it first, even in a fresh clone.
-RUN := mkdir -p node_modules .vitest-attachments && $(COMPOSE) run --rm
+RUN := mkdir -p node_modules .vitest-attachments coverage && $(COMPOSE) run --rm
 # The project's name, as infra/compose.yaml gives it. Compose marks every image it builds with it (decision 0043).
 PROJECT := $(shell sed -n 's/^name: //p' infra/compose.yaml)
 
-.PHONY: help check lint types test test-repository test-browser pack check-release release-notes release-package install format tokens watch screenshots \
+.PHONY: help check lint types test test-repository test-browser coverage pack check-release release-notes release-package install format tokens watch screenshots \
 	reference prototype storybook images clean outdated outdated-deps outdated-pins audit
 .DEFAULT_GOAL := help
 
@@ -20,7 +20,7 @@ help: ## List the targets
 ##@ Checks
 
 check: ## Run every check below, before a commit: what continuous integration runs
-	@$(MAKE) --no-print-directory -k lint types test test-repository test-browser pack
+	@$(MAKE) --no-print-directory -k lint types test test-repository test-browser coverage pack
 
 lint: ## Formatting and lint rules, with Biome
 	$(COMPOSE) build tools
@@ -41,6 +41,11 @@ test-repository: ## The checks of the repository as a whole, in test/
 test-browser: ## The tests in a real browser
 	$(COMPOSE) build tools
 	$(RUN) tools pnpm run test-browser
+
+coverage: ## The tests of the code again, failing below 100% of src/; each line coloured in coverage/index.html
+	$(COMPOSE) build tools
+	rm -rf coverage
+	$(RUN) tools pnpm run coverage
 
 pack: ## Pack the package, install it in a throwaway app and import every export
 	$(COMPOSE) build tools

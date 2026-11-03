@@ -17,3 +17,6 @@ node_modules/
 
 # The images a failing visual test writes, to look at (decision 0043)
 .vitest-attachments/
+
+# The report make coverage writes (decision 0061)
+coverage/
