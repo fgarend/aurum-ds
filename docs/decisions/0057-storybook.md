@@ -1,6 +1,6 @@
 # 0057. Storybook
 
-- Status: Accepted; partly superseded by 0059: the checks of a component, in its stories
+- Status: Accepted; partly superseded by 0059: the checks of a component, in its stories; and by 0060: the visual test, one for every story
 - Date: 2026-11-02
 
 ## Context

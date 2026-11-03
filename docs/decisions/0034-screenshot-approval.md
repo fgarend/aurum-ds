@@ -1,6 +1,6 @@
 # 0034. Screenshot approval
 
-- Status: Accepted; partly superseded by 0044: the width and the removal of screenshots
+- Status: Accepted; partly superseded by 0044: the width and the removal of screenshots; and by 0060: the folders removed
 - Date: 2026-11-01
 
 ## Context

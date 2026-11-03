@@ -68,8 +68,9 @@ const Labelled: Story = {
   },
 };
 
-// Every size the design uses, for a few drawings.
+// Every size the design uses, for a few drawings, compared with its approved screenshot.
 const Sizes: Story = {
+  tags: ["visual"],
   render: () => (
     <div data-testid="icons">
       {sizes.map((size) => (

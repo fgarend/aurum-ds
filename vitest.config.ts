@@ -11,7 +11,9 @@ const browserTests = "**/*.browser.test.{ts,tsx}";
 const visualTests = "**/*.visual.test.{ts,tsx}";
 // The checks of the repository as a whole live in test/ (decision 0039), in a project of their own.
 const repositoryChecks = "test/**/*.test.ts";
-// The visual tests import stories, so they get what every story runs in.
+// One visual test compares every story tagged visual with its screenshot (decision 0060). It imports the stories,
+// so it gets what every story runs in.
+const storyScreenshots = ".storybook/visual.test.tsx";
 const storySetup = ".storybook/vitest.setup.ts";
 const notBrowserTests = ["**/node_modules/**", browserTests, visualTests];
 const pixels = /^(?<number>\d+)px$/u;
@@ -103,7 +105,7 @@ const config: ViteUserConfig = defineConfig({
       {
         test: {
           name: "visual",
-          include: [visualTests],
+          include: [visualTests, storyScreenshots],
           browser: chromium(),
           setupFiles: [storySetup],
         },

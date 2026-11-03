@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 7.25.
+**Now:** 7.26.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -57,25 +57,23 @@ snapshot's React 18 with nothing gained.
 Each component is one item and ends in a release the app can use, a patch
 version while in `0.y.z` (decision 0004). The decisions every component
 relies on come first. The components follow the order in
-`docs/consumers.md`, each the same way: tests, the component, its visual
-test (decision 0034), a comparison with its reference screenshot (decisions
-0033 and 0035), the guidelines' Components section (decision 0031), the
-changelog, and a release.
+`docs/consumers.md`, each the same way: stories that check it, the
+component, a story tagged for its screenshot (decisions 0059 and 0060), a
+comparison with its reference screenshot (decisions 0033 and 0035), the
+guidelines' Components section (decision 0031), the changelog, and a
+release.
 
-Done: 7.21, 7.22, 7.23, 7.24.
+Done: 7.21, 7.22, 7.23, 7.24, 7.25.
 
-- **7.25 · One visual test for every story.** A single visual test goes
-  through the stories tagged `visual` and compares each with its approved
-  screenshot, as Primer, EUI and GitLab UI loop over their stories. Each
-  component's `.visual.test.tsx` goes, and with it `composeStories` and
-  `.storybook/vitest.setup.ts` if nothing else imports stories. A composed
-  story carries its tags; the loop itself is untried.
 - **7.26 · Tests' repetitions.** The base styles' browser test checks Geist
   again, which `test/fonts.test.ts` and `src/fonts/fonts.browser.test.ts`
   already cover. The Makefile's help still says `make test` runs "in a
   simulated DOM", gone with decision 0052. Anything else repeated after 7.24
   and 7.25.
-
+- **7.27 · Text styles' screenshot rewritten differently.** `make screenshots`
+  writes `text-styles-chromium-linux.png` with other bytes than the approved
+  one, already at f4f7807, though `make check` passes against it. Decision
+  0034 expects an unchanged screen written byte for byte the same. Find why.
 - **7.1 (was 5.2) · Component conventions.** Folder layout, naming, props and
   exports. Item 5.17 found a folder per component the common layout, with
   written rules in Primer React's ADR-013 (file structure) and GOV.UK
