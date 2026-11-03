@@ -6,6 +6,8 @@ follow decision 0004.
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-11-03
+
 ### Added
 
 - `Icon`: a Lucide drawing in Aurum's 1.5 stroke, at a size in pixels (20 by
@@ -44,6 +46,7 @@ The base, with no component yet.
   `"@fgarend/aurum-ds": "github:fgarend/aurum-ds#v0.1.0"`. React 19 is a peer
   dependency.
 
-[Unreleased]: https://github.com/fgarend/aurum-ds/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/fgarend/aurum-ds/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/fgarend/aurum-ds/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/fgarend/aurum-ds/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/fgarend/aurum-ds/tree/v0.1.0
