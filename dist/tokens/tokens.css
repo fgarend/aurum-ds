@@ -1,0 +1,184 @@
+:root, [data-theme="light"] {
+  --au-canvas: #faf9f6;
+  --au-surface: #ffffff;
+  --au-surface-hover: #f3f2ee;
+  --au-surface-sunken: #eeede8;
+  --au-line: #e7e5df;
+  --au-line-strong: #d8d5ce;
+  --au-control-border: #d3d0c8;
+  --au-control-border-hover: #aba79f;
+  --au-switch-off: #c9c6be;
+  --au-ink: #23262b;
+  --au-ink-muted: #4b4f55;
+  --au-ink-subtle: #5f636a;
+  --au-ink-disabled: #abadb0;
+  --au-primary: #2b2e33;
+  --au-primary-hover: #3a3e44;
+  --au-primary-pressed: #1e2124;
+  --au-on-primary: #ffffff;
+  --au-primary-soft: #ecebe6;
+  --au-gold: #f0bd2a;
+  --au-gold-hover: #e4af17;
+  --au-gold-soft: #fbf1d0;
+  --au-gold-ink: #8a6400;
+  --au-on-gold: #23262b;
+  --au-inverse: #303338;
+  --au-inverse-top: #2b2e33;
+  --au-inverse-bottom: #34373d;
+  --au-inverse-hover: rgba(255, 255, 255, 0.06);
+  --au-inverse-active: rgba(255, 255, 255, 0.10);
+  --au-inverse-line: rgba(255, 255, 255, 0.10);
+  --au-on-inverse: #f4f4f2;
+  --au-on-inverse-muted: #cfd1d4;
+  --au-on-inverse-subtle: #b6b9bd;
+  --au-sand: #d8ccb8;
+  --au-income: #0f7a3d;
+  --au-income-soft: #e3f2e8;
+  --au-expense: #c4281c;
+  --au-expense-soft: #fbe6e2;
+  --au-invest: #6b4c70;
+  --au-invest-soft: #efe5ef;
+  --au-warning: #8f5200;
+  --au-warning-soft: #f7ead2;
+  --au-success: var(--au-income);
+  --au-danger: var(--au-expense);
+  --au-cat-1: #8a6400;
+  --au-cat-1-soft: #fbf1d0;
+  --au-cat-2: #1f6b66;
+  --au-cat-2-soft: #dcefec;
+  --au-cat-3: #8a5a2b;
+  --au-cat-3-soft: #f4e8dc;
+  --au-cat-4: #6b4c70;
+  --au-cat-4-soft: #efe5ef;
+  --au-cat-5: #3f5f7a;
+  --au-cat-5-soft: #e3ebf2;
+  --au-cat-6: #4f6b3a;
+  --au-cat-6-soft: #e8efe0;
+  --au-cat-7: #9b3f5c;
+  --au-cat-7-soft: #f7e3ea;
+  --au-cat-8: #4b4f55;
+  --au-cat-8-soft: #eeede8;
+  --au-focus-ring: #2b2e33;
+  --au-focus-halo: rgba(240, 189, 42, 0.35);
+  --au-danger-halo: rgba(196, 40, 28, 0.14);
+  --au-scrim: rgba(30, 33, 36, 0.40);
+  --au-chart-1: #2b2e33;
+  --au-chart-2: #e2b02a;
+  --au-chart-3: #9f9f9e;
+  --au-chart-4: #2f8077;
+  --au-chart-5: #cfcabf;
+  --au-chart-6: #8c6e8f;
+  --au-shadow-xs: 0 1px 2px rgba(16, 24, 40, 0.05);
+  --au-shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.04);
+  --au-shadow-md: 0 4px 16px rgba(20, 38, 54, 0.08);
+  --au-shadow-lg: 0 16px 48px rgba(20, 38, 54, 0.16);
+}
+:root {
+  --au-space-1: 4px;
+  --au-space-2: 8px;
+  --au-space-3: 12px;
+  --au-space-4: 16px;
+  --au-space-5: 20px;
+  --au-space-6: 24px;
+  --au-space-8: 32px;
+  --au-space-10: 40px;
+  --au-space-12: 48px;
+  --au-space-16: 64px;
+  --au-radius-sm: 4px;
+  --au-radius-md: 6px;
+  --au-radius-lg: 8px;
+  --au-radius-xl: 12px;
+  --au-radius-pill: 999px;
+  --au-control-sm: 32px;
+  --au-control-md: 40px;
+  --au-control-lg: 48px;
+  --au-sidebar-width: 248px;
+  --au-content-max: 1200px;
+  --au-breakpoint-md: 768px;
+  --au-font-sans: "Geist Variable", Geist, "Helvetica Neue", Arial, system-ui, sans-serif;
+  --au-font-mono: "Geist Mono Variable", "Geist Mono", ui-monospace, Menlo, monospace;
+}
+.au-text-amount-xl {
+  font-family: var(--au-font-sans);
+  font-size: 36px;
+  line-height: 40px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+.au-text-display {
+  font-family: var(--au-font-sans);
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.au-text-amount-lg {
+  font-family: var(--au-font-sans);
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.au-text-title-lg {
+  font-family: var(--au-font-sans);
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+.au-text-title {
+  font-family: var(--au-font-sans);
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.au-text-heading {
+  font-family: var(--au-font-sans);
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.au-text-body {
+  font-family: var(--au-font-sans);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.au-text-body-strong {
+  font-family: var(--au-font-sans);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.au-text-label {
+  font-family: var(--au-font-sans);
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.au-text-caption {
+  font-family: var(--au-font-sans);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.au-text-overline {
+  font-family: var(--au-font-sans);
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+.au-text-code {
+  font-family: var(--au-font-mono);
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 400;
+  letter-spacing: 0;
+}

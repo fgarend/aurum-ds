@@ -9,7 +9,7 @@ RUN := mkdir -p node_modules .vitest-attachments coverage storybook-static && $(
 # The project's name, as infra/compose.yaml gives it. Compose marks every image it builds with it (decision 0043).
 PROJECT := $(shell sed -n 's/^name: //p' infra/compose.yaml)
 
-.PHONY: help check lint types test test-repository test-browser coverage pack check-release release-notes release-package install format tokens watch screenshots \
+.PHONY: help check lint types test test-repository test-browser coverage pack check-release release-notes release-package install format tokens build watch screenshots \
 	reference prototype storybook storybook-build images clean outdated outdated-deps outdated-pins audit
 .DEFAULT_GOAL := help
 
@@ -78,6 +78,10 @@ format: ## Format the files and apply the safe lint fixes, in place
 tokens: ## After changing src/tokens/tokens.json: write src/tokens/tokens.css, which is never edited by hand
 	$(COMPOSE) build tools-write
 	$(RUN) tools-write pnpm run tokens
+
+build: ## After changing src/: write dist/, what the app installs, which is never edited by hand
+	$(COMPOSE) build tools-write
+	$(RUN) tools-write pnpm run build
 
 watch: ## Run the tests of the code again on every change, until stopped with q or Ctrl+C
 	$(COMPOSE) build tools

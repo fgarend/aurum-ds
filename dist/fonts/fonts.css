@@ -1,0 +1,4 @@
+/* The fonts the tokens name first, served by the package (decision 0027): Geist and Geist Mono, variable, normal style.
+   Each file covers one set of characters, and the browser downloads only the sets a page uses. */
+@import "@fontsource-variable/geist/wght.css";
+@import "@fontsource-variable/geist-mono/wght.css";

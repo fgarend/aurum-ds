@@ -4,12 +4,14 @@
   // What .gitignore lists is left out.
   "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
   "files": {
-    // The frozen snapshot is never edited, pnpm writes its own lockfile, and make tokens writes tokens.css.
+    // The frozen snapshot is never edited, pnpm writes its own lockfile, make tokens writes tokens.css, and make build
+    // writes dist/.
     "includes": [
       "**",
       "!reference",
       "!pnpm-lock.yaml",
-      "!src/tokens/tokens.css"
+      "!src/tokens/tokens.css",
+      "!dist"
     ]
   },
   // Biome's default style, with the indentation from .editorconfig.

@@ -65,14 +65,18 @@ release.
 
 Done: 7.1, 7.2, 7.3, 7.4, 7.5, 7.20, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27.
 
-- **7.19 · Build of components.** What `dist/` contains, with tools that
+- **7.19 · Build of components.** `make build` writes `dist/`, kept in the
+  repository (decision 0063). Left: the exports, and `make pack`'s check of
+  the types. What `dist/` contains, with tools that
   work with TypeScript 7 (decision 0024). Planned with the user: TypeScript 7
   emits the JavaScript and declarations, with no bundler (`tsconfig.json`
   then sets `noEmit`, `rootDir` and `outDir`), a script copies each
   component's CSS beside it, and no React Compiler until a measured need.
   Test files and the `__screenshots__` folders stay out of the package.
-  Check the package with publint, `@arethetypeswrong/cli` and a size budget
-  (size-limit), as Primer and MUI do (item 5.19). The exports gain the
+  `make pack`'s throwaway app also checks the types of what it imports,
+  with the TypeScript already here, instead of publint,
+  `@arethetypeswrong/cli` and size-limit, which Primer and MUI use (item
+  5.19): fewer tools, and no size budget until size becomes a problem. The exports gain the
   components: the single entry, `src/index.ts`, and a path per component
   through a wildcard (`./*`, as `@fgarend/aurum-ds/Icon`), as five of eight
   design systems surveyed offer; the guide recommends the path per

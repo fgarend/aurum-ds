@@ -4,3 +4,6 @@
 
 # The frozen snapshot of the artifact: third-party code, kept byte for byte.
 reference/artifact/** linguist-vendored -text
+
+# What make build writes, kept so the app can install any commit: GitHub folds it in diffs (decision 0063).
+dist/** linguist-generated

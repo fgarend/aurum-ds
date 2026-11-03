@@ -1,0 +1,11 @@
+// What make build emits into dist/ (decision 0063): the package's code, as JavaScript and declarations, without its
+// tests and stories.
+{
+  "extends": "./tsconfig.json",
+  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/**/*.stories.tsx"],
+  "compilerOptions": {
+    "noEmit": false,
+    "rootDir": "src",
+    "outDir": "dist"
+  }
+}
