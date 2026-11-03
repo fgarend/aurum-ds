@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { createRef } from "react";
-import { expect } from "storybook/test";
+import { expect, userEvent } from "storybook/test";
+import tokens from "../../tokens/tokens.json" with { type: "json" };
 import { AurumRoot } from "./AurumRoot.js";
 
 // The root's examples (decision 0070), each checking what it shows: where Aurum begins, with its fonts, tokens and base
@@ -12,8 +13,13 @@ const meta = {
 
 type Story = StoryObj<typeof meta>;
 
-// The tokens' values, as the browser computes them: ink #23262b.
+// The tokens' values, as the browser computes them: canvas #faf9f6, ink #23262b, focus-ring #2b2e33.
+const canvas = "rgb(250, 249, 246)";
 const ink = "rgb(35, 38, 43)";
+const focusRing = "rgb(43, 46, 51)";
+// Browsers write a family name with or without quotes: Firefox keeps them, Chromium and WebKit drop them.
+const quotes = /"/gu;
+const textStyles = tokens.type.groups.flatMap((group) => group.styles);
 // WebKit writes the family names without quotes, Chromium and Firefox with them.
 const geistFirst = /^"?Geist Variable"?,/u;
 
@@ -50,5 +56,114 @@ const Default: Story = {
   },
 };
 
+// One focus ring for every Aurum element, from the keyboard.
+const Focus: Story = {
+  render: () => (
+    <button className="au-probe" type="button">
+      Save
+    </button>
+  ),
+  play: async ({ canvas: screen }) => {
+    const button = screen.getByRole("button", { name: "Save" });
+    await userEvent.tab();
+    const ring = getComputedStyle(button);
+
+    await expect(button).toHaveFocus();
+    await expect([
+      ring.outlineStyle,
+      ring.outlineWidth,
+      ring.outlineColor,
+      ring.outlineOffset,
+    ]).toEqual(["solid", "2px", focusRing, "2px"]);
+  },
+};
+
+// Text only screen readers read, which takes no room on screen.
+const ScreenReaderText: Story = {
+  render: () => <span className="au-sr">Only for screen readers</span>,
+  play: async ({ canvas: screen }) => {
+    const hidden = screen
+      .getByText("Only for screen readers")
+      .getBoundingClientRect();
+
+    await expect([hidden.width, hidden.height]).toEqual([1, 1]);
+  },
+};
+
+// The fonts the root brings, loaded from the package.
+const Fonts: Story = {
+  render: () => (
+    <p>
+      Geist <code className="au-num">and Geist Mono</code>
+    </p>
+  ),
+  play: async () => {
+    for (const family of ["Geist Variable", "Geist Mono Variable"]) {
+      // biome-ignore lint/performance/noAwaitInLoops: two fonts, loaded in order.
+      const loaded = await document.fonts.load(`16px "${family}"`, "Aurum");
+
+      await expect(
+        loaded.map((face) => face.family.replace(quotes, "")),
+      ).toContain(family);
+      await expect(document.fonts.check(`16px "${family}"`, "Aurum")).toBe(
+        true,
+      );
+    }
+  },
+};
+
+// Every text style of the tokens, with its sample, or its name, compared with its approved screenshot.
+const TextStyles: Story = {
+  tags: ["visual"],
+  render: () => (
+    <div>
+      {textStyles.map((style) => (
+        <div className={`au-${style.name}`} key={style.name}>
+          {"sample" in style ? style.sample : style.name}
+        </div>
+      ))}
+    </div>
+  ),
+};
+
+// The class alone, on an element of the app's: it keeps its box and paints the canvas.
+const ClassAlone: Story = {
+  render: () => (
+    <div className="au-root" data-testid="class-alone">
+      Text
+    </div>
+  ),
+  play: async ({ canvas: screen }) => {
+    const style = getComputedStyle(screen.getByTestId("class-alone"));
+
+    await expect(style.display).toBe("block");
+    await expect([style.backgroundColor, style.color]).toEqual([canvas, ink]);
+    await expect(style.fontFamily).toMatch(geistFirst);
+  },
+};
+
+// The base styles sit in the layer au.base (decision 0053): the app's own CSS, outside any layer, wins over them
+// however plain its selector.
+const AppCss: Story = {
+  play: async ({ canvasElement, mount }) => {
+    const appStyle = document.createElement("style");
+    appStyle.textContent = "div { color: rgb(1, 2, 3); }";
+    document.head.append(appStyle);
+    await mount(<div className="au-root">Text</div>);
+    const color = getComputedStyle(root(canvasElement)).color;
+    appStyle.remove();
+
+    await expect(color).toBe("rgb(1, 2, 3)");
+  },
+};
+
 export default meta;
-export { Default };
+export {
+  AppCss,
+  ClassAlone,
+  Default,
+  Focus,
+  Fonts,
+  ScreenReaderText,
+  TextStyles,
+};

@@ -5,17 +5,12 @@ import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
 import { playwright } from "@vitest/browser-playwright";
 import { defineConfig, type ViteUserConfig } from "vitest/config";
 
-// A browser test, named *.browser.test.ts or .tsx, checks behaviour in every browser. A visual test, named
-// *.visual.test.ts or .tsx, compares screenshots in Chromium only. The other projects leave both out.
-const browserTests = "**/*.browser.test.{ts,tsx}";
-const visualTests = "**/*.visual.test.{ts,tsx}";
 // The checks of the repository as a whole live in test/ (decision 0039), in a project of their own.
 const repositoryChecks = "test/**/*.test.ts";
 // One visual test compares every story tagged visual with its screenshot (decision 0060). It imports the stories,
 // so it gets what every story runs in.
 const storyScreenshots = ".storybook/visual.test.tsx";
 const storySetup = ".storybook/vitest.setup.ts";
-const notBrowserTests = ["**/node_modules/**", browserTests, visualTests];
 const pixels = /^(?<number>\d+)px$/u;
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -44,7 +39,7 @@ const inBrowser = {
   enabled: true,
   provider: playwright(),
   headless: true,
-  // One canvas for every browser test: the tokens' content-max wide (decision 0034).
+  // One canvas for every test in the browser: the tokens' content-max wide (decision 0034).
   viewport: { width: contentMax(), height: 800 },
   // A failing test's screenshot would land among the approved ones.
   screenshotFailures: false,
@@ -87,14 +82,14 @@ const config: ViteUserConfig = defineConfig({
       // coverage/ is mounted into the container, which cannot remove it: make coverage empties it first.
       clean: false,
     },
-    // A test of logic runs in Node, a browser test in every browser, and a visual test in Chromium. Components are
-    // tested in the browser only (decision 0052), in their stories (decision 0059).
+    // A test of logic runs in Node, and everything drawn in the browser is a story (decisions 0052, 0059 and 0071): in
+    // every browser with its checks, and in Chromium for its screenshot.
     projects: [
       {
         test: {
           name: "node",
           include: ["**/*.test.ts"],
-          exclude: [...notBrowserTests, repositoryChecks],
+          exclude: ["**/node_modules/**", repositoryChecks],
           environment: "node",
         },
       },
@@ -103,13 +98,6 @@ const config: ViteUserConfig = defineConfig({
           name: "repository",
           include: [repositoryChecks],
           environment: "node",
-        },
-      },
-      {
-        test: {
-          name: "browser",
-          include: [browserTests],
-          browser: everyBrowser(),
         },
       },
       // Every story, rendered in the three browsers, with axe checking it (decision 0057) and its play function
@@ -121,7 +109,7 @@ const config: ViteUserConfig = defineConfig({
       {
         test: {
           name: "visual",
-          include: [visualTests, storyScreenshots],
+          include: [storyScreenshots],
           browser: chromium(),
           setupFiles: [storySetup],
         },

@@ -1,6 +1,6 @@
 # 0059. Component tests in their stories
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0071: what is not a component, now stories of AurumRoot
 - Date: 2026-11-03
 
 ## Context

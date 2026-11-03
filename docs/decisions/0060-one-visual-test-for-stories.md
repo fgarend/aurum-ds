@@ -1,6 +1,6 @@
 # 0060. One visual test for the stories
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0071: the text styles, now a story
 - Date: 2026-11-03
 
 ## Context

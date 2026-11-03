@@ -1,14 +1,8 @@
 // TypeScript settings (decision 0013). Only types are checked: the build decides what is emitted.
 {
   "include": ["src"],
-  // The browser tests have their own settings, in tsconfig.browser.json (decision 0032).
-  "exclude": [
-    "src/**/*.browser.test.ts",
-    "src/**/*.browser.test.tsx",
-    "src/**/*.visual.test.ts",
-    "src/**/*.visual.test.tsx",
-    "src/**/*.stories.tsx"
-  ],
+  // The stories, the tests in the browser, have their own settings, in tsconfig.browser.json (decision 0032).
+  "exclude": ["src/**/*.stories.tsx"],
   "compilerOptions": {
     "noEmit": true,
 
