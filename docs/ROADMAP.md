@@ -100,7 +100,10 @@ Done: 7.5, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27.
   (size-limit), as Primer and MUI do (item 5.19). Consider the React
   Compiler, which memoizes by itself. The exports gain the components'
   entry (decision 0036). The built files go in the release's tag, since the
-  package runs no script when installed (decision 0037).
+  package runs no script when installed (decision 0037). `make pack`'s
+  throwaway app then installs `lucide-react`, the package's peer, at the
+  version used here, as it installs React: until then pnpm warns of a
+  missing peer.
 - **7.6 (was 5.6) · Icon.** How the package depends on Lucide (peer or
   dependency; the app is on 1.61), the stroke width (Aurum's 1.5 or Lucide's
   2), names by concept as the app's `Icon` has them, and the three artifact
@@ -148,5 +151,8 @@ No order between them; each becomes items when its time comes.
 - **Storybook's accepted advisories.** Two advisories of `glob` and
   `minimatch`, through Storybook's docgen plugin, sit in `audit.ignore`
   (decision 0058). They go when the plugin depends on `glob` 14.0.2 or later.
+- **Storybook's deprecated loader.** Every test run warns `DEP0205`:
+  Storybook loads its settings with Node's `module.register()`, which Node
+  deprecates for `module.registerHooks()`. It goes when Storybook moves.
 - **pnpm's update notice.** Every run says a newer pnpm exists, though the
   version is chosen by the release-age rule; `updateNotifier` turns it off.

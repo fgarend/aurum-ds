@@ -38,11 +38,13 @@ jobs:
       VERSION: ${{ inputs.version }}
       COMMIT: ${{ inputs.commit }}
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Check out the commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ inputs.commit }}
           fetch-depth: 0
-      - run: make check-release VERSION="$VERSION"
+      - name: Check the version can be released (make check-release)
+        run: make check-release VERSION="$VERSION"
       - name: Take the notes from the changelog
         run: make release-notes VERSION="$VERSION" > "$RUNNER_TEMP/notes.md"
       - name: Pack the package
