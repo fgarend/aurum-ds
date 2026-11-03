@@ -67,6 +67,14 @@ test: {
 }
 ```
 
+Aurum's style sheets state their layers among Tailwind's, its reset below and
+its utilities above. If the app's CSS loads before Aurum's, it states the same
+line first:
+
+```css
+@layer theme, base, au.base, au.components, components, utilities;
+```
+
 How to use the tokens, text styles and components is in
 `docs/guidelines.md`.
 

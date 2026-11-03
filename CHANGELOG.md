@@ -6,6 +6,13 @@ follow decision 0004.
 
 ## [Unreleased]
 
+### Fixed
+
+- With Tailwind, its reset no longer wins over a component's padding and margin,
+  and its utilities win over a component's rules: Aurum's style sheets state
+  their layers among Tailwind's. If the app's CSS loads before Aurum's, it
+  states the same line first: see the README.
+
 ## [0.1.3] - 2026-11-03
 
 ### Added

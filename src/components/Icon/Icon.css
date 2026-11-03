@@ -1,5 +1,5 @@
 /* The Icon (decision 0056). Aurum's layers, in order: the base, then the components (decision 0053). */
-@layer au.base, au.components;
+@layer theme, base, au.base, au.components, components, utilities;
 
 @layer au.components {
   .au-icon {

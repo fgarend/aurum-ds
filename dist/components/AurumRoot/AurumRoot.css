@@ -2,8 +2,9 @@
    inside .au-root, so screens that do not use Aurum yet are left alone. */
 
 /* Aurum's layers, in order (decision 0053): the base, then the components. The app's own CSS, outside any layer,
-   wins over both. Every component's CSS repeats this line, so the order holds whatever loads first. */
-@layer au.base, au.components;
+   wins over both. Tailwind's layers are named around them (decision 0072), its reset below and its utilities above, and
+   are empty in an app without it. Every component's CSS repeats this line, so the order holds whatever loads first. */
+@layer theme, base, au.base, au.components, components, utilities;
 
 @layer au.base {
   .au-root {

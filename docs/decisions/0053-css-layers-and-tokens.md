@@ -1,6 +1,6 @@
 # 0053. CSS layers and tokens only
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0072: the layers' order, among Tailwind's
 - Date: 2026-11-02
 
 ## Context

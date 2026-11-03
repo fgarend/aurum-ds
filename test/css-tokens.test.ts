@@ -16,6 +16,8 @@ const tokenLength =
 const allowedBorder =
   /^border(?:-[a-z]+)*-width$|^border(?:-(?:top|right|bottom|left))?$/u;
 const exception = /\/\* tokens-exception: .+ \*\//u;
+const layerOrder =
+  "@layer theme, base, au.base, au.components, components, utilities;";
 
 // The CSS of the sources may only use tokens that tokens.css defines (decision 0030): a wrong name fails here, not
 // silently in the browser.
@@ -117,4 +119,21 @@ it("writes no colour or length by hand in a component's CSS", async () => {
   }
 
   expect(found).toEqual([]);
+});
+
+// Whichever file loads first fixes the layers' order: Tailwind's reset below Aurum, and its utilities above (decision 0072).
+it("states the whole order of the layers in every style sheet that uses them", async () => {
+  const files = (await readdir(sources, { recursive: true })).filter((path) =>
+    path.endsWith(".css"),
+  );
+  const missing: string[] = [];
+  for (const path of files) {
+    // biome-ignore lint/performance/noAwaitInLoops: a few small files, read in order.
+    const css = await readFile(new URL(path, sources), "utf8");
+    if (css.includes("@layer") && !css.includes(layerOrder)) {
+      missing.push(path);
+    }
+  }
+
+  expect(missing).toEqual([]);
 });

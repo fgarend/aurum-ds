@@ -157,6 +157,30 @@ const AppCss: Story = {
   },
 };
 
+// An app with Tailwind (decision 0072), whose CSS comes after Aurum's: its reset stays below a component's rule, and its
+// utilities above it.
+const WithTailwind: Story = {
+  play: async ({ canvas: screen, mount }) => {
+    const tailwind = document.createElement("style");
+    tailwind.textContent = `
+      @layer theme, base, components, utilities;
+      @layer base { * { padding: 0; } }
+      @layer utilities { .from-tailwind { color: rgb(1, 2, 3); } }
+      @layer au.components { .au-probe { padding: 8px; color: rgb(4, 5, 6); } }
+    `;
+    document.head.append(tailwind);
+    await mount(
+      <div className="au-probe from-tailwind" data-testid="probe">
+        Text
+      </div>,
+    );
+    const { paddingTop, color } = getComputedStyle(screen.getByTestId("probe"));
+    tailwind.remove();
+
+    await expect([paddingTop, color]).toEqual(["8px", "rgb(1, 2, 3)"]);
+  },
+};
+
 export default meta;
 export {
   AppCss,
@@ -166,4 +190,5 @@ export {
   Fonts,
   ScreenReaderText,
   TextStyles,
+  WithTailwind,
 };
