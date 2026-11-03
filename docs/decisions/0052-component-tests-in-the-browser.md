@@ -1,6 +1,6 @@
 # 0052. Component tests in the browser
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0059: a component's browser test, now its stories
 - Date: 2026-11-02
 
 ## Context

@@ -1,6 +1,6 @@
 # 0057. Storybook
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0059: the checks of a component, in its stories
 - Date: 2026-11-02
 
 ## Context

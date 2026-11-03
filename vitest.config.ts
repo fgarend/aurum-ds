@@ -11,7 +11,7 @@ const browserTests = "**/*.browser.test.{ts,tsx}";
 const visualTests = "**/*.visual.test.{ts,tsx}";
 // The checks of the repository as a whole live in test/ (decision 0039), in a project of their own.
 const repositoryChecks = "test/**/*.test.ts";
-// The tests that import stories get what every story runs in.
+// The visual tests import stories, so they get what every story runs in.
 const storySetup = ".storybook/vitest.setup.ts";
 const notBrowserTests = ["**/node_modules/**", browserTests, visualTests];
 const pixels = /^(?<number>\d+)px$/u;
@@ -70,7 +70,7 @@ const everyBrowser = (): typeof inBrowser & {
 const config: ViteUserConfig = defineConfig({
   test: {
     // A test of logic runs in Node, a browser test in every browser, and a visual test in Chromium. Components are
-    // tested in the browser only (decision 0052).
+    // tested in the browser only (decision 0052), in their stories (decision 0059).
     projects: [
       {
         test: {
@@ -92,10 +92,10 @@ const config: ViteUserConfig = defineConfig({
           name: "browser",
           include: [browserTests],
           browser: everyBrowser(),
-          setupFiles: [storySetup],
         },
       },
-      // Every story, rendered in the three browsers, with axe checking it (decision 0057).
+      // Every story, rendered in the three browsers, with axe checking it (decision 0057) and its play function
+      // checking what it shows (decision 0059).
       {
         plugins: [storybookTest({ configDir: ".storybook" })],
         test: { name: "storybook", browser: everyBrowser() },

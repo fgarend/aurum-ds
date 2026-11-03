@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 7.1.
+**Now:** 7.25.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -62,7 +62,19 @@ test (decision 0034), a comparison with its reference screenshot (decisions
 0033 and 0035), the guidelines' Components section (decision 0031), the
 changelog, and a release.
 
-Done: 7.21, 7.22, 7.23.
+Done: 7.21, 7.22, 7.23, 7.24.
+
+- **7.25 · One visual test for every story.** A single visual test goes
+  through the stories tagged `visual` and compares each with its approved
+  screenshot, as Primer, EUI and GitLab UI loop over their stories. Each
+  component's `.visual.test.tsx` goes, and with it `composeStories` and
+  `.storybook/vitest.setup.ts` if nothing else imports stories. A composed
+  story carries its tags; the loop itself is untried.
+- **7.26 · Tests' repetitions.** The base styles' browser test checks Geist
+  again, which `test/fonts.test.ts` and `src/fonts/fonts.browser.test.ts`
+  already cover. The Makefile's help still says `make test` runs "in a
+  simulated DOM", gone with decision 0052. Anything else repeated after 7.24
+  and 7.25.
 
 - **7.1 (was 5.2) · Component conventions.** Folder layout, naming, props and
   exports. Item 5.17 found a folder per component the common layout, with
@@ -81,7 +93,9 @@ Done: 7.21, 7.22, 7.23.
   replaces them. Settle Biome's `noJsxLiterals`, which forbids text written
   in JSX.
 - **7.5 (was 5.11) · Coverage.** The tool, and whether `make check` requires a
-  minimum.
+  minimum. Decided: a `make coverage` of its own, with istanbul. Which tests
+  count returns for decision, since a component's checks now live in its
+  stories (decision 0059).
 - **7.20 · Storybook.** Whether to adopt it, before the first component, since
   its stories would live in each component's folder and could become its
   tests: a gallery of each component in every state (a `make run`), the
