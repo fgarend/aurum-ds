@@ -20,3 +20,6 @@ node_modules/
 
 # The report make coverage writes (decision 0061)
 coverage/
+
+# The gallery make storybook-build writes (decision 0062)
+storybook-static/

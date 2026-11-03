@@ -1,6 +1,6 @@
 # Releasing
 
-How a version is released (decisions 0004, 0040, 0048, 0049 and 0051). The
+How a version is released (decisions 0004, 0040, 0048, 0049, 0051 and 0062). The
 app installs the package on the release's page, or from GitHub at its tag
 (decisions 0037 and 0051), so the tag is the release. It is created by the
 `release` workflow, never by hand: GitHub then refuses to move or delete it.
@@ -28,11 +28,22 @@ app installs the package on the release's page, or from GitHub at its tag
    runs `make check-release`, checks the commit is on `main`, creates the
    annotated tag `vX.Y.Z` on it, and publishes the release page with the
    version's notes from the changelog (decision 0049) and the packed package,
-   `fgarend-aurum-ds-X.Y.Z.tgz` (decision 0051). The release is immutable once
-   published: its tag and its package never change.
+   `fgarend-aurum-ds-X.Y.Z.tgz` (decision 0051). It builds the gallery of
+   components before the tag, and publishes it on GitHub Pages after, at
+   `https://fgarend.github.io/aurum-ds/` (decision 0062). The release is
+   immutable once published: its tag and its package never change.
 7. **The app moves to the release**, by the package on its page,
    `https://github.com/fgarend/aurum-ds/releases/download/vX.Y.Z/fgarend-aurum-ds-X.Y.Z.tgz`,
    in its own repository (decision 0051).
+
+## Once: turning Pages on
+
+Pages takes its site from GitHub Actions, a setting of the repository a
+workflow cannot change. It was turned on once, by its owner:
+
+```sh
+gh api -X POST repos/fgarend/aurum-ds/pages -f build_type=workflow
+```
 
 ## Deprecating
 

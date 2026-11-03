@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 7.20.
+**Now:** 7.19.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -63,19 +63,8 @@ comparison with its reference screenshot (decisions 0033 and 0035), the
 guidelines' Components section (decision 0031), the changelog, and a
 release.
 
-Done: 7.1, 7.2, 7.3, 7.4, 7.5, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27.
+Done: 7.1, 7.2, 7.3, 7.4, 7.5, 7.20, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27.
 
-- **7.20 · Storybook.** Whether to adopt it, before the first component, since
-  its stories would live in each component's folder and could become its
-  tests: a gallery of each component in every state (a `make run`), the
-  Vitest addon running stories as browser tests, and the accessibility addon
-  failing a test on axe-core violations. Five of nine design systems surveyed
-  use it, and MUI, GOV.UK and Ant Design do not (item 5.19). Check it works
-  with React 19, TypeScript 7 (decision 0024) and the containers.
-  Adopted with the Icon (decision 0057). Left: `make storybook-build`, into
-  `storybook-static/` ignored by git, and a job of the release workflow that
-  publishes the gallery on GitHub Pages at each release, the latest version
-  only.
 - **7.19 · Build of components.** What `dist/` contains, with tools that
   work with TypeScript 7 (decision 0024). Planned with the user: TypeScript 7
   emits the JavaScript and declarations, with no bundler (`tsconfig.json`

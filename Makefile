@@ -5,12 +5,12 @@
 
 COMPOSE := docker compose --env-file infra/settings.env -f infra/compose.yaml
 # The code is mounted read-only, and the folders mounted over it must exist in it first, even in a fresh clone.
-RUN := mkdir -p node_modules .vitest-attachments coverage && $(COMPOSE) run --rm
+RUN := mkdir -p node_modules .vitest-attachments coverage storybook-static && $(COMPOSE) run --rm
 # The project's name, as infra/compose.yaml gives it. Compose marks every image it builds with it (decision 0043).
 PROJECT := $(shell sed -n 's/^name: //p' infra/compose.yaml)
 
 .PHONY: help check lint types test test-repository test-browser coverage pack check-release release-notes release-package install format tokens watch screenshots \
-	reference prototype storybook images clean outdated outdated-deps outdated-pins audit
+	reference prototype storybook storybook-build images clean outdated outdated-deps outdated-pins audit
 .DEFAULT_GOAL := help
 
 help: ## List the targets
@@ -98,6 +98,11 @@ prototype: ## Serve the prototype's screens at http://localhost:5173 (PROTOTYPE_
 storybook: ## Serve the gallery of components at http://localhost:6006 (STORYBOOK_PORT), until stopped with Ctrl+C
 	$(COMPOSE) build storybook
 	$(RUN) --service-ports storybook pnpm run storybook
+
+storybook-build: ## Build the gallery of components as a static site in storybook-static/, as each release publishes it
+	$(COMPOSE) build tools
+	rm -rf storybook-static
+	$(RUN) tools pnpm run storybook-build
 
 images: ## Build the images every command runs in
 	$(COMPOSE) build

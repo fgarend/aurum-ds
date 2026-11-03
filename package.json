@@ -28,6 +28,7 @@
     "reference": "vitest run --project reference",
     "prototype": "vite reference/prototype --host 0.0.0.0 --port \"$PROTOTYPE_PORT\" --strictPort",
     "storybook": "storybook dev --host 0.0.0.0 --port \"$STORYBOOK_PORT\" --no-open --ci",
+    "storybook-build": "storybook build --output-dir storybook-static --quiet",
     "outdated-deps": "pnpm outdated",
     "outdated-pins": "node scripts/check-pins/main.ts",
     "audit": "pnpm audit"
