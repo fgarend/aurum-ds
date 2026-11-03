@@ -6,6 +6,13 @@ follow decision 0004.
 
 ## [Unreleased]
 
+### Added
+
+- The line the app's Vitest needs to import the components, which import
+  their own CSS: `test: { server: { deps: { inline: ["@fgarend/aurum-ds"] } } }`,
+  in the README. Without it, a test that imports a component fails with
+  `Unknown file extension ".css"`.
+
 ## [0.1.2] - 2026-11-03
 
 ### Added

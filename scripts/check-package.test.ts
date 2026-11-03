@@ -4,7 +4,9 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
   importEveryExport,
+  importTestSource,
   specifiers,
+  testSettingsSource,
   typeCheckSource,
 } from "./check-package.ts";
 
@@ -76,6 +78,31 @@ describe("typeCheckSource", () => {
       [
         'export * as entry from "@fictional/kit";',
         'export { Button } from "@fictional/kit/Button";',
+        "",
+      ].join("\n"),
+    );
+  });
+});
+
+describe("testSettingsSource", () => {
+  it("is the line the guides give the app's Vitest, for the package's CSS", () => {
+    expect(testSettingsSource(manifest.name)).toBe(
+      'export default { test: { server: { deps: { inline: ["@fictional/kit"] } } } };\n',
+    );
+  });
+});
+
+describe("importTestSource", () => {
+  it("imports the entry and every component by its path, in a test of the app", () => {
+    expect(importTestSource(manifest.name, components)).toBe(
+      [
+        'import { expect, it } from "vitest";',
+        'import * as entry from "@fictional/kit";',
+        'import { Button } from "@fictional/kit/Button";',
+        "",
+        'it("imports the package in the app\'s tests", () => {',
+        "  expect([entry, Button]).not.toContain(undefined);",
+        "});",
         "",
       ].join("\n"),
     );

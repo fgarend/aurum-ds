@@ -49,6 +49,20 @@ the package's entry exports them all too:
 import { Icon } from "@fgarend/aurum-ds/Icon";
 ```
 
+Each component imports its own CSS, which Vite takes and Node alone does not.
+If the app's tests run with Vitest, hand the package to Vite there, in the
+test settings:
+
+```ts
+test: {
+  server: {
+    deps: {
+      inline: ["@fgarend/aurum-ds"];
+    }
+  }
+}
+```
+
 How to use the tokens, text styles and components is in
 `docs/guidelines.md`.
 

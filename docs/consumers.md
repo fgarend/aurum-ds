@@ -34,6 +34,10 @@ Read from the app's repository on 2026-11-01.
   and 0036).
 - **Import each component by its own path**, `@fgarend/aurum-ds/Icon`; the
   package's entry, `@fgarend/aurum-ds`, exports them all too (decision 0064).
+- **Hand the package to Vite in its Vitest settings**,
+  `test: { server: { deps: { inline: ["@fgarend/aurum-ds"] } } }`: each
+  component imports its own CSS, on which Node alone fails, `Unknown file
+  extension ".css"` (decision 0069).
 - **Put `.au-root`** on each part of the page that uses Aurum, and at the top
   once all of it does (decision 0030).
 - **Carry the fonts' license notice** in its own build, as it ships Geist and
