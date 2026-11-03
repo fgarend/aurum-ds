@@ -146,5 +146,8 @@ No order between them; each becomes items when its time comes.
   Debian of the Node image), which `make audit` does not cover.
 - **Update bot.** Renovate or Dependabot opening pull requests, with the CI;
   check first that it respects the release age and updates image digests.
+- **Storybook's accepted advisories.** Two advisories of `glob` and
+  `minimatch`, through Storybook's docgen plugin, sit in `audit.ignore`
+  (decision 0058). They go when the plugin depends on `glob` 14.0.2 or later.
 - **pnpm's update notice.** Every run says a newer pnpm exists, though the
   version is chosen by the release-age rule; `updateNotifier` turns it off.

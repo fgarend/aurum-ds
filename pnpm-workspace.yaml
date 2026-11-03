@@ -11,3 +11,11 @@ saveExact: true
 # own package, so it is refused, said out loud so pnpm does not ask again (decision 0057).
 allowBuilds:
   esbuild: false
+# Advisories reviewed and accepted, by their GitHub code, each with its reason (decisions 0012 and 0058).
+audit:
+  ignore:
+    # glob and minimatch, through Storybook's docgen plugin, whose latest version still depends on glob 13. Both slow
+    # down a search of files whose pattern an attacker writes; the plugin only searches the components' own files,
+    # and nothing of it reaches the package. Goes when the plugin moves to glob 14.0.2 or later.
+    - GHSA-3g3m-2fjr-6pw4
+    - GHSA-g3hv-75wg-m249

@@ -1,6 +1,6 @@
 # 0012. Security audit
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0058: the name of the list
 - Date: 2026-11-01
 
 ## Context
