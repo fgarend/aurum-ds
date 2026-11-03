@@ -1,4 +1,5 @@
-// Packs the package and installs it in a throwaway app, as the app would, then imports every export (decision 0038).
+// Packs the package and installs it in a throwaway app, as the app would, then imports every export and checks the
+// types of the entry and of each component's path (decisions 0038 and 0065).
 // Run by make pack, in a container, with the repository mounted read-only and the folder of pnpm's store as its argument.
 import { execFileSync } from "node:child_process";
 import {
@@ -46,11 +47,14 @@ function pack(): string {
   return join(folder, tarball);
 }
 
-// A throwaway app with the same pnpm settings, and the package's peers, React 19 and Lucide, at the versions used here.
+// A throwaway app with the same pnpm settings, the package's peers, React 19 and Lucide, and TypeScript with React's
+// types, at the versions used here.
 function install(manifest: Manifest, tarball: string, store: string): string {
   const app = mkdtempSync(join(tmpdir(), "app-"));
   const react = manifest.devDependencies["react"] ?? "";
   const lucide = manifest.devDependencies["lucide-react"] ?? "";
+  const typescript = manifest.devDependencies["typescript"] ?? "";
+  const reactTypes = manifest.devDependencies["@types/react"] ?? "";
   writeFileSync(
     join(app, "package.json"),
     JSON.stringify({
@@ -72,6 +76,8 @@ function install(manifest: Manifest, tarball: string, store: string): string {
       `react@${react}`,
       `react-dom@${react}`,
       `lucide-react@${lucide}`,
+      `typescript@${typescript}`,
+      `@types/react@${reactTypes}`,
       "--store-dir",
       store,
     ],
@@ -115,6 +121,44 @@ function importEveryExport(
   });
 }
 
+// A module that imports the entry and every component by its path, for TypeScript to check what the app would see.
+function typeCheckSource(name: string, components: string[]): string {
+  return [
+    `export * as entry from "${name}";`,
+    ...components.map(
+      (component) => `export { ${component} } from "${name}/${component}";`,
+    ),
+    "",
+  ].join("\n");
+}
+
+// Checks the package's types in the app, with settings like the app's, a Vite app's, and its declarations checked too
+// (skipLibCheck off), the strictest an app may choose.
+function checkTypes(name: string, components: string[], app: string): void {
+  writeFileSync(join(app, "check.ts"), typeCheckSource(name, components));
+  writeFileSync(
+    join(app, "tsconfig.json"),
+    JSON.stringify({
+      compilerOptions: {
+        target: "es2023",
+        lib: ["es2023", "dom"],
+        module: "esnext",
+        moduleResolution: "bundler",
+        jsx: "react-jsx",
+        strict: true,
+        noUncheckedIndexedAccess: true,
+        exactOptionalPropertyTypes: true,
+        verbatimModuleSyntax: true,
+        skipLibCheck: false,
+        noEmit: true,
+        types: [],
+      },
+      include: ["check.ts"],
+    }),
+  );
+  run(join(app, "node_modules/.bin/tsc"), ["-p", "."], app);
+}
+
 function main(): void {
   const [store] = process.argv.slice(2);
   if (store === undefined) {
@@ -127,6 +171,8 @@ function main(): void {
   for (const line of importEveryExport(manifest, components, app)) {
     console.log(`  ${line}`);
   }
+  checkTypes(manifest.name, components, app);
+  console.log("The app's TypeScript accepts the package's types.");
 }
 
 if (import.meta.main) {
@@ -138,4 +184,4 @@ if (import.meta.main) {
   }
 }
 
-export { importEveryExport, specifiers };
+export { importEveryExport, specifiers, typeCheckSource };

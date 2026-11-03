@@ -8,7 +8,7 @@ import {
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { expect, it } from "vitest";
-import { copyStyles } from "./build-package.ts";
+import { copyStyles, withoutStyleImports } from "./build-package.ts";
 
 // A fictitious source tree: two style sheets, in folders, beside code and data.
 function sourceTree(): string {
@@ -37,4 +37,25 @@ it("copies every style sheet to its place, and nothing else", () => {
   );
   expect(existsSync(join(to, "components/Button/Button.tsx"))).toBe(false);
   expect(existsSync(join(to, "tokens/tokens.json"))).toBe(false);
+});
+
+// A declaration describes types, and a style sheet has none: an app whose TypeScript checks the package's declarations
+// could not resolve the import.
+it("drops the style sheet imports a declaration keeps, and nothing else", () => {
+  expect(
+    withoutStyleImports(
+      [
+        'import type { ReactElement } from "react";',
+        'import "./Button.css";',
+        "declare function Button(): ReactElement;",
+        "",
+      ].join("\n"),
+    ),
+  ).toBe(
+    [
+      'import type { ReactElement } from "react";',
+      "declare function Button(): ReactElement;",
+      "",
+    ].join("\n"),
+  );
 });

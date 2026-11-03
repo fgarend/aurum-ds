@@ -2,7 +2,11 @@ import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { importEveryExport, specifiers } from "./check-package.ts";
+import {
+  importEveryExport,
+  specifiers,
+  typeCheckSource,
+} from "./check-package.ts";
 
 // A fictitious package, installed by hand in a throwaway app: no network, no pnpm.
 const manifest = {
@@ -62,6 +66,18 @@ describe("importEveryExport", () => {
 
     expect(() => importEveryExport(manifest, components, app)).toThrow(
       "@fictional/kit",
+    );
+  });
+});
+
+describe("typeCheckSource", () => {
+  it("imports the entry and every component by its path, for TypeScript to check", () => {
+    expect(typeCheckSource(manifest.name, components)).toBe(
+      [
+        'export * as entry from "@fictional/kit";',
+        'export { Button } from "@fictional/kit/Button";',
+        "",
+      ].join("\n"),
     );
   });
 });

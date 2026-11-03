@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 7.19.
+**Now:** 7.6.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -63,21 +63,14 @@ comparison with its reference screenshot (decisions 0033 and 0035), the
 guidelines' Components section (decision 0031), the changelog, and a
 release.
 
-Done: 7.1, 7.2, 7.3, 7.4, 7.5, 7.20, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27.
+Done: 7.1, 7.2, 7.3, 7.4, 7.5, 7.19, 7.20, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27.
 
-- **7.19 · Build of components.** `make build` writes `dist/`, kept in the
-  repository (decision 0063), and the exports point into it, with a path
-  per component (decision 0064). Left: `make pack`'s throwaway app checks
-  the types of what it imports, with the TypeScript already here, instead
-  of publint, `@arethetypeswrong/cli` and size-limit, which Primer and MUI
-  use (item 5.19): fewer tools, and no size budget until size becomes a
-  problem. The built `Icon.d.ts` keeps `import "./Icon.css"`, which the
-  check must show the app's TypeScript accepts.
 - **7.6 (was 5.6) · Icon.** How the package depends on Lucide (peer or
   dependency; the app is on 1.61), the stroke width (Aurum's 1.5 or Lucide's
   2), names by concept as the app's `Icon` has them, and the three artifact
   names Lucide spells differently: `arrows-swap` (`arrow-left-right`), `more`
-  (`ellipsis`) and `piggy` (`piggy-bank`).
+  (`ellipsis`) and `piggy` (`piggy-bank`). Decided (decision 0056) and
+  built, with its stories, changelog and guidelines; left: the release.
 - **7.7 · Badge.**
 - **7.8 · Avatar.**
 - **7.9 · AvatarGroup.**

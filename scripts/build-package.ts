@@ -1,14 +1,28 @@
 // Builds what the app installs into dist/ (decision 0063): TypeScript emits the code, one JavaScript file and its
-// declarations per module, and every style sheet is copied beside it, since a component imports its own. Run by
-// make build. The check that dist/ is up to date builds into a folder of its own.
+// declarations per module, and every style sheet is copied beside it, since a component imports its own. The
+// declarations lose the style sheet imports TypeScript keeps in them. Run by make build. The check that dist/ is up to
+// date builds into a folder of its own.
 import { spawnSync } from "node:child_process";
-import { cpSync, readdirSync, rmSync } from "node:fs";
+import {
+  cpSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
 import { join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const sources = join(root, "src");
 const tsc = join(root, "node_modules/.bin/tsc");
+const styleImport = /^import "[^"]+\.css";\n/gmu;
+
+// A declaration without the style sheet imports it keeps: it describes types, and a style sheet has none, so an app
+// whose TypeScript checks the package's declarations could not resolve them.
+function withoutStyleImports(declaration: string): string {
+  return declaration.replace(styleImport, "");
+}
 
 // Copies every .css file under from to the same place under to.
 function copyStyles(from: string, to: string): void {
@@ -34,6 +48,15 @@ function buildPackage(outDir: string): void {
   if (status !== 0) {
     throw new Error("TypeScript could not build the package");
   }
+  for (const entry of readdirSync(outDir, {
+    recursive: true,
+    withFileTypes: true,
+  })) {
+    if (entry.isFile() && entry.name.endsWith(".d.ts")) {
+      const path = join(entry.parentPath, entry.name);
+      writeFileSync(path, withoutStyleImports(readFileSync(path, "utf8")));
+    }
+  }
   copyStyles(sources, outDir);
 }
 
@@ -46,4 +69,4 @@ if (import.meta.main) {
   }
 }
 
-export { buildPackage, copyStyles };
+export { buildPackage, copyStyles, withoutStyleImports };

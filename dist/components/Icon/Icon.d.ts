@@ -1,6 +1,5 @@
 import type { LucideIcon } from "lucide-react";
 import type { ComponentProps, ReactElement } from "react";
-import "./Icon.css";
 interface IconProps extends Omit<ComponentProps<"svg">, "children"> {
     icon: LucideIcon;
     size?: number;
