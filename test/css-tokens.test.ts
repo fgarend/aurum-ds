@@ -16,6 +16,7 @@ const tokenLength =
 const allowedBorder =
   /^border(?:-[a-z]+)*-width$|^border(?:-(?:top|right|bottom|left))?$/u;
 const exception = /\/\* tokens-exception: .+ \*\//u;
+const widthQuery = /@media \(min-width: (?<width>[^)]+)\)/gu;
 const layerOrder =
   "@layer theme, base, au.base, au.components, components, utilities;";
 
@@ -136,4 +137,28 @@ it("states the whole order of the layers in every style sheet that uses them", a
   }
 
   expect(missing).toEqual([]);
+});
+
+// A media query cannot read a custom property, so the width is written in the style sheet, and must be the token's.
+it("breaks the layout only at the tokens' breakpoint", async () => {
+  const tokens = JSON.parse(
+    await readFile(new URL("tokens/tokens.json", sources), "utf8"),
+  );
+  const breakpoint = tokens.layout.tokens.find(
+    (token: { name: string }) => token.name === "breakpoint-md",
+  ).value;
+  const files = (await readdir(sources, { recursive: true })).filter((path) =>
+    path.endsWith(".css"),
+  );
+  const widths: (string | undefined)[] = [];
+  for (const path of files) {
+    // biome-ignore lint/performance/noAwaitInLoops: a few small files, read in order.
+    const css = await readFile(new URL(path, sources), "utf8");
+    widths.push(
+      ...[...css.matchAll(widthQuery)].map((match) => match.groups?.["width"]),
+    );
+  }
+
+  expect(widths).toContain(breakpoint);
+  expect(new Set(widths)).toEqual(new Set([breakpoint]));
 });

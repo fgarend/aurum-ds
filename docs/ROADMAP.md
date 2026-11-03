@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 7.31.
+**Now:** 7.36.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -63,7 +63,7 @@ comparison with its reference screenshot (decisions 0033 and 0035), the
 guidelines' Components section (decision 0031), the changelog, and a
 release.
 
-Done: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.19, 7.20, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27, 7.28, 7.29, 7.32, 7.33, 7.34, 7.35.
+Done: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.19, 7.20, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27, 7.28, 7.29, 7.31, 7.32, 7.33, 7.34, 7.35.
 
 Dropped: 7.30, the gallery's title in the browser's tab. Storybook writes
 "⋅ Storybook" after each story's name in its own code, with no setting, and
@@ -71,15 +71,6 @@ the first title comes from a setting it does not document; changing it would
 mean a script fighting Storybook at every navigation, for a tab's text, while
 the gallery already shows Aurum's brand mark.
 
-- **7.31 · The shell's frame.** Before the other components, as the app
-  waits for it: the page's layout with slots for the side navigation (a strip
-  at the top below `md`), the top bar, the side panel and the content up to a
-  maximum width. The app puts its own navigation in the slot until the
-  Sidebar comes. To decide: its name (`AppLayout` or `AppShell`); a top bar,
-  which the app has (path and filters) and the prototype does not; below
-  `md`, the app's strip at the top or the guidelines' `BottomNav`; and the
-  wider content of the app's note page (1440px against 1240px; the prototype
-  has 1200px on every screen).
 - **7.36 · Release 0.2.0, after the client migrates.** First the client
   (`wealth`) moves to a release with `AurumRoot` and the layers' order
   (decision 0072), 0.1.4 or later, wraps itself in it
@@ -94,8 +85,13 @@ the gallery already shows Aurum's brand mark.
 - **7.11 · Button and IconButton.**
 - **7.12 · PageHeader.**
 - **7.13 · Sidebar.**
-- **7.14 · The Sidebar in the shell.** The frame of 7.31 takes the Sidebar
-  in its navigation slot: the shell is complete.
+- **7.14 · The Sidebar in the shell.** `AppLayout` takes the Sidebar in its
+  `navigation`: the shell is complete.
+- **7.37 · The side panel.** The app's opens over the page, in a portal, so it
+  is a component of its own, not an area of `AppLayout` (decision 0073).
+- **7.38 · BottomNav.** The guidelines' navigation below `breakpoint-md`, in
+  `AppLayout` as an optional prop, where the navigation sits at the top until
+  then (decision 0073).
 - **7.18 · Table.** Right after the shell, as the app asked: People is its
   first screen after the shell, and needs the table.
 - **7.15 · Section and Card.**

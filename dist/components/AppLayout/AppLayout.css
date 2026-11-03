@@ -1,0 +1,68 @@
+/* The AppLayout (decision 0073). Aurum's layers, among Tailwind's (decisions 0053 and 0072). */
+@layer theme, base, au.base, au.components, components, utilities;
+
+@layer au.components {
+  /* On a small screen, one column: the navigation over the rest. */
+  .au-app-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: var(--au-canvas);
+  }
+
+  .au-app-layout-column {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  /* Both end at the same edges: the inset, or what is left beside content-max on a wider screen. */
+  .au-app-layout-top-bar,
+  .au-app-layout-content {
+    padding-inline: max(
+      var(--au-space-4),
+      calc((100% - var(--au-content-max)) / 2)
+    );
+  }
+
+  .au-app-layout-top-bar {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding-block: var(--au-space-3);
+    border-bottom: 1px solid var(--au-line);
+    background: var(--au-canvas);
+  }
+
+  .au-app-layout-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--au-space-10);
+    padding-block: var(--au-space-10) var(--au-space-16);
+  }
+
+  /* The tokens' breakpoint-md: a media query cannot read a custom property, and a check holds them alike. */
+  @media (min-width: 768px) {
+    .au-app-layout {
+      flex-direction: row;
+    }
+
+    .au-app-layout-top-bar,
+    .au-app-layout-content {
+      padding-inline: max(
+        var(--au-space-12),
+        calc((100% - var(--au-content-max)) / 2)
+      );
+    }
+
+    /* The navigation stays in view, as wide as it draws itself. */
+    .au-app-layout-navigation {
+      position: sticky;
+      top: 0;
+      flex: none;
+      align-self: flex-start;
+      height: 100vh;
+    }
+  }
+}

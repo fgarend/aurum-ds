@@ -7,7 +7,7 @@ const root = new URL("../", import.meta.url);
 const { resolve } = createRequire(new URL("package.json", root));
 const files = ["tokens.css", "fonts.css", "base.css"];
 // The components, each importable by its own path as well as from the entry (decision 0064).
-const components = ["AurumRoot", "Icon"];
+const components = ["AppLayout", "AurumRoot", "Icon"];
 const leadingDotSlash = /^\.\//u;
 const pnpmImage = /^PNPM_IMAGE=ghcr\.io\/pnpm\/pnpm:(?<version>[^@\s]+)@/mu;
 const imageDefault = /^ARG (?<name>[A-Z0-9_]+_IMAGE)(?:=(?<value>\S*))?$/gmu;

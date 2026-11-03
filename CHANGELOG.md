@@ -6,6 +6,18 @@ follow decision 0004.
 
 ## [Unreleased]
 
+### Added
+
+- `AppLayout`: the frame of the app's pages. It paints the canvas, holds the
+  `navigation` at the side, as wide as it draws itself, and at the top below
+  768px; an optional `topBar`, which stays in view; and the content, up to
+  `content-max`, centred, with 40px between its sections.
+
+### Changed
+
+- The token `content-max` goes from 1200px to 1360px, so tables have more room
+  on a wide screen.
+
 ## [0.1.4] - 2026-11-03
 
 ### Fixed

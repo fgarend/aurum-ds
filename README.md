@@ -75,6 +75,16 @@ line first:
 @layer theme, base, au.base, au.components, components, utilities;
 ```
 
+`AppLayout` is the frame of the app's pages: the canvas, the navigation at the
+side, an optional top bar, and the content up to `content-max`, centred. What
+goes in each area is the app's:
+
+```tsx
+<AppLayout navigation={<Navigation />} topBar={<TopBar />}>
+  …
+</AppLayout>;
+```
+
 How to use the tokens, text styles and components is in
 `docs/guidelines.md`.
 

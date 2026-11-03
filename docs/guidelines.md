@@ -65,7 +65,7 @@ Tokens are named here as `tokens.json` names them. In CSS, each token is a custo
 - 4px base: `space-1` 4 · `space-2` 8 · `space-3` 12 · `space-4` 16 · `space-5` 20 · `space-6` 24 · `space-8` 32 · `space-10` 40 · `space-12` 48 · `space-16` 64.
 - Pages are built from `Section`s: a section's title, subtitle, actions and footer sit on `canvas`, outside the box; the content itself stays in `Card`s (KPI cards, row lists, budget bars, charts). The card holds only data — never its own heading. Sections are `space-12` apart on desktop (`space-8` on mobile).
 - Card padding `space-5`; gap between cards `space-4` (mobile) / `space-6` (desktop); page padding `space-4` (mobile) / `space-10` (desktop).
-- App shell: `Sidebar` (`sidebar-width`, 248px; `variant="inverse"` graphite is the default look for this palette — see its guide) + content column up to `content-max` (1200px). Below `breakpoint-md` (768px) use `BottomNav` and stack cards.
+- App shell: `Sidebar` (`sidebar-width`, 248px; `variant="inverse"` graphite is the default look for this palette — see its guide) + content column up to `content-max` (1360px), centred, in `AppLayout`. Below `breakpoint-md` (768px) use `BottomNav` and stack cards.
 - Controls are `control-sm` 32, `control-md` 40 (default) or `control-lg` 48 tall — nothing in between.
 
 ### Shape, borders, elevation
@@ -101,7 +101,7 @@ The catalogue below is the artifact's. This package builds it in React 19 (decis
 
 - **Actions** — `Button`, `IconButton`
 - **Forms** — `TextField`, `AmountInput`, `Select`, `Checkbox`, `Switch`, `SegmentedControl`
-- **Layout & display** — `Section`, `Card`, `Badge`, `Avatar`, `Icon`
+- **Layout & display** — `AppLayout`, `Section`, `Card`, `Badge`, `Avatar`, `Icon`
 - **Feedback** — `Alert`, `ProgressBar`, `EmptyState`, `Dialog`
 - **Navigation** — `Sidebar`, `BottomNav`
 - **Finance** — `Amount`, `StatCard`, `StatStrip`, `Delta`, `TransactionRow`, `BudgetBar`, `AllocationBar`, `Sparkline`

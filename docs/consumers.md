@@ -44,6 +44,8 @@ Read from the app's repository on 2026-11-01.
 - **Let Aurum's CSS load first, or state its layers first**: with Tailwind,
   `@layer theme, base, au.base, au.components, components, utilities;` before
   any other CSS, if the app's loads before Aurum's (decision 0072).
+- **Put its pages in `AppLayout`**, with its navigation and top bar in their
+  areas (decision 0073): it paints the canvas, which `AurumRoot` does not.
 - **Accept React 19 only** as the peer (decision 0019), and provide
   `lucide-react` 1, the Icon's drawings (decision 0056).
 
