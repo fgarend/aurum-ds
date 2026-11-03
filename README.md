@@ -29,7 +29,7 @@ Or from GitHub at the release's tag, which needs `git`:
 
 `X.Y.Z` is a version from `CHANGELOG.md`.
 
-React 19 is a peer dependency.
+React 19 and `lucide-react` 1 are peer dependencies.
 
 ## Use
 
@@ -42,13 +42,22 @@ Import the fonts, the tokens and the base styles, in that order, and put the
 @import "@fgarend/aurum-ds/base.css";
 ```
 
-How to use the tokens and text styles is in `docs/guidelines.md`.
+Import each component by its own path, so the app loads only what it uses;
+the package's entry exports them all too:
+
+```ts
+import { Icon } from "@fgarend/aurum-ds/Icon";
+```
+
+How to use the tokens, text styles and components is in
+`docs/guidelines.md`.
 
 ## The repository
 
 Each folder at the root belongs to one of four parts (decision 0039):
 
-- **The product, `src/`:** what the app installs and imports.
+- **The product, `src/`:** the package's source; `make build` writes from it
+  `dist/`, what the app installs and imports.
 - **The tooling:** `infra/`, the containers (the image, Compose and their
   settings); `scripts/`, the programs `make` runs; `test/`, the checks of the
   repository as a whole; `.github/`, continuous integration.

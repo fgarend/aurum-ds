@@ -1,6 +1,6 @@
 # 0036. The first package
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0064: the exports, now with the components and from dist/
 - Date: 2026-11-02
 
 ## Context

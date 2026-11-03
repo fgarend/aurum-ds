@@ -1,6 +1,6 @@
 # 0037. Delivery
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0064: `files`, now `dist/`, where the exports point
 - Date: 2026-11-02
 
 ## Context

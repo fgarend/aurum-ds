@@ -46,10 +46,11 @@ function pack(): string {
   return join(folder, tarball);
 }
 
-// A throwaway app with the same pnpm settings, and React 19, the package's peer, at the version used here.
+// A throwaway app with the same pnpm settings, and the package's peers, React 19 and Lucide, at the versions used here.
 function install(manifest: Manifest, tarball: string, store: string): string {
   const app = mkdtempSync(join(tmpdir(), "app-"));
   const react = manifest.devDependencies["react"] ?? "";
+  const lucide = manifest.devDependencies["lucide-react"] ?? "";
   writeFileSync(
     join(app, "package.json"),
     JSON.stringify({
@@ -70,6 +71,7 @@ function install(manifest: Manifest, tarball: string, store: string): string {
       tarball,
       `react@${react}`,
       `react-dom@${react}`,
+      `lucide-react@${lucide}`,
       "--store-dir",
       store,
     ],
@@ -78,17 +80,31 @@ function install(manifest: Manifest, tarball: string, store: string): string {
   return app;
 }
 
-// The name the app imports for each export, such as @fgarend/aurum-ds/tokens.css.
-function specifiers({ name, exports }: Exported): string[] {
-  return Object.keys(exports).map(
-    (entry) => `${name}/${entry.replace(leadingDotSlash, "")}`,
-  );
+// The name the app imports for each export, such as @fgarend/aurum-ds/tokens.css: the entry by the package's name,
+// and the path per component (./*) once for each component.
+function specifiers(
+  { name, exports }: Exported,
+  components: string[],
+): string[] {
+  return Object.keys(exports).flatMap((entry) => {
+    if (entry === ".") {
+      return [name];
+    }
+    const subpath = entry.replace(leadingDotSlash, "");
+    return subpath === "*"
+      ? components.map((component) => `${name}/${component}`)
+      : [`${name}/${subpath}`];
+  });
 }
 
 // Resolves every export from the app's folder, as the app would; a file the app did not receive throws.
-function importEveryExport(manifest: Exported, app: string): string[] {
+function importEveryExport(
+  manifest: Exported,
+  components: string[],
+  app: string,
+): string[] {
   const { resolve } = createRequire(join(app, "package.json"));
-  return specifiers(manifest).map((specifier) => {
+  return specifiers(manifest, components).map((specifier) => {
     try {
       return `${specifier} → ${resolve(specifier).replace(upToPackage, "")}`;
     } catch (error) {
@@ -105,9 +121,10 @@ function main(): void {
     throw new Error("Usage: node scripts/check-package.ts <pnpm store folder>");
   }
   const manifest = readManifest();
+  const components = readdirSync(join(root, "dist/components"));
   const app = install(manifest, pack(), store);
   console.log("What the app imports:");
-  for (const line of importEveryExport(manifest, app)) {
+  for (const line of importEveryExport(manifest, components, app)) {
     console.log(`  ${line}`);
   }
 }

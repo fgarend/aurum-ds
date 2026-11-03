@@ -35,15 +35,18 @@
     "audit": "pnpm audit"
   },
   "exports": {
-    "./tokens.css": "./src/tokens/tokens.css",
-    "./fonts.css": "./src/fonts/fonts.css",
-    "./base.css": "./src/styles/base.css",
+    ".": "./dist/index.js",
+    "./tokens.css": "./dist/tokens/tokens.css",
+    "./fonts.css": "./dist/fonts/fonts.css",
+    "./base.css": "./dist/styles/base.css",
+    "./*": "./dist/components/*/*.js",
     "./package.json": "./package.json"
   },
   "files": [
-    "src/tokens/tokens.css",
-    "src/fonts/fonts.css",
-    "src/styles/base.css"
+    "dist"
+  ],
+  "sideEffects": [
+    "**/*.css"
   ],
   "peerDependencies": {
     "lucide-react": "^1.61.0",

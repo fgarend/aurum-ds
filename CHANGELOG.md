@@ -12,6 +12,8 @@ follow decision 0004.
   default), in the colour of the text around it, and hidden from screen
   readers unless it has a `label`. `lucide-react` `^1.61.0` is a peer
   dependency.
+- Components import from their own path, `@fgarend/aurum-ds/Icon`, or from
+  the package's entry, `@fgarend/aurum-ds`.
 
 ### Changed
 

@@ -6,6 +6,8 @@ const root = new URL("../", import.meta.url);
 // The package resolves its own name through its exports, as the app would.
 const { resolve } = createRequire(new URL("package.json", root));
 const files = ["tokens.css", "fonts.css", "base.css"];
+// The components, each importable by its own path as well as from the entry (decision 0064).
+const components = ["Icon"];
 const leadingDotSlash = /^\.\//u;
 const pnpmImage = /^PNPM_IMAGE=ghcr\.io\/pnpm\/pnpm:(?<version>[^@\s]+)@/mu;
 const playwrightImage =
@@ -29,20 +31,29 @@ async function readExports(): Promise<Record<string, unknown>> {
 
 // What the package ships is public (decisions 0004 and 0036): adding or removing a name changes the next version.
 describe("the package's exports", () => {
-  it("are exactly the public files", async () => {
+  it("are exactly the entry, the public files and a path per component", async () => {
     expect(Object.keys(await readExports())).toEqual([
+      ".",
       ...files.map((file) => `./${file}`),
+      "./*",
       "./package.json",
     ]);
   });
 
-  // The app receives exactly what it can import (decision 0037).
-  it("ship exactly the files they point to", async () => {
+  // The app receives exactly dist/, which every export points into (decisions 0037 and 0063).
+  it("ship dist/, where they all point", async () => {
     const targets = Object.entries(await readExports())
       .filter(([name]) => name !== "./package.json")
       .map(([, path]) => String(path).replace(leadingDotSlash, ""));
 
-    expect((await readManifest())["files"]).toEqual(targets);
+    expect((await readManifest())["files"]).toEqual(["dist"]);
+    expect(targets.filter((path) => !path.startsWith("dist/"))).toEqual([]);
+  });
+
+  // Only style sheets do something by being imported: the app's bundler may drop any code it does not use, and must
+  // keep the CSS a component imports.
+  it("mark only style sheets as side effects", async () => {
+    expect((await readManifest())["sideEffects"]).toEqual(["**/*.css"]);
   });
 
   // Installing the package runs no code in the app (decision 0037).
@@ -54,10 +65,12 @@ describe("the package's exports", () => {
     }
   });
 
-  it.each(files)("resolve %s by the package's name", async (file) => {
-    const path = resolve(`@fgarend/aurum-ds/${file}`);
-
-    await expect(access(path)).resolves.toBeUndefined();
+  it.each([
+    "@fgarend/aurum-ds",
+    ...files.map((file) => `@fgarend/aurum-ds/${file}`),
+    ...components.map((component) => `@fgarend/aurum-ds/${component}`),
+  ])("resolve %s", async (specifier) => {
+    await expect(access(resolve(specifier))).resolves.toBeUndefined();
   });
 });
 

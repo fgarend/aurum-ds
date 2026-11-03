@@ -32,11 +32,14 @@ Read from the app's repository on 2026-11-01.
 - **Import** `@fgarend/aurum-ds/fonts.css`, `@fgarend/aurum-ds/tokens.css`
   and `@fgarend/aurum-ds/base.css`, in that order (decisions 0026, 0027, 0030
   and 0036).
+- **Import each component by its own path**, `@fgarend/aurum-ds/Icon`; the
+  package's entry, `@fgarend/aurum-ds`, exports them all too (decision 0064).
 - **Put `.au-root`** on each part of the page that uses Aurum, and at the top
   once all of it does (decision 0030).
 - **Carry the fonts' license notice** in its own build, as it ships Geist and
   Geist Mono (decision 0027).
-- **Accept React 19 only** as the peer (decision 0019).
+- **Accept React 19 only** as the peer (decision 0019), and provide
+  `lucide-react` 1, the Icon's drawings (decision 0056).
 
 ## The shell and People today
 

@@ -8,10 +8,13 @@ import { importEveryExport, specifiers } from "./check-package.ts";
 const manifest = {
   name: "@fictional/kit",
   exports: {
-    "./colors.css": "./src/colors.css",
+    ".": "./dist/index.js",
+    "./colors.css": "./dist/colors.css",
+    "./*": "./dist/components/*/*.js",
     "./package.json": "./package.json",
   },
 };
+const components = ["Button"];
 
 function appWith(files: Record<string, string>): string {
   const app = mkdtempSync(join(tmpdir(), "app-"));
@@ -28,9 +31,11 @@ function appWith(files: Record<string, string>): string {
 }
 
 describe("specifiers", () => {
-  it("lists what the app imports, one name per export", () => {
-    expect(specifiers(manifest)).toEqual([
+  it("lists what the app imports, one name per export and per component", () => {
+    expect(specifiers(manifest, components)).toEqual([
+      "@fictional/kit",
       "@fictional/kit/colors.css",
+      "@fictional/kit/Button",
       "@fictional/kit/package.json",
     ]);
   });
@@ -38,10 +43,16 @@ describe("specifiers", () => {
 
 describe("importEveryExport", () => {
   it("resolves every export in the app", () => {
-    const app = appWith({ "src/colors.css": ":root {}" });
+    const app = appWith({
+      "dist/index.js": "",
+      "dist/colors.css": ":root {}",
+      "dist/components/Button/Button.js": "",
+    });
 
-    expect(importEveryExport(manifest, app)).toEqual([
-      "@fictional/kit/colors.css → @fictional/kit/src/colors.css",
+    expect(importEveryExport(manifest, components, app)).toEqual([
+      "@fictional/kit → @fictional/kit/dist/index.js",
+      "@fictional/kit/colors.css → @fictional/kit/dist/colors.css",
+      "@fictional/kit/Button → @fictional/kit/dist/components/Button/Button.js",
       "@fictional/kit/package.json → @fictional/kit/package.json",
     ]);
   });
@@ -49,8 +60,8 @@ describe("importEveryExport", () => {
   it("fails on an export whose file the app did not receive", () => {
     const app = appWith({});
 
-    expect(() => importEveryExport(manifest, app)).toThrow(
-      "@fictional/kit/colors.css",
+    expect(() => importEveryExport(manifest, components, app)).toThrow(
+      "@fictional/kit",
     );
   });
 });
