@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 7.30.
+**Now:** 7.34.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -65,8 +65,12 @@ release.
 
 Done: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.19, 7.20, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27, 7.28, 7.29, 7.35.
 
-- **7.30 · The gallery's title.** The browser's tab shows "storybook -
-  Storybook" instead of Aurum's name.
+Dropped: 7.30, the gallery's title in the browser's tab. Storybook writes
+"⋅ Storybook" after each story's name in its own code, with no setting, and
+the first title comes from a setting it does not document; changing it would
+mean a script fighting Storybook at every navigation, for a tab's text, while
+the gallery already shows Aurum's brand mark.
+
 - **7.34 · The components' CSS in the app's tests.** Each component imports
   its own CSS (decision 0055), and Vitest 5.0.5, the app's, hands a package's
   modules to Node, which fails on it: `Unknown file extension ".css"`, tried
