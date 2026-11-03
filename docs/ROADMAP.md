@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 7.29.
+**Now:** 7.30.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -63,12 +63,8 @@ comparison with its reference screenshot (decisions 0033 and 0035), the
 guidelines' Components section (decision 0031), the changelog, and a
 release.
 
-Done: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.19, 7.20, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27, 7.28, 7.35.
+Done: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.19, 7.20, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27, 7.28, 7.29, 7.35.
 
-- **7.29 · Docker's build check warning.** Every image build warns
-  `InvalidDefaultArgInFrom`: the Dockerfile's image arguments have no
-  default, since `infra/settings.env` gives them. A `# check=skip=` line in
-  the Dockerfile silences it, tried.
 - **7.30 · The gallery's title.** The browser's tab shows "storybook -
   Storybook" instead of Aurum's name.
 - **7.34 · The components' CSS in the app's tests.** Each component imports

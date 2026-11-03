@@ -10,6 +10,7 @@ const files = ["tokens.css", "fonts.css", "base.css"];
 const components = ["Icon"];
 const leadingDotSlash = /^\.\//u;
 const pnpmImage = /^PNPM_IMAGE=ghcr\.io\/pnpm\/pnpm:(?<version>[^@\s]+)@/mu;
+const imageDefault = /^ARG (?<name>[A-Z0-9_]+_IMAGE)(?:=(?<value>\S*))?$/gmu;
 const playwrightImage =
   /^PLAYWRIGHT_IMAGE=mcr\.microsoft\.com\/playwright:v(?<version>\d+\.\d+\.\d+)-/mu;
 
@@ -101,5 +102,26 @@ describe("the browsers", () => {
     expect(isRecord(devDependencies) && devDependencies["playwright"]).toBe(
       image,
     );
+  });
+});
+
+// The images in use are pinned in infra/settings.env, which Compose requires; the Dockerfile's arguments default to each
+// image's family, with no version, only so Docker's check finds a base image (decision 0068). A version there would be a
+// second pin, which the settings always replace.
+describe("the images' defaults", () => {
+  it("name each image's family, with no version", async () => {
+    const dockerfile = await readFile(
+      new URL("infra/Dockerfile", root),
+      "utf8",
+    );
+    const defaults = [...dockerfile.matchAll(imageDefault)].map((match) => [
+      match.groups?.["name"],
+      match.groups?.["value"],
+    ]);
+
+    expect(defaults).toEqual([
+      ["PLAYWRIGHT_IMAGE", "mcr.microsoft.com/playwright"],
+      ["PNPM_IMAGE", "ghcr.io/pnpm/pnpm"],
+    ]);
   });
 });

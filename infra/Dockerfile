@@ -2,8 +2,10 @@
 # from Playwright's image, which brings Node and the browsers, frozen by its digest, so nothing is installed from the
 # system's sources at build time. The images are pinned by tag and digest in infra/settings.env, which Compose passes
 # in. The code is never copied in: each command mounts it.
-ARG PLAYWRIGHT_IMAGE
-ARG PNPM_IMAGE
+# Each default names only the image's family, never used: Compose always passes the pinned image, and stops when
+# infra/settings.env has none. It is there so Docker's check finds a base image (decision 0068).
+ARG PLAYWRIGHT_IMAGE=mcr.microsoft.com/playwright
+ARG PNPM_IMAGE=ghcr.io/pnpm/pnpm
 
 # pnpm's official image, only as the source of its standalone binary.
 FROM ${PNPM_IMAGE} AS pnpm
