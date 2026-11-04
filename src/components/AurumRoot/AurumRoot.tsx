@@ -11,7 +11,11 @@ function AurumRoot({ className, ...rest }: AurumRootProps): ReactElement {
   return (
     <div
       {...rest}
-      className={className === undefined ? "au-root" : `au-root ${className}`}
+      className={
+        className === undefined
+          ? "au-root au-text-body"
+          : `au-root au-text-body ${className}`
+      }
       data-au-root=""
     />
   );

@@ -30,6 +30,8 @@ follow decision 0004.
 - **Breaking:** `Icon`'s `label` is now `aria-label`, the native name, also honoured by
   `aria-labelledby`. To upgrade: rename it. An `aria-label` was hidden before.
 - **Breaking:** the token `sidebar-width` is now `navigation-width`.
+- Text inside `AurumRoot` with no style of its own is `text-body`, 14px, not the browser's
+  16px. The app's own CSS or a class on the text wins over it.
 - `AppLayout`'s `navigation` and `topBar`, and `NavItem`'s `end`, draw nothing when given
   what React draws nothing for, as `shown && <Filters />` when not shown.
 - `AppLayout`'s navigation is in an `aside`, and scrolls by itself when it does not fit.

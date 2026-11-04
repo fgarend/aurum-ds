@@ -52,10 +52,17 @@ const Default: Story = {
     }
 
     await expect(getComputedStyle(element).display).toBe("contents");
-    await expect([...element.classList]).toEqual(["au-root", "from-app"]);
+    await expect([...element.classList]).toEqual([
+      "au-root",
+      "au-text-body",
+      "from-app",
+    ]);
     await expect(ref.current).toBe(element);
     await expect(getComputedStyle(text).fontFamily).toMatch(geistFirst);
     await expect(getComputedStyle(text).color).toBe(ink);
+    // Text with no style of its own is text-body (decision 0089).
+    await expect(getComputedStyle(text).fontSize).toBe("14px");
+    await expect(getComputedStyle(text).lineHeight).toBe("20px");
   },
 };
 
