@@ -5,6 +5,6 @@ import { Icon } from "../Icon/Icon.js";
 function NavItem({ icon, end, children, className, ...rest }) {
     return (_jsx("li", { children: _jsxs("a", { ...rest, className: className === undefined
                 ? "au-nav-item au-text-body"
-                : `au-nav-item au-text-body ${className}`, children: [_jsx(Icon, { icon: icon }), _jsx("span", { className: "au-nav-item-name", children: children }), end === undefined ? null : (_jsx("span", { className: "au-nav-item-end", children: end }))] }) }));
+                : `au-nav-item au-text-body ${className}`, children: [icon === undefined ? null : _jsx(Icon, { icon: icon }), _jsx("span", { className: "au-nav-item-name", children: children }), end === undefined ? null : (_jsx("span", { className: "au-nav-item-end", children: end }))] }) }));
 }
 export { NavItem };

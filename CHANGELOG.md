@@ -9,8 +9,8 @@ follow decision 0004.
 ### Added
 
 - `NavList`, `NavSection` and `NavItem`: the pieces of a navigation, which the app
-  puts where it wants, as its rail in `AppLayout`'s `navigation`. Items have an icon, a
-  name in text and an optional `end`, and the current page, marked by
+  puts where it wants, as its rail in `AppLayout`'s `navigation`. Items have a name, an optional
+  icon and an optional `end`, and the current page, marked by
   `aria-current="page"`, has a mark on its edge. `orientation` is `vertical`,
   `horizontal` or `responsive`. Wrap `NavItem` once with the router's link, as
   `createLink(NavItem)` in TanStack Router.

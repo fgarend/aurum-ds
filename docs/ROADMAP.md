@@ -76,8 +76,8 @@ and the app asks for none. 7.44, the Sidebar's name: settled by 7.47.
 
 - **7.48 · What the review of 2026-11-04 found.** First, before Badge, one commit each: the
   text styles in a layer; the tokens the dark surface lacks; what the removed Sidebar
-  left behind; `icon`, `children` and `LucideIcon` on `NavItem`; and a Tooltip around a
-  `NavItem`, which breaks the list.
+  left behind; `icon` and `children` on `NavItem`; and a Tooltip around a `NavItem`, which
+  breaks the list.
 - **7.46 · The first run of the accessibility script.** By the user, as it takes a
   screen reader and real zoom: `docs/accessibility-script.md`. What fails becomes an
   item here. Set aside by the user on 2026-11-03, to be raised before the next release.
@@ -142,6 +142,9 @@ No order between them; each becomes items when its time comes.
   `data-au-` for what an app writes, as a rule. Before the next release.
 - **Layers in the gallery.** Foundations with colours, type and space, and groups beyond
   `Components`; the shared `className` in `src/internal/`; the name `gold`.
+- **Drawings beyond Lucide.** `Icon` and `NavItem` take only a `LucideIcon`, so an app cannot
+  pass an SVG of its own. Widening the type breaks nothing, and would let `lucide-react`
+  leave the peers, as Aurum imports only its type. When an app needs it.
 - **The browsers Aurum supports.** Nothing states them, while `popover` needs
   Safari 17 and iOS 18.3, and `:has` and `color-mix` have floors of their own.
 - **One place for the stories' list.** Three tests in `.storybook/` repeat the same

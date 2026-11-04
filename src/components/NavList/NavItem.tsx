@@ -2,11 +2,9 @@ import type { LucideIcon } from "lucide-react";
 import type { ComponentProps, ReactElement, ReactNode } from "react";
 import { Icon } from "../Icon/Icon.js";
 
-interface NavItemProps extends Omit<ComponentProps<"a">, "children"> {
-  // The drawing, from Lucide: every item has one, so names line up.
-  icon: LucideIcon;
-  // The name, in text.
-  children: string;
+interface NavItemProps extends ComponentProps<"a"> {
+  // The drawing, from Lucide. Use one on every item of a list or none, so names line up.
+  icon?: LucideIcon;
   // What stays at the end of the item, such as a count; it keeps its width and the name gives way.
   end?: ReactNode;
 }
@@ -30,7 +28,7 @@ function NavItem({
             : `au-nav-item au-text-body ${className}`
         }
       >
-        <Icon icon={icon} />
+        {icon === undefined ? null : <Icon icon={icon} />}
         <span className="au-nav-item-name">{children}</span>
         {end === undefined ? null : (
           <span className="au-nav-item-end">{end}</span>

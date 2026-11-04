@@ -161,6 +161,33 @@ const Default: Story = {
   },
 };
 
+// With no icons, as a line of text links often has, and a name that is more than text. The current page keeps its mark.
+const WithoutIcons: Story = {
+  tags: ["visual"],
+  args: {
+    orientation: "horizontal",
+    children: (
+      <>
+        <NavItem aria-current="page" href="#overview">
+          Overview
+        </NavItem>
+        <NavItem href="#notes">
+          Notes <small>new</small>
+        </NavItem>
+      </>
+    ),
+  },
+  play: async ({ canvas: screen }) => {
+    const current = screen.getByRole("link", { name: "Overview" });
+    const other = screen.getByRole("link", { name: "Notes new" });
+
+    await expect(current.querySelector("svg")).toBeNull();
+    await expect(current.offsetHeight).toBe(controlMd);
+    await expect(mark(current).borderLeftWidth).toBe(markWidth);
+    await expect(other.querySelector("small")).toBeInTheDocument();
+  },
+};
+
 // Something at the end of an item, here plain text, keeping its width beside any name.
 const WithEnd: Story = {
   tags: ["visual"],
@@ -368,4 +395,5 @@ export {
   ResponsiveNarrow,
   ResponsiveWide,
   WithEnd,
+  WithoutIcons,
 };

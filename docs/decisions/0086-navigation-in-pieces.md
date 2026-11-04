@@ -17,8 +17,8 @@ that differ in layout.
 ## Decision
 
 - **Three pieces**: `NavList`, a `nav` with a required `aria-label` around a list;
-  `NavSection`, a title naming a list; `NavItem`, an anchor with a required Lucide `icon`,
-  its name in text, and an optional `end`. All three come from `NavList.tsx`, since the
+  `NavSection`, a title naming a list; `NavItem`, an anchor with an optional Lucide `icon`,
+  its name, and an optional `end`. All three come from `NavList.tsx`, since the
   path `@fgarend/aurum-ds/NavList` reaches only it.
 - **`Sidebar`, its `header`, `footer`, `variant` and the rest are gone**, unreleased. Its
   rail goes to the app, or to the module, later.
