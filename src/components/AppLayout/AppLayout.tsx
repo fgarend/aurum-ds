@@ -6,6 +6,7 @@ import {
   useId,
   useRef,
 } from "react";
+import { hasContent } from "../../internal/hasContent.js";
 import "./AppLayout.css";
 
 interface AppLayoutBaseProps extends ComponentProps<"div"> {
@@ -48,7 +49,7 @@ function AppLayout({
         className === undefined ? "au-app-layout" : `au-app-layout ${className}`
       }
     >
-      {navigation === undefined ? null : (
+      {hasContent(navigation) ? (
         <>
           <a
             className="au-app-layout-skip au-text-body-strong"
@@ -59,16 +60,16 @@ function AppLayout({
           </a>
           <aside className="au-app-layout-navigation">{navigation}</aside>
         </>
-      )}
+      ) : null}
       <main
         className="au-app-layout-main"
         id={contentId}
         ref={content}
         tabIndex={-1}
       >
-        {topBar === undefined ? null : (
+        {hasContent(topBar) ? (
           <header className="au-app-layout-top-bar">{topBar}</header>
-        )}
+        ) : null}
         <div className="au-app-layout-content">{children}</div>
       </main>
     </div>

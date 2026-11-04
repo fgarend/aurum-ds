@@ -214,6 +214,32 @@ const WithEnd: Story = {
   },
 };
 
+// An end given nothing, as `count > 0 && count` gives when there is none, leaves no gap, while a zero is something to show.
+const EmptyEnd: Story = {
+  tags: ["!dev"],
+  args: {
+    children: (
+      <>
+        <NavItem end={false} href="#none" icon={House}>
+          None
+        </NavItem>
+        <NavItem end={null} href="#also" icon={House}>
+          Also
+        </NavItem>
+        <NavItem end={0} href="#zero" icon={House}>
+          Zero
+        </NavItem>
+      </>
+    ),
+  },
+  play: async ({ canvasElement, canvas: screen }) => {
+    await expect(
+      canvasElement.querySelectorAll(".au-nav-item-end"),
+    ).toHaveLength(1);
+    await expect(screen.getByRole("link", { name: "Zero 0" })).toBeVisible();
+  },
+};
+
 // With nothing in it, no empty list is drawn. A section with no items draws nothing, not even its title; items need no
 // section; and no page has to be current.
 const Empty: Story = {
@@ -388,6 +414,7 @@ export default meta;
 export {
   Default,
   Empty,
+  EmptyEnd,
   EmptyList,
   Horizontal,
   LongText,

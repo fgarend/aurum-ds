@@ -291,9 +291,22 @@ const NarrowScreen: Story = {
   },
 };
 
+// An area given nothing, as `shown && <Filters />` gives when not shown: no bar, line or landmark, and no link to skip.
+const EmptyAreas: Story = {
+  tags: ["!dev"],
+  args: { navigation: null, skipLabel, topBar: false, children: sections },
+  play: async ({ canvas: screen, canvasElement }) => {
+    await expect(screen.queryByRole("complementary")).toBeNull();
+    await expect(screen.queryByRole("link")).toBeNull();
+    await expect(canvasElement.querySelector("header")).toBeNull();
+    await expect(screen.getByRole("main")).toBeInTheDocument();
+  },
+};
+
 export default meta;
 export {
   Default,
+  EmptyAreas,
   NarrowScreen,
   SkipLink,
   TallNavigation,

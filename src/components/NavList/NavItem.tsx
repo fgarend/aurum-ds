@@ -1,5 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import type { ComponentProps, ReactElement, ReactNode } from "react";
+import { hasContent } from "../../internal/hasContent.js";
 import { Icon } from "../Icon/Icon.js";
 
 interface NavItemProps extends ComponentProps<"a"> {
@@ -30,9 +31,9 @@ function NavItem({
       >
         {icon === undefined ? null : <Icon icon={icon} />}
         <span className="au-nav-item-name">{children}</span>
-        {end === undefined ? null : (
+        {hasContent(end) ? (
           <span className="au-nav-item-end">{end}</span>
-        )}
+        ) : null}
       </a>
     </li>
   );

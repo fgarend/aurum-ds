@@ -28,6 +28,8 @@ follow decision 0004.
   link that lets the keyboard skip the navigation, the first thing it reaches. To
   upgrade: pass it, in the app's language, as `skipLabel="Skip to the content"`.
 - **Breaking:** the token `sidebar-width` is now `navigation-width`.
+- `AppLayout`'s `navigation` and `topBar`, and `NavItem`'s `end`, draw nothing when given
+  what React draws nothing for, as `shown && <Filters />` when not shown.
 - `AppLayout`'s navigation is in an `aside`, and scrolls by itself when it does not fit.
   Its `topBar` is a `header` inside `main`, so no longer the page's banner landmark.
   Its heights use `100dvh`.
