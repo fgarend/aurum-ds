@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 7.45.
+**Now:** 7.46.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -63,7 +63,7 @@ comparison with its reference screenshot (decisions 0033 and 0035), the
 guidelines' Components section (decision 0031), the changelog, and a
 release.
 
-Done: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.13, 7.19, 7.20, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27, 7.28, 7.29, 7.31, 7.32, 7.33, 7.34, 7.35, 7.36, 7.43.
+Done: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.13, 7.19, 7.20, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27, 7.28, 7.29, 7.31, 7.32, 7.33, 7.34, 7.35, 7.36, 7.43, 7.45.
 
 Dropped: 7.30, the gallery's title in the browser's tab. Storybook writes
 "⋅ Storybook" after each story's name in its own code, with no setting, and
@@ -72,10 +72,9 @@ mean a script fighting Storybook at every navigation, for a tab's text, while
 the gallery already shows Aurum's brand mark. 7.14, the Sidebar in the shell:
 it is the Sidebar's own item, in the `navigation` of `AppLayout`.
 
-- **7.45 · Accessibility across the system.** First, closing what
-  `docs/accessibility.md` marks as coming, one commit each. A
-  manual script with VoiceOver and zoom, run by the user. `control-border`, at
-  1.54:1, is decided in 7.16.
+- **7.46 · The first run of the accessibility script.** By the user, as it takes a
+  screen reader and real zoom: `docs/accessibility-script.md`. What fails becomes an
+  item here. Before the release that first brings the Sidebar and the Tooltip.
 - **7.40 · Collapsing the Sidebar.** After 7.45, as a prop of its own: the
   72px rail of icons, each one's name beside it on hover and focus, sections as
   hairlines and an item's `end` hidden, with what to do with the reference's
@@ -98,7 +97,8 @@ it is the Sidebar's own item, in the `navigation` of `AppLayout`.
 - **7.17 · Alert.** People is complete.
 - **7.11 · Button and IconButton.**
 - **7.12 · PageHeader.**
-- **7.16 · TextField, Select, SegmentedControl and Switch.**
+- **7.16 · TextField, Select, SegmentedControl and Switch.** With `control-border`, at
+  1.54:1 against the 3:1 of WCAG 1.4.11, decided there.
 - **7.9 · AvatarGroup.** When a screen asks for it.
 - **7.10 · ScopeChip.** When a screen asks for it.
 - **7.39 · The switch of people.** A component of its own, with Avatar and

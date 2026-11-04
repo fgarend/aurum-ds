@@ -20,7 +20,8 @@ it is run by hand.
 - **story:** a check in a story's `play` function.
 - **tokens:** `test/contrast.test.ts`, on the palette's pairs (decision 0080).
 - **every story:** text spacing and forced colours, on all stories (decision 0081).
-- **script:** by hand, and it has not been run yet (item 7.45).
+- **script:** by hand, in `docs/accessibility-script.md`, whose last section says
+  which runs there have been.
 - **coming:** a check planned, with its item.
 - **app:** the app's to meet, as it depends on its words or its content.
 - **none yet:** no component does this yet; whichever first does brings the check.
