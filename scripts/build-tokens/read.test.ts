@@ -80,6 +80,42 @@ describe("readTokens", () => {
         'text style "x": bad fontWeight',
       ],
       [
+        "a case other than capitals",
+        {
+          type: {
+            fonts: [],
+            families: { body: "Fictional Sans" },
+            groups: [
+              {
+                name: "Fictional",
+                family: "body",
+                styles: [
+                  { name: "x", fontSize: "1px", textTransform: "lower" },
+                ],
+              },
+            ],
+          },
+        },
+        'text style "x": bad textTransform',
+      ],
+      [
+        "tabular that is not a yes or no",
+        {
+          type: {
+            fonts: [],
+            families: { body: "Fictional Sans" },
+            groups: [
+              {
+                name: "Fictional",
+                family: "body",
+                styles: [{ name: "x", fontSize: "1px", tabular: "yes" }],
+              },
+            ],
+          },
+        },
+        'text style "x": bad tabular',
+      ],
+      [
         "a group with an unknown family",
         {
           type: {

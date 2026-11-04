@@ -21,7 +21,6 @@
     display: block;
     padding: var(--au-space-5) var(--au-space-3) var(--au-space-2);
     color: var(--au-ink-subtle);
-    text-transform: uppercase;
     overflow-wrap: anywhere;
   }
 

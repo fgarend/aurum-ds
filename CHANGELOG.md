@@ -34,6 +34,8 @@ follow decision 0004.
   16px. The app's own CSS or a class on the text wins over it.
 - `AppLayout`'s `navigation` and `topBar`, and `NavItem`'s `end`, draw nothing when given
   what React draws nothing for, as `shown && <Filters />` when not shown.
+- `text-overline` is in capitals, and `text-amount-xl` and `text-amount-lg` have tabular
+  figures, in the classes themselves.
 - `AppLayout`'s spaces follow the guidelines: 48px between sections and a 40px inset on a
   wide screen, and 32px between sections on a small one.
 - `AppLayout`'s navigation is in an `aside`, and scrolls by itself when it does not fit.

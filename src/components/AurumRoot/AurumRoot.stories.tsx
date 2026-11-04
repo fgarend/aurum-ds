@@ -22,7 +22,12 @@ const onInverse = "rgb(244, 244, 242)";
 const onInverseSubtle = "rgb(182, 185, 189)";
 // Browsers write a family name with or without quotes: Firefox keeps them, Chromium and WebKit drop them.
 const quotes = /"/gu;
-const textStyles = tokens.type.groups.flatMap((group) => group.styles);
+// Only what these examples read: TypeScript's type of the JSON differs from group to group.
+const textStyles = (
+  tokens.type.groups as unknown as {
+    styles: { name: string; sample?: string }[];
+  }[]
+).flatMap((group) => group.styles);
 // WebKit writes the family names without quotes, Chromium and Firefox with them.
 const geistFirst = /^"?Geist Variable"?,/u;
 
@@ -129,11 +134,27 @@ const TextStyles: Story = {
     <div>
       {textStyles.map((style) => (
         <div className={`au-${style.name}`} key={style.name}>
-          {"sample" in style ? style.sample : style.name}
+          {style.sample ?? style.name}
         </div>
       ))}
     </div>
   ),
+  // The promises of a style, in the class itself: amounts line up, and an overline is in capitals.
+  play: async ({ canvasElement }) => {
+    const style = (name: string): CSSStyleDeclaration =>
+      getComputedStyle(
+        canvasElement.querySelector(`.au-${name}`) as HTMLElement,
+      );
+
+    await expect(style("text-amount-xl").fontVariantNumeric).toBe(
+      "tabular-nums",
+    );
+    await expect(style("text-amount-lg").fontVariantNumeric).toBe(
+      "tabular-nums",
+    );
+    await expect(style("text-overline").textTransform).toBe("uppercase");
+    await expect(style("text-body").textTransform).toBe("none");
+  },
 };
 
 // The class alone, on an element of the app's: it keeps its box and paints the canvas.

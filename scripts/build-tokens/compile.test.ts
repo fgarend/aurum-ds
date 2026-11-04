@@ -243,6 +243,32 @@ describe("compileTokens", () => {
     ).toBe(true);
   });
 
+  it("writes a style's case and figures when it has them", () => {
+    const css = compile({
+      type: {
+        fonts: [],
+        families: { body: "Fictional Sans" },
+        groups: [
+          {
+            name: "Fictional",
+            family: "body",
+            styles: [
+              {
+                name: "text-caps",
+                fontSize: "11px",
+                textTransform: "uppercase",
+              },
+              { name: "text-figures", fontSize: "20px", tabular: true },
+            ],
+          },
+        ],
+      },
+    });
+
+    expect(css).toContain("    text-transform: uppercase;\n");
+    expect(css).toContain("    font-variant-numeric: tabular-nums;\n");
+  });
+
   it("leaves out a block with nothing in it", () => {
     expect(
       compile({ color: { themes: [{ id: "day", name: "Day" }], tokens: [] } }),

@@ -106,6 +106,7 @@
     line-height: 40px;
     font-weight: 600;
     letter-spacing: -0.025em;
+    font-variant-numeric: tabular-nums;
   }
   .au-text-display {
     font-family: var(--au-font-sans);
@@ -120,6 +121,7 @@
     line-height: 28px;
     font-weight: 600;
     letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
   }
   .au-text-title-lg {
     font-family: var(--au-font-sans);
@@ -176,6 +178,7 @@
     line-height: 16px;
     font-weight: 500;
     letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
   .au-text-code {
     font-family: var(--au-font-mono);

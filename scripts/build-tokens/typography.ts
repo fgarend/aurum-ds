@@ -19,6 +19,9 @@ interface TextStyle {
   letterSpacing: string;
   fontStyle: string;
   opticalSize: number | undefined;
+  // What the style promises beyond its measures: an overline in capitals, amounts that line up.
+  uppercase: boolean;
+  tabular: boolean;
 }
 
 const stackForbidden = /[;{}<>\\()]/u;
@@ -127,6 +130,13 @@ function readStyle(
   ) {
     fail(where, "bad opticalSize");
   }
+  const { textTransform, tabular } = raw;
+  if (!(textTransform === undefined || textTransform === "uppercase")) {
+    fail(where, "bad textTransform");
+  }
+  if (!(tabular === undefined || typeof tabular === "boolean")) {
+    fail(where, "bad tabular");
+  }
   return {
     name,
     family: styleFamily(raw, groupFamily, families, where),
@@ -146,6 +156,8 @@ function readStyle(
     ),
     fontStyle,
     opticalSize,
+    uppercase: textTransform === "uppercase",
+    tabular: tabular === true,
   };
 }
 

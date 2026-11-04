@@ -42,6 +42,8 @@ function writer(prefix: string): {
     ...(style.opticalSize === undefined
       ? []
       : [`  font-variation-settings: 'opsz' ${style.opticalSize};`]),
+    ...(style.uppercase ? ["  text-transform: uppercase;"] : []),
+    ...(style.tabular ? ["  font-variant-numeric: tabular-nums;"] : []),
     "}",
   ];
   return { property, colorLine, styleRule };
