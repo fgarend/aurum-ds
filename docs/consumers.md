@@ -45,6 +45,8 @@ Read from the app's repository on 2026-11-01.
   any other CSS, if the app's loads before Aurum's (decision 0072).
 - **Put its pages in `AppLayout`**, with its navigation and top bar in their
   areas (decision 0073): it paints the canvas, which `AurumRoot` does not.
+- **Wrap `SidebarItem` once with the router's link**, as
+  `createLink(SidebarItem)` in TanStack Router (decision 0077).
 - **Accept React 19 only** as the peer (decision 0019), and provide
   `lucide-react` 1, the Icon's drawings (decision 0056).
 
@@ -102,10 +104,9 @@ screen's own. Muted text, tabular figures and code already exist as the
 By what the app waits for: its shell, then People, its first screen after it
 (the app's order: the shell, People, Position, Notes, Note). Each comes after
 those it uses, and each is one item of roadmap milestone 7 and ends in a
-release. Done: Icon, AppLayout, AurumRoot.
+release. Done: Icon, AppLayout, AurumRoot, Sidebar.
 
-1. Sidebar, which uses Icon, without the switch of people, which the app does
-   not use: its top bar chooses the person. The shell is complete
+1. Collapsing the Sidebar, which the app does not ask for yet
 2. Badge: the shell's environment and People's default holder
 3. Section and Card: People
 4. Table: People
@@ -115,5 +116,5 @@ release. Done: Icon, AppLayout, AurumRoot.
 8. PageHeader, which uses Button
 9. TextField, Select, SegmentedControl and Switch
 10. AvatarGroup, which uses Avatar; ScopeChip, which uses AvatarGroup; and the
-    Sidebar's switch of people, when a screen asks for them
+    switch of people, a component of its own, when a screen asks for them
 11. The side panel and BottomNav, when a screen asks for them

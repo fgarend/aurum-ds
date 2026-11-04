@@ -6,6 +6,16 @@ follow decision 0004.
 
 ## [Unreleased]
 
+### Added
+
+- `Sidebar`, `SidebarSection` and `SidebarItem`: the app's navigation, in
+  `AppLayout`'s `navigation`. Three variants, `inverse` by default, `surface` and
+  `canvas`; a `header` and a `footer` that take anything; and items with an icon
+  and an optional `end`. The items' area scrolls and brings the current page,
+  marked by `aria-current="page"`, into view; long names break into lines; below
+  768px it is a strip that scrolls. Wrap `SidebarItem` once with the router's
+  link, as `createLink(SidebarItem)` in TanStack Router.
+
 ## [0.2.0] - 2026-11-03
 
 ### Removed

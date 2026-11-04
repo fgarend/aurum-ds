@@ -1,0 +1,234 @@
+/* The Sidebar (decision 0075). Aurum's layers, among Tailwind's (decisions 0053 and 0072). */
+@layer theme, base, au.base, au.components, components, utilities;
+
+@layer au.components {
+  /* On a small screen, a strip across the top: one line that scrolls, each name whole. */
+  .au-sidebar {
+    display: flex;
+    align-items: center;
+    gap: var(--au-space-3);
+    padding: var(--au-space-2) var(--au-space-3);
+    overflow-x: auto;
+    color: var(--au-ink);
+  }
+
+  .au-sidebar-header,
+  .au-sidebar-items,
+  .au-sidebar-footer {
+    flex: none;
+  }
+
+  .au-sidebar-list {
+    display: flex;
+    gap: var(--au-space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .au-sidebar-entry {
+    flex: none;
+  }
+
+  .au-sidebar-section {
+    position: relative;
+    display: flex;
+    flex: none;
+  }
+
+  /* A list or a section with no items draws nothing, however its items came to be missing. */
+  .au-sidebar-list:not(:has(li)),
+  .au-sidebar-section:not(:has(li)) {
+    display: none;
+  }
+
+  /* On the strip, the titles are only for screen readers. */
+  .au-sidebar-section-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    color: var(--au-ink-subtle);
+    text-transform: uppercase;
+  }
+
+  .au-sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: var(--au-space-3);
+    min-height: var(--au-control-md);
+    padding: var(--au-space-2) var(--au-space-3);
+    border-radius: var(--au-radius-md);
+    color: var(--au-ink-muted);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .au-sidebar-item .au-icon,
+  .au-sidebar-item-end {
+    flex: none;
+  }
+
+  .au-sidebar-item-name {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .au-sidebar-item:hover {
+    background: var(--au-surface-hover);
+    color: var(--au-ink);
+  }
+
+  /* The current page. The outline, transparent, is what shows where forced colours remove the fill. */
+  .au-sidebar-item[aria-current="page"] {
+    outline: 1px solid transparent;
+    outline-offset: -1px;
+    background: var(--au-primary-soft);
+    color: var(--au-primary);
+  }
+
+  /* The surface variant, white with a border. */
+  .au-sidebar[data-variant="surface"] {
+    border-bottom: 1px solid var(--au-line);
+    background: var(--au-surface);
+  }
+
+  /* The canvas variant, with no panel: the current page is a white chip. */
+  .au-sidebar[data-variant="canvas"] .au-sidebar-item[aria-current="page"] {
+    outline-color: var(--au-line);
+    background: var(--au-surface);
+    box-shadow: var(--au-shadow-xs);
+    color: var(--au-ink);
+  }
+
+  /* The inverse variant, graphite, with a faint gold glow behind the header and scroll bars that belong on it. */
+  .au-sidebar[data-variant="inverse"] {
+    background:
+      radial-gradient(
+        140% 45% at 0% 0%,
+        color-mix(in srgb, var(--au-gold) 7%, transparent) 0%,
+        transparent 70%
+      ),
+      linear-gradient(
+        180deg,
+        var(--au-inverse-top) 0%,
+        var(--au-inverse) 60%,
+        var(--au-inverse-bottom) 100%
+      );
+    color: var(--au-on-inverse);
+    color-scheme: dark;
+  }
+
+  .au-sidebar[data-variant="inverse"] .au-sidebar-section-label {
+    color: var(--au-on-inverse-subtle);
+  }
+
+  .au-sidebar[data-variant="inverse"] .au-sidebar-item {
+    color: var(--au-on-inverse-muted);
+  }
+
+  .au-sidebar[data-variant="inverse"] .au-sidebar-item:hover {
+    background: var(--au-inverse-hover);
+    color: var(--au-on-inverse);
+  }
+
+  .au-sidebar[data-variant="inverse"] .au-sidebar-item[aria-current="page"] {
+    background: var(--au-inverse-active);
+    color: var(--au-on-inverse);
+  }
+
+  .au-sidebar[data-variant="inverse"]
+    .au-sidebar-item[aria-current="page"]
+    .au-icon {
+    color: var(--au-gold);
+  }
+
+  /* The ring inside the item, which the scrolling area would cut outside it. */
+  .au-sidebar[data-variant] .au-sidebar-item:focus-visible {
+    outline: 2px solid var(--au-focus-ring);
+    outline-offset: -2px;
+  }
+
+  .au-sidebar[data-variant="inverse"] .au-sidebar-item:focus-visible {
+    outline-color: var(--au-on-inverse);
+  }
+
+  /* The tokens' breakpoint-md: a media query cannot read a custom property, and a check holds them alike. */
+  @media (min-width: 768px) {
+    /* A rail as tall as its parent. The items' area gives way first; on a screen too short even for that, the whole
+       rail scrolls, so nothing is out of reach. */
+    .au-sidebar {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      width: var(--au-sidebar-width);
+      height: 100%;
+      padding: var(--au-space-4) var(--au-space-3) var(--au-space-3);
+      overflow: hidden auto;
+    }
+
+    .au-sidebar-header {
+      min-width: 0;
+      padding: var(--au-space-1) var(--au-space-3) var(--au-space-5);
+      overflow-wrap: anywhere;
+    }
+
+    .au-sidebar-items {
+      flex: 1 1 auto;
+      min-height: calc(var(--au-control-lg) * 2);
+      overflow-y: auto;
+    }
+
+    .au-sidebar-footer {
+      margin-top: var(--au-space-3);
+      padding-top: var(--au-space-3);
+      border-top: 1px solid var(--au-line);
+    }
+
+    .au-sidebar[data-variant="canvas"] .au-sidebar-footer {
+      border-top-color: var(--au-line-strong);
+    }
+
+    .au-sidebar[data-variant="inverse"] .au-sidebar-footer {
+      border-top-color: var(--au-inverse-line);
+    }
+
+    .au-sidebar[data-variant="surface"] {
+      border-right: 1px solid var(--au-line);
+      border-bottom: 0;
+    }
+
+    .au-sidebar-list {
+      flex-direction: column;
+    }
+
+    .au-sidebar-section {
+      display: block;
+    }
+
+    .au-sidebar-section-label {
+      position: static;
+      display: block;
+      width: auto;
+      height: auto;
+      padding: var(--au-space-5) var(--au-space-3) var(--au-space-2);
+      overflow: visible;
+      clip-path: none;
+      white-space: normal;
+    }
+
+    .au-sidebar-list
+      > .au-sidebar-section:first-child
+      .au-sidebar-section-label {
+      padding-top: 0;
+    }
+
+    /* A long name breaks into lines, and the item grows. */
+    .au-sidebar-item {
+      overflow-wrap: anywhere;
+      white-space: normal;
+    }
+  }
+}

@@ -47,7 +47,7 @@ Tokens are named here as `tokens.json` names them. In CSS, each token is a custo
 
 ### People and household
 
-- An app can hold several people (e.g. a couple) plus a household view of everyone together. The Sidebar `scopes` switch (“Visão”) chooses whose data every screen shows; shared registries (institutions, issuers, assets, categories) ignore it.
+- An app can hold several people (e.g. a couple) plus a household view of everyone together. A switch of people (“Visão”), a component of its own in the Sidebar's `footer` or the top bar, chooses whose data every screen shows; shared registries (institutions, issuers, assets, categories) ignore it.
 - Each person gets one `tone` (1–8, from the category palette) used everywhere: Avatar, the owner marker on TransactionRow, StatStrip/StatCard `breakdown`. Never use `income`/`expense` or `gold` as a person colour.
 - In the household view: show owner markers on mixed lists, a per-person `breakdown` under KPIs, and tag transfers between people as internal (they are left out of totals). In a single-person view hide owner markers.
 - Joint accounts belong to several people with shares; individual views count the person's share, the household view counts the account once.
@@ -65,7 +65,7 @@ Tokens are named here as `tokens.json` names them. In CSS, each token is a custo
 - 4px base: `space-1` 4 · `space-2` 8 · `space-3` 12 · `space-4` 16 · `space-5` 20 · `space-6` 24 · `space-8` 32 · `space-10` 40 · `space-12` 48 · `space-16` 64.
 - Pages are built from `Section`s: a section's title, subtitle, actions and footer sit on `canvas`, outside the box; the content itself stays in `Card`s (KPI cards, row lists, budget bars, charts). The card holds only data — never its own heading. Sections are `space-12` apart on desktop (`space-8` on mobile).
 - Card padding `space-5`; gap between cards `space-4` (mobile) / `space-6` (desktop); page padding `space-4` (mobile) / `space-10` (desktop).
-- App shell: `Sidebar` (`sidebar-width`, 248px; `variant="inverse"` graphite is the default look for this palette — see its guide) + content column up to `content-max` (1360px), centred, in `AppLayout`. Below `breakpoint-md` (768px) use `BottomNav` and stack cards.
+- App shell: `Sidebar` (`sidebar-width`, 248px; `variant="inverse"` graphite is the default look for this palette — see its guide) + content column up to `content-max` (1360px), centred, in `AppLayout`. Below `breakpoint-md` (768px) the Sidebar is a strip across the top, which scrolls, and cards stack.
 - Controls are `control-sm` 32, `control-md` 40 (default) or `control-lg` 48 tall — nothing in between.
 
 ### Shape, borders, elevation

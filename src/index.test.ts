@@ -5,5 +5,12 @@ import { expect, it } from "vitest";
 it("exports exactly the public API", async () => {
   const entry = await import("./index.js");
 
-  expect(Object.keys(entry)).toEqual(["AppLayout", "AurumRoot", "Icon"]);
+  expect(Object.keys(entry)).toEqual([
+    "AppLayout",
+    "AurumRoot",
+    "Icon",
+    "Sidebar",
+    "SidebarItem",
+    "SidebarSection",
+  ]);
 });

@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 7.13.
+**Now:** 7.40.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -63,7 +63,7 @@ comparison with its reference screenshot (decisions 0033 and 0035), the
 guidelines' Components section (decision 0031), the changelog, and a
 release.
 
-Done: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.19, 7.20, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27, 7.28, 7.29, 7.31, 7.32, 7.33, 7.34, 7.35, 7.36.
+Done: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.13, 7.19, 7.20, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27, 7.28, 7.29, 7.31, 7.32, 7.33, 7.34, 7.35, 7.36.
 
 Dropped: 7.30, the gallery's title in the browser's tab. Storybook writes
 "⋅ Storybook" after each story's name in its own code, with no setting, and
@@ -72,10 +72,16 @@ mean a script fighting Storybook at every navigation, for a tab's text, while
 the gallery already shows Aurum's brand mark. 7.14, the Sidebar in the shell:
 it is the Sidebar's own item, in the `navigation` of `AppLayout`.
 
-- **7.13 · Sidebar.** First, since the app's shell waits for it, in the
-  `navigation` of `AppLayout`. Without the switch of people (7.39): the app's
-  top bar chooses the person.
-- **7.7 · Badge.** The shell's environment and People's default holder.
+- **7.40 · Collapsing the Sidebar.** First, as a prop of its own: the
+  72px rail of icons, each one's name beside it on hover and focus, sections as
+  hairlines and an item's `end` hidden, with what to do with the reference's
+  gold dot and the compact switch of people (7.39) decided there. All of the prototype's screens have it; the app does
+  not ask for it yet.
+- **7.42 · Sections that open and close, and items within items.** After 7.40,
+  as props of `SidebarSection` and `SidebarItem`: W3C's disclosure pattern, with
+  a closed section opening when its item is the current one.
+- **7.7 · Badge.** The shell's environment and People's default holder. It also
+  works on the graphite Sidebar, in a `SidebarItem`'s `end`, as its counts.
 - **7.15 · Section and Card.** People.
 - **7.18 · Table.** People, as the app asked before that screen.
 - **7.8 · Avatar.** People.
@@ -85,14 +91,20 @@ it is the Sidebar's own item, in the `navigation` of `AppLayout`.
 - **7.16 · TextField, Select, SegmentedControl and Switch.**
 - **7.9 · AvatarGroup.** When a screen asks for it.
 - **7.10 · ScopeChip.** When a screen asks for it.
-- **7.39 · The Sidebar's switch of people.** With Avatar and AvatarGroup, when
-  the app asks for it.
+- **7.39 · The switch of people.** A component of its own, with Avatar and
+  AvatarGroup, that an app puts in the Sidebar's `footer` or its top bar; the
+  Sidebar knows nothing of people. When the app asks for it. It has a compact
+  form once 7.40 is done.
 - **7.37 · The side panel.** The app's opens over the page, in a portal, so it
   is a component of its own, not an area of `AppLayout` (decision 0073). When a
   screen asks for it.
 - **7.38 · BottomNav.** The guidelines' navigation below `breakpoint-md`, in
   `AppLayout` as an optional prop, where the navigation sits at the top until
   then (decision 0073). When a screen asks for it.
+- **7.41 · The Sidebar as a drawer.** Hidden behind a button on a small screen,
+  for a navigation too long for the strip it draws there. After the Dialog, whose
+  focus and layer it shares. The app chooses among the strip, the drawer and
+  BottomNav.
 
 ## 6. One version per screen
 
@@ -114,6 +126,17 @@ No order between them; each becomes items when its time comes.
   fails on a second theme until then (decision 0026). Storybook's interface
   then follows the system's light or dark mode, with a theme for each, from
   the tokens (decision 0057).
+- **The scale of the whole system.** A person's preference for larger text
+  belongs to the whole system, not to a component's `size`: the tokens in `rem`,
+  which today are in `px` and ignore the browser's text size, or a `scaling` on
+  `AurumRoot`, as Radix Themes has. Browser zoom meets WCAG 1.4.4 until then.
+  Components take values only from tokens, so this changes the tokens alone.
+- **Below `breakpoint-md` in the checks.** `AppLayout` has no check of its stacking
+  there, and the screenshots run at one width, so the Sidebar's strip has checks
+  but no screenshot.
+- **A list of corner cases for every component.** Empty, too much, long text,
+  narrow and short screens, keyboard and forced colours, in the docs, from the
+  Sidebar's map (decision 0075).
 - **Image vulnerability scan.** The system packages inside the images (the
   Debian of the Node image), which `make audit` does not cover.
 - **Update bot.** Renovate or Dependabot opening pull requests, with the CI;
