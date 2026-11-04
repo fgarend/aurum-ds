@@ -18,19 +18,16 @@ function NavItem({
   end,
   children,
   className,
-  "aria-current": current,
   ...rest
 }: NavItemProps): ReactElement {
-  const text = current === "page" ? "au-text-body-strong" : "au-text-body";
   return (
     <li className="au-nav-entry">
       <a
         {...rest}
-        aria-current={current}
         className={
           className === undefined
-            ? `au-nav-item ${text}`
-            : `au-nav-item ${text} ${className}`
+            ? "au-nav-item au-text-body"
+            : `au-nav-item au-text-body ${className}`
         }
       >
         <Icon icon={icon} />

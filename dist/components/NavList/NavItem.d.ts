@@ -5,6 +5,6 @@ interface NavItemProps extends Omit<ComponentProps<"a">, "children"> {
     children: string;
     end?: ReactNode;
 }
-declare function NavItem({ icon, end, children, className, "aria-current": current, ...rest }: NavItemProps): ReactElement;
+declare function NavItem({ icon, end, children, className, ...rest }: NavItemProps): ReactElement;
 export type { NavItemProps };
 export { NavItem };

@@ -3,6 +3,9 @@
 import { aliasTarget, readTokens, type Token } from "./read.ts";
 import type { TextStyle } from "./typography.ts";
 
+// The order every style sheet with layers states (decision 0072).
+const layerOrder =
+  "@layer theme, base, au.base, au.components, components, utilities;";
 const leadingDigit = /^[0-9]/u;
 const allDots = /\./gu;
 
@@ -58,12 +61,19 @@ function compileTokens(source: unknown, prefix = "au-"): string {
       ([key, stack]) => `  ${property(`font-${key}`)}: ${stack};`,
     ),
   ];
+  const rules = styles.flatMap(styleRule);
+  // In Aurum's base layer, so what an app and Tailwind's utilities set wins (decision 0088). The reference's render, with
+  // no prefix, keeps them as the artifact has them.
+  const layered = prefix !== "" && rules.length > 0;
   const lines = [
+    ...(layered ? [layerOrder] : []),
     ...(themeLines.length > 0
       ? [`:root, [data-theme="${theme}"] {`, ...themeLines, "}"]
       : []),
     ...(root.length > 0 ? [":root {", ...root, "}"] : []),
-    ...styles.flatMap(styleRule),
+    ...(layered
+      ? ["@layer au.base {", ...rules.map((line) => `  ${line}`), "}"]
+      : rules),
   ];
   return lines.length > 0 ? `${lines.join("\n")}\n` : "";
 }

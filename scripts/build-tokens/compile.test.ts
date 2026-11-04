@@ -127,28 +127,30 @@ describe("compileTokens", () => {
 
     expect(css).toContain(
       [
-        ".au-text-big {",
-        "  font-family: var(--au-font-body);",
-        "  font-size: 30px;",
-        "  line-height: 36px;",
-        "  font-weight: 600;",
-        "  letter-spacing: -0.02em;",
-        "}",
-        ".au-text-plain {",
-        "  font-family: var(--au-font-body);",
-        "  font-size: 14px;",
-        "  line-height: 1.4;",
-        "  font-weight: 400;",
-        "  letter-spacing: 0;",
-        "}",
-        ".au-text-code {",
-        "  font-family: var(--au-font-code);",
-        "  font-size: 13px;",
-        "  line-height: 1.4;",
-        "  font-weight: 400;",
-        "  letter-spacing: 0;",
-        "  font-style: italic;",
-        "  font-variation-settings: 'opsz' 14;",
+        "@layer au.base {",
+        "  .au-text-big {",
+        "    font-family: var(--au-font-body);",
+        "    font-size: 30px;",
+        "    line-height: 36px;",
+        "    font-weight: 600;",
+        "    letter-spacing: -0.02em;",
+        "  }",
+        "  .au-text-plain {",
+        "    font-family: var(--au-font-body);",
+        "    font-size: 14px;",
+        "    line-height: 1.4;",
+        "    font-weight: 400;",
+        "    letter-spacing: 0;",
+        "  }",
+        "  .au-text-code {",
+        "    font-family: var(--au-font-code);",
+        "    font-size: 13px;",
+        "    line-height: 1.4;",
+        "    font-weight: 400;",
+        "    letter-spacing: 0;",
+        "    font-style: italic;",
+        "    font-variation-settings: 'opsz' 14;",
+        "  }",
         "}",
         "",
       ].join("\n"),
@@ -190,7 +192,7 @@ describe("compileTokens", () => {
     expect(css).toContain("  --au-paper: #fafafa;\n");
     expect(css).toContain("  --au-gap: 4px;\n");
     expect(css).toContain(
-      "  font-size: 16px;\n  line-height: 1.4;\n  font-weight: 700;\n",
+      "    font-size: 16px;\n    line-height: 1.4;\n    font-weight: 700;\n",
     );
   });
 
@@ -217,6 +219,28 @@ describe("compileTokens", () => {
     expect(css).toContain("  --paper: #fafafa;\n");
     expect(css).toContain("  --gap: 4px;\n  --font-body: Fictional Sans;\n");
     expect(css).toContain(".text-plain {\n  font-family: var(--font-body);\n");
+  });
+
+  it("states the layers' order first, as every style sheet that uses them", () => {
+    const css = compile({
+      type: {
+        fonts: [],
+        families: { body: "Fictional Sans" },
+        groups: [
+          {
+            name: "Fictional",
+            family: "body",
+            styles: [{ name: "text-plain", fontSize: "14px" }],
+          },
+        ],
+      },
+    });
+
+    expect(
+      css.startsWith(
+        "@layer theme, base, au.base, au.components, components, utilities;\n",
+      ),
+    ).toBe(true);
   });
 
   it("leaves out a block with nothing in it", () => {

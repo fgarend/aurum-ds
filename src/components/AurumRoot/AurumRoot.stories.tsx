@@ -168,19 +168,25 @@ const WithTailwind: Story = {
     tailwind.textContent = `
       @layer theme, base, components, utilities;
       @layer base { * { padding: 0; } }
-      @layer utilities { .from-tailwind { color: rgb(1, 2, 3); } }
+      @layer utilities { .from-tailwind { color: rgb(1, 2, 3); font-size: 30px; } }
       @layer au.components { .au-probe { padding: 8px; color: rgb(4, 5, 6); } }
     `;
     document.head.append(tailwind);
     await mount(
-      <div className="au-probe from-tailwind" data-testid="probe">
+      <div className="au-probe au-text-body from-tailwind" data-testid="probe">
         Text
       </div>,
     );
-    const { paddingTop, color } = getComputedStyle(screen.getByTestId("probe"));
+    const { paddingTop, color, fontSize } = getComputedStyle(
+      screen.getByTestId("probe"),
+    );
     tailwind.remove();
 
-    await expect([paddingTop, color]).toEqual(["8px", "rgb(1, 2, 3)"]);
+    await expect([paddingTop, color, fontSize]).toEqual([
+      "8px",
+      "rgb(1, 2, 3)",
+      "30px",
+    ]);
   },
 };
 

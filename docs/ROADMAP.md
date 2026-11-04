@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 7.7.
+**Now:** 7.48.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -74,6 +74,10 @@ it is the Sidebar's own item, in the `navigation` of `AppLayout`. 7.40, 7.41 and
 drawer and its sections that open: they leave for the module of composed components,
 and the app asks for none. 7.44, the Sidebar's name: settled by 7.47.
 
+- **7.48 · What the review of 2026-11-04 found.** First, before Badge, one commit each: the
+  text styles in a layer; the tokens the dark surface lacks; what the removed Sidebar
+  left behind; `icon`, `children` and `LucideIcon` on `NavItem`; and a Tooltip around a
+  `NavItem`, which breaks the list.
 - **7.46 · The first run of the accessibility script.** By the user, as it takes a
   screen reader and real zoom: `docs/accessibility-script.md`. What fails becomes an
   item here. Set aside by the user on 2026-11-03, to be raised before the next release.
@@ -131,6 +135,13 @@ No order between them; each becomes items when its time comes.
   chart.
 - **A top bar that stays in view.** As an option of `AppLayout`, measuring its height
   for `scroll-padding` so it covers no focus, if the app misses it (decision 0082).
+- **Tokens for what is written by hand.** The focus ring's 2px, the 150ms of motion, and
+  `z-index`. Before the next release.
+- **Sizes and names to settle.** `Icon`'s numeric `size` against decision 0076; the
+  Tooltip's width, written from a control's height; its `text` against `label` elsewhere;
+  `data-au-` for what an app writes, as a rule. Before the next release.
+- **Layers in the gallery.** Foundations with colours, type and space, and groups beyond
+  `Components`; the shared `className` in `src/internal/`; the name `gold`.
 - **The browsers Aurum supports.** Nothing states them, while `popover` needs
   Safari 17 and iOS 18.3, and `:has` and `color-mix` have floors of their own.
 - **One place for the stories' list.** Three tests in `.storybook/` repeat the same

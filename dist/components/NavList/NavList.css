@@ -59,6 +59,7 @@
     outline-offset: -1px;
     background: var(--au-primary-soft);
     color: var(--au-primary);
+    font-weight: 500;
   }
 
   /* Its mark, which tells it apart by its shape, where the fill barely shows (WCAG 1.4.1 and 1.4.11, decision 0084). A
