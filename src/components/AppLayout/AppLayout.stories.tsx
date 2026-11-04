@@ -24,7 +24,10 @@ type Story = StoryObj<typeof meta>;
 // navigation here takes for itself.
 const canvas = "rgb(250, 249, 246)";
 const contentMax = 1360;
-const sectionGap = "40px";
+const sectionGap = 48;
+const sectionGapNarrow = 32;
+const inset = 40;
+const insetNarrow = 16;
 const navigationWidth = 248;
 const controlMd = 40;
 const narrowWidth = 320;
@@ -90,12 +93,16 @@ const Default: Story = {
     await expect(main).toContainElement(first);
     await expect(bar.closest("header")?.closest("main")).toBe(main);
 
+    // The guidelines' spaces on a wide screen (decision 0090).
     await expect(getComputedStyle(first.parentElement as Element).rowGap).toBe(
-      sectionGap,
+      `${sectionGap}px`,
     );
-    await expect(first.getBoundingClientRect().bottom + 40).toBe(
+    await expect(first.getBoundingClientRect().bottom + sectionGap).toBe(
       second.getBoundingClientRect().top,
     );
+    await expect(
+      first.getBoundingClientRect().left - main.getBoundingClientRect().left,
+    ).toBe(inset);
   },
 };
 
@@ -288,6 +295,13 @@ const NarrowScreen: Story = {
     );
     await expect(area.scrollWidth).toBeGreaterThan(area.clientWidth);
     await expect(document.documentElement.scrollWidth).toBe(narrowWidth);
+
+    // The guidelines' spaces on a small screen (decision 0090).
+    const first = screen.getByTestId("first");
+    await expect(getComputedStyle(first.parentElement as Element).rowGap).toBe(
+      `${sectionGapNarrow}px`,
+    );
+    await expect(first.getBoundingClientRect().left).toBe(insetNarrow);
   },
 };
 

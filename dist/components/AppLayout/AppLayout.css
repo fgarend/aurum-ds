@@ -74,7 +74,7 @@
   .au-app-layout-content {
     display: flex;
     flex-direction: column;
-    gap: var(--au-space-10);
+    gap: var(--au-space-8);
     padding-block: var(--au-space-10) var(--au-space-16);
   }
 
@@ -87,9 +87,13 @@
     .au-app-layout-top-bar,
     .au-app-layout-content {
       padding-inline: max(
-        var(--au-space-12),
+        var(--au-space-10),
         calc((100% - var(--au-content-max)) / 2)
       );
+    }
+
+    .au-app-layout-content {
+      gap: var(--au-space-12);
     }
 
     /* The navigation stays in view, as wide as it draws itself, and scrolls by itself when taller than the screen. */

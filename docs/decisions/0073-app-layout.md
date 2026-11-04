@@ -1,6 +1,6 @@
 # 0073. AppLayout
 
-- Status: Accepted; partly superseded by 0082: the top bar scrolls away; and by 0085: its regions
+- Status: Accepted; partly superseded by 0082: the top bar scrolls away; and by 0085: its regions; and by 0090: its spaces
 - Date: 2026-11-03
 
 ## Context
