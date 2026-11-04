@@ -44,7 +44,8 @@ Read from the app's repository on 2026-11-01.
   `@layer theme, base, au.base, au.components, components, utilities;` before
   any other CSS, if the app's loads before Aurum's (decision 0072).
 - **Put its pages in `AppLayout`**, with its navigation and top bar in their
-  areas (decision 0073): it paints the canvas, which `AurumRoot` does not.
+  areas (decision 0073): it paints the canvas, which `AurumRoot` does not. With a
+  navigation, it takes the text of the link that skips it (decision 0083).
 - **Wrap `SidebarItem` once with the router's link**, as
   `createLink(SidebarItem)` in TanStack Router (decision 0077).
 - **Accept React 19 only** as the peer (decision 0019), and provide

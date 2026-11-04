@@ -551,6 +551,7 @@ const InAppLayout: Story = {
   parameters: { height: "auto", layout: "fullscreen" },
   render: () => (
     <AppLayout
+      skipLabel="Skip to the content"
       navigation={
         <Sidebar aria-label="Main" footer={footer} header={header}>
           {items}

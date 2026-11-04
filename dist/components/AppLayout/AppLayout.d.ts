@@ -1,8 +1,14 @@
-import type { ComponentProps, ReactElement, ReactNode } from "react";
-interface AppLayoutProps extends ComponentProps<"div"> {
-    navigation?: ReactNode;
+import { type ComponentProps, type ReactElement, type ReactNode } from "react";
+interface AppLayoutBaseProps extends ComponentProps<"div"> {
     topBar?: ReactNode;
 }
-declare function AppLayout({ navigation, topBar, children, className, ...rest }: AppLayoutProps): ReactElement;
+type AppLayoutProps = AppLayoutBaseProps & ({
+    navigation: ReactNode;
+    skipLabel: string;
+} | {
+    navigation?: undefined;
+    skipLabel?: undefined;
+});
+declare function AppLayout({ navigation, skipLabel, topBar, children, className, ...rest }: AppLayoutProps): ReactElement;
 export type { AppLayoutProps };
 export { AppLayout };

@@ -24,7 +24,8 @@ const spacing = `
   }
 `;
 // Hidden from the screen on purpose, for screen readers.
-const hidden = ".au-sr, .au-sidebar-section-label";
+const hidden =
+  ".au-sr, .au-sidebar-section-label, .au-app-layout-skip:not(:focus)";
 // An area that scrolls lets everything be reached; any other has lost what does not fit.
 const reachable = ["auto", "scroll"];
 

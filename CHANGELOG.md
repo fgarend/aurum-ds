@@ -23,6 +23,9 @@ follow decision 0004.
 
 ### Changed
 
+- **Breaking:** `AppLayout` requires `skipLabel` with `navigation`: the text of a
+  link that lets the keyboard skip the navigation, the first thing it reaches. To
+  upgrade: pass it, in the app's language, as `skipLabel="Skip to the content"`.
 - `AppLayout`'s `topBar` scrolls away with the page instead of staying in view: it
   hid a control reached by keyboard (WCAG 2.4.11) and took 37% of the height at a
   zoom of 400%. The app's path and filters leave the screen as the page scrolls.

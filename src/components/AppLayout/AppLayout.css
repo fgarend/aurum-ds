@@ -10,6 +10,36 @@
     background: var(--au-canvas);
   }
 
+  /* The link that skips the navigation: only for screen readers, until the keyboard reaches it (WCAG 2.4.1). */
+  .au-app-layout-skip {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* Over the navigation, which is sticky and drawn after it. */
+  .au-app-layout-skip:focus {
+    position: fixed;
+    top: var(--au-space-2);
+    left: var(--au-space-2);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    width: auto;
+    height: auto;
+    min-height: var(--au-control-md);
+    padding-inline: var(--au-space-4);
+    overflow: visible;
+    clip-path: none;
+    border-radius: var(--au-radius-md);
+    background: var(--au-surface);
+    box-shadow: var(--au-shadow-md);
+    color: var(--au-ink);
+  }
+
   .au-app-layout-column {
     display: flex;
     flex: 1 1 0;
@@ -30,6 +60,11 @@
     padding-block: var(--au-space-3);
     border-bottom: 1px solid var(--au-line);
     background: var(--au-canvas);
+  }
+
+  /* It takes focus only from the link above, and no key acts on it: the ring would mark nothing a person can use. */
+  .au-app-layout-content:focus {
+    outline: 0;
   }
 
   .au-app-layout-content {

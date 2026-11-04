@@ -74,10 +74,15 @@ line first:
 
 `AppLayout` is the frame of the app's pages: the canvas, the navigation at the
 side, an optional top bar, and the content up to `content-max`, centred. What
-goes in each area is the app's:
+goes in each area is the app's, as is the text of the link that skips the
+navigation, in its own language:
 
 ```tsx
-<AppLayout navigation={<Navigation />} topBar={<TopBar />}>
+<AppLayout
+  navigation={<Navigation />}
+  skipLabel="Skip to the content"
+  topBar={<TopBar />}
+>
   …
 </AppLayout>;
 ```

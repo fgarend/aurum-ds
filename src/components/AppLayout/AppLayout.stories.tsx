@@ -1,7 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { type CSSProperties, createRef } from "react";
-import { expect } from "storybook/test";
-import { AppLayout } from "./AppLayout.js";
+import {
+  type CSSProperties,
+  createRef,
+  type ReactNode,
+  useEffect,
+  useRef,
+} from "react";
+import { expect, userEvent } from "storybook/test";
+import { AppLayout, type AppLayoutProps } from "./AppLayout.js";
 
 // The frame's examples (decision 0073), each checking what it shows: the page's canvas, the app's navigation beside the
 // content, an optional top bar, and the content up to the tokens' content-max, centred.
@@ -20,6 +26,7 @@ const canvas = "rgb(250, 249, 246)";
 const contentMax = 1360;
 const sectionGap = "40px";
 const navigationWidth = 248;
+const controlMd = 40;
 
 // What the app puts in each area, here a coloured block with its name in the middle, so the areas show at a glance.
 function block(color: string, minHeight: number | string): CSSProperties {
@@ -39,6 +46,7 @@ const navigation = (
     Navigation
   </nav>
 );
+const skipLabel = "Skip to the content";
 const topBar = (
   <div data-testid="top-bar" style={block("cat-2-soft", 48)}>
     Path and filters
@@ -56,7 +64,7 @@ const sections = [
 // The navigation, the top bar and the page, as the app has them.
 const Default: Story = {
   tags: ["visual"],
-  args: { navigation, topBar, children: sections },
+  args: { navigation, skipLabel, topBar, children: sections },
   play: async ({ args, canvas: screen, canvasElement, mount }) => {
     const ref = createRef<HTMLDivElement>();
     await mount(<AppLayout {...args} className="from-app" ref={ref} />);
@@ -84,7 +92,7 @@ const Default: Story = {
 
 // Without a top bar, as the design's screens: no bar is drawn.
 const WithoutTopBar: Story = {
-  args: { navigation, children: sections },
+  args: { navigation, skipLabel, children: sections },
   play: async ({ canvas: screen }) => {
     await expect(screen.queryByRole("banner")).toBeNull();
     await expect(screen.getByRole("main")).toBeInTheDocument();
@@ -105,9 +113,61 @@ const WideScreen: Story = {
     const bar = screen.getByTestId("top-bar").getBoundingClientRect();
     const first = screen.getByTestId("first").getBoundingClientRect();
 
+    await expect(screen.queryByRole("link")).toBeNull();
     await expect(first.width).toBe(contentMax);
     await expect(first.left).toBe(bar.left);
     await expect(first.right).toBe(bar.right);
+  },
+};
+
+function Skipping(props: AppLayoutProps): ReactNode {
+  const link = useRef<HTMLDivElement>(null);
+  useEffect(() => link.current?.querySelector("a")?.focus(), []);
+  return (
+    <div ref={link}>
+      <AppLayout {...props} />
+    </div>
+  );
+}
+
+// The link that skips the navigation, the first thing a keyboard reaches: hidden until it has focus, and taking focus to
+// the content (WCAG 2.4.1 and 2.4.3). Shown with its focus.
+const SkipLink: Story = {
+  tags: ["visual"],
+  args: {
+    navigation: (
+      <nav aria-label="Main" style={{ width: navigationWidth }}>
+        <a href="#page">A page</a>
+      </nav>
+    ),
+    skipLabel,
+    children: <button type="button">In the content</button>,
+  },
+  render: (args) => <Skipping {...args} />,
+  play: async ({ canvas: screen }) => {
+    const link = screen.getByRole("link", { name: skipLabel });
+    (document.activeElement as HTMLElement | null)?.blur();
+    await expect(link.offsetWidth).toBeLessThanOrEqual(1);
+    await expect(getComputedStyle(link).clipPath).not.toBe("none");
+
+    await userEvent.tab();
+    await expect(link).toHaveFocus();
+    await expect(link.offsetWidth).toBeGreaterThan(1);
+    await expect(link.offsetHeight).toBeGreaterThanOrEqual(controlMd);
+    const box = link.getBoundingClientRect();
+    await expect(box.top).toBeGreaterThanOrEqual(0);
+    await expect(box.left).toBeGreaterThanOrEqual(0);
+    await expect(document.elementFromPoint(box.left + 4, box.top + 4)).toBe(
+      link,
+    );
+
+    await userEvent.keyboard("{Enter}");
+    await expect(screen.getByRole("main")).toHaveFocus();
+
+    await userEvent.tab();
+    await expect(
+      screen.getByRole("button", { name: "In the content" }),
+    ).toHaveFocus();
   },
 };
 
@@ -117,6 +177,7 @@ const TopBarScrollsAway: Story = {
   tags: ["!dev"],
   args: {
     navigation,
+    skipLabel,
     topBar,
     children: (
       <>
@@ -143,4 +204,4 @@ const TopBarScrollsAway: Story = {
 };
 
 export default meta;
-export { Default, TopBarScrollsAway, WideScreen, WithoutTopBar };
+export { Default, SkipLink, TopBarScrollsAway, WideScreen, WithoutTopBar };

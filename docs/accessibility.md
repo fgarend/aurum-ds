@@ -53,7 +53,7 @@ it is run by hand.
 | 2.2.1 Timing Adjustable                         | none yet       |                                                                                                      |
 | 2.2.2 Pause, Stop, Hide                         | none yet       |                                                                                                      |
 | 2.3.1 Three Flashes or Below Threshold          | none yet       |                                                                                                      |
-| 2.4.1 Bypass Blocks                             | coming         | `AppLayout`'s landmarks, and a link to skip (7.45)                                                   |
+| 2.4.1 Bypass Blocks                             | story          | `AppLayout`'s link and landmarks (decision 0083)                                                     |
 | 2.4.2 Page Titled                               | app            |                                                                                                      |
 | 2.4.3 Focus Order                               | story          |                                                                                                      |
 | 2.4.4 Link Purpose (In Context)                 | axe, app       | axe finds a link with no name; its words are the app's                                               |
