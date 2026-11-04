@@ -27,6 +27,7 @@ follow decision 0004.
 - **Breaking:** `AppLayout` requires `skipLabel` with `navigation`: the text of a
   link that lets the keyboard skip the navigation, the first thing it reaches. To
   upgrade: pass it, in the app's language, as `skipLabel="Skip to the content"`.
+- **Breaking:** the token `sidebar-width` is now `navigation-width`.
 - `AppLayout`'s navigation is in an `aside`, and scrolls by itself when it does not fit.
   Its `topBar` is a `header` inside `main`, so no longer the page's banner landmark.
   Its heights use `100dvh`.

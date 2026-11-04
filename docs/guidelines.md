@@ -65,7 +65,7 @@ Tokens are named here as `tokens.json` names them. In CSS, each token is a custo
 - 4px base: `space-1` 4 · `space-2` 8 · `space-3` 12 · `space-4` 16 · `space-5` 20 · `space-6` 24 · `space-8` 32 · `space-10` 40 · `space-12` 48 · `space-16` 64.
 - Pages are built from `Section`s: a section's title, subtitle, actions and footer sit on `canvas`, outside the box; the content itself stays in `Card`s (KPI cards, row lists, budget bars, charts). The card holds only data — never its own heading. Sections are `space-12` apart on desktop (`space-8` on mobile).
 - Card padding `space-5`; gap between cards `space-4` (mobile) / `space-6` (desktop); page padding `space-4` (mobile) / `space-10` (desktop).
-- App shell: `AppLayout`, with the app's rail in its `navigation` (`sidebar-width`, 248px, usually on the dark surface) built with `NavList`, and a content column up to `content-max` (1360px), centred. Below `breakpoint-md` (768px) the navigation sits at the top, where a `NavList` with `orientation="responsive"` is one line that scrolls, and cards stack.
+- App shell: `AppLayout`, with the app's rail in its navigation area (`navigation-width`, 248px, usually on the dark surface) built with `NavList`, and a content column up to `content-max` (1360px), centred. Below `breakpoint-md` (768px) the navigation sits at the top, where a `NavList` with `orientation="responsive"` is one line that scrolls, and cards stack.
 - Controls are `control-sm` 32, `control-md` 40 (default) or `control-lg` 48 tall — nothing in between.
 
 ### Shape, borders, elevation

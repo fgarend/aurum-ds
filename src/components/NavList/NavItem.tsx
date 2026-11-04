@@ -21,7 +21,7 @@ function NavItem({
   ...rest
 }: NavItemProps): ReactElement {
   return (
-    <li className="au-nav-entry">
+    <li>
       <a
         {...rest}
         className={

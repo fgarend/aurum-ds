@@ -20,7 +20,7 @@ const meta = {
 
 type Story = StoryObj<typeof meta>;
 
-// The tokens' values, as the browser computes them: canvas #faf9f6, content-max, space-10, and sidebar-width, which the
+// The tokens' values, as the browser computes them: canvas #faf9f6, content-max, space-10, and navigation-width, which the
 // navigation here takes for itself.
 const canvas = "rgb(250, 249, 246)";
 const contentMax = 1360;

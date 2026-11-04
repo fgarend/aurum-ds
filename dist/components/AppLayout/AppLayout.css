@@ -69,7 +69,6 @@
   .au-app-layout-top-bar {
     padding-block: var(--au-space-3);
     border-bottom: 1px solid var(--au-line);
-    background: var(--au-canvas);
   }
 
   .au-app-layout-content {
