@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 7.46.
+**Now:** 7.47.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -70,25 +70,16 @@ Dropped: 7.30, the gallery's title in the browser's tab. Storybook writes
 the first title comes from a setting it does not document; changing it would
 mean a script fighting Storybook at every navigation, for a tab's text, while
 the gallery already shows Aurum's brand mark. 7.14, the Sidebar in the shell:
-it is the Sidebar's own item, in the `navigation` of `AppLayout`.
+it is the Sidebar's own item, in the `navigation` of `AppLayout`. 7.40, 7.41 and 7.42, collapsing the Sidebar, its
+drawer and its sections that open: they leave for the module of composed components,
+and the app asks for none. 7.44, the Sidebar's name: settled by 7.47.
 
+- **7.47 · The navigation in pieces.** First, before any release: the Sidebar becomes
+  pieces an app puts together, its item, its section and its list. Its rail, areas,
+  scrolling, strip and collapsing leave the design system.
 - **7.46 · The first run of the accessibility script.** By the user, as it takes a
   screen reader and real zoom: `docs/accessibility-script.md`. What fails becomes an
-  item here. Before the release that first brings the Sidebar and the Tooltip.
-- **7.40 · Collapsing the Sidebar.** After 7.45, as a prop of its own: the
-  72px rail of icons, each one's name beside it on hover and focus, sections as
-  hairlines and an item's `end` hidden, with what to do with the reference's
-  gold dot and the compact switch of people (7.39) decided there. Each name in
-  a Tooltip (decision 0078), far enough to clear the graphite rail. All of the prototype's screens have it; the app does
-  not ask for it yet. Its release also brings the Sidebar, which has waited for
-  it.
-- **7.42 · Sections that open and close, and items within items.** After 7.40,
-  as props of `SidebarSection` and `SidebarItem`: W3C's disclosure pattern, with
-  a closed section opening when its item is the current one.
-- **7.44 · The Sidebar's name.** Sidebar, or a name for what it is rather than
-  where it sits, since it is a navigation and a strip on a small screen. Raised
-  by the user. Before the release that first brings it, while renaming breaks
-  nothing.
+  item here. Set aside by the user on 2026-11-03, to be raised before the next release.
 - **7.7 · Badge.** The shell's environment and People's default holder. It also
   works on the graphite Sidebar, in a `SidebarItem`'s `end`, as its counts.
 - **7.15 · Section and Card.** People.
@@ -102,19 +93,14 @@ it is the Sidebar's own item, in the `navigation` of `AppLayout`.
 - **7.9 · AvatarGroup.** When a screen asks for it.
 - **7.10 · ScopeChip.** When a screen asks for it.
 - **7.39 · The switch of people.** A component of its own, with Avatar and
-  AvatarGroup, that an app puts in the Sidebar's `footer` or its top bar; the
-  Sidebar knows nothing of people. When the app asks for it. It has a compact
-  form once 7.40 is done.
+  AvatarGroup, that an app puts in its navigation or its top bar; the
+  navigation knows nothing of people. When the app asks for it.
 - **7.37 · The side panel.** The app's opens over the page, in a portal, so it
   is a component of its own, not an area of `AppLayout` (decision 0073). When a
   screen asks for it.
 - **7.38 · BottomNav.** The guidelines' navigation below `breakpoint-md`, in
   `AppLayout` as an optional prop, where the navigation sits at the top until
   then (decision 0073). When a screen asks for it.
-- **7.41 · The Sidebar as a drawer.** Hidden behind a button on a small screen,
-  for a navigation too long for the strip it draws there. After the Dialog, whose
-  focus and layer it shares. The app chooses among the strip, the drawer and
-  BottomNav.
 
 ## 6. One version per screen
 
@@ -141,9 +127,8 @@ No order between them; each becomes items when its time comes.
   which today are in `px` and ignore the browser's text size, or a `scaling` on
   `AurumRoot`, as Radix Themes has. Browser zoom meets WCAG 1.4.4 until then.
   Components take values only from tokens, so this changes the tokens alone.
-- **Below `breakpoint-md` in the checks.** `AppLayout` has no check of its stacking
-  there, and the screenshots run at one width, so the Sidebar's strip has checks
-  but no screenshot.
+- **Below `breakpoint-md` in the screenshots.** They run at one width, so what changes
+  there has checks but no screenshot.
 - **Charts' colours.** `chart-2`, `chart-3` and `chart-5` are below the 3:1 that
   WCAG 1.4.11 asks of a chart's marks on `surface` (decision 0080). With the first
   chart.
@@ -153,10 +138,12 @@ No order between them; each becomes items when its time comes.
   Safari 17 and iOS 18.3, and `:has` and `color-mix` have floors of their own.
 - **One place for the stories' list.** Three tests in `.storybook/` repeat the same
   glob and `composeStories`.
-- **The top bar as a `header`.** It is exposed as the page's banner landmark, for a
-  path and filters, while the brand is in the navigation. To check if it belongs.
 - **The Sidebar's hidden titles repeat `.au-sr`.** The strip hides them with the same
   declarations as the base class, which a media query cannot apply.
+- **A module of composed components.** Built from the pieces, later, when a second app
+  or the app's own repetition asks for it: a navigation rail with its areas, scrolling
+  and strip, collapsing, sections that open, a drawer. The Sidebar of commit `9f6058b`
+  and its map of corner cases are the starting point.
 - **Image vulnerability scan.** The system packages inside the images (the
   Debian of the Node image), which `make audit` does not cover.
 - **Update bot.** Renovate or Dependabot opening pull requests, with the CI;

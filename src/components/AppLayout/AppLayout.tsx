@@ -57,22 +57,20 @@ function AppLayout({
           >
             {skipLabel}
           </a>
-          <div className="au-app-layout-navigation">{navigation}</div>
+          <aside className="au-app-layout-navigation">{navigation}</aside>
         </>
       )}
-      <div className="au-app-layout-column">
+      <main
+        className="au-app-layout-main"
+        id={contentId}
+        ref={content}
+        tabIndex={-1}
+      >
         {topBar === undefined ? null : (
           <header className="au-app-layout-top-bar">{topBar}</header>
         )}
-        <main
-          className="au-app-layout-content"
-          id={contentId}
-          ref={content}
-          tabIndex={-1}
-        >
-          {children}
-        </main>
-      </div>
+        <div className="au-app-layout-content">{children}</div>
+      </main>
     </div>
   );
 }

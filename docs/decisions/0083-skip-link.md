@@ -1,6 +1,6 @@
 # 0083. A link to skip the navigation
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0085: the link reaches the top bar
 - Date: 2026-11-03
 
 ## Context
@@ -41,5 +41,3 @@ so the app gives the link's text.
   follow a link, with or without the code. Tried by hand with a real keyboard in the
   three browsers, against the gallery: without the code the address takes a hash, and
   with it, it does not.
-- The link also skips the top bar, whose path and filters are reached by Tab from the
-  top if the link is not used.

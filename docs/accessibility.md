@@ -44,7 +44,7 @@ it is run by hand.
 | 1.4.3 Contrast (Minimum)                        | axe, tokens   | axe on flat colours; the tokens also on the graphite gradient                                   |
 | 1.4.4 Resize Text                               | script        | By browser zoom; the tokens are in `px` (decision 0076)                                         |
 | 1.4.5 Images of Text                            | app           |                                                                                                 |
-| 1.4.10 Reflow                                   | story, script | The Sidebar at 320px; `AppLayout` has no check there (roadmap)                                  |
+| 1.4.10 Reflow                                   | story, script | The Sidebar and `AppLayout` at 320px                                                            |
 | 1.4.11 Non-text Contrast                        | tokens        | Focus rings, and the Sidebar's current icon and mark; `control-border` (7.16); charts (roadmap) |
 | 1.4.12 Text Spacing                             | every story   | All three browsers                                                                              |
 | 1.4.13 Content on Hover or Focus                | story         | `Tooltip`                                                                                       |

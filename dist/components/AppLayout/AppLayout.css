@@ -6,7 +6,7 @@
   .au-app-layout {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    min-height: 100dvh;
     background: var(--au-canvas);
   }
 
@@ -40,11 +40,21 @@
     color: var(--au-ink);
   }
 
-  .au-app-layout-column {
+  .au-app-layout-main {
     display: flex;
     flex: 1 1 0;
     flex-direction: column;
     min-width: 0;
+  }
+
+  /* It takes focus only from the link above, and no key acts on it: the ring would mark nothing a person can use. */
+  .au-app-layout-main:focus {
+    outline: 0;
+  }
+
+  /* On a small screen the navigation scrolls sideways by itself, with the page still. */
+  .au-app-layout-navigation {
+    overflow-x: auto;
   }
 
   /* Both end at the same edges: the inset, or what is left beside content-max on a wider screen. */
@@ -60,11 +70,6 @@
     padding-block: var(--au-space-3);
     border-bottom: 1px solid var(--au-line);
     background: var(--au-canvas);
-  }
-
-  /* It takes focus only from the link above, and no key acts on it: the ring would mark nothing a person can use. */
-  .au-app-layout-content:focus {
-    outline: 0;
   }
 
   .au-app-layout-content {
@@ -88,13 +93,14 @@
       );
     }
 
-    /* The navigation stays in view, as wide as it draws itself. */
+    /* The navigation stays in view, as wide as it draws itself, and scrolls by itself when taller than the screen. */
     .au-app-layout-navigation {
       position: sticky;
       top: 0;
       flex: none;
       align-self: flex-start;
-      height: 100vh;
+      height: 100dvh;
+      overflow: hidden auto;
     }
   }
 }

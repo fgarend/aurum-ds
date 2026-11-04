@@ -27,6 +27,7 @@ const contentMax = 1360;
 const sectionGap = "40px";
 const navigationWidth = 248;
 const controlMd = 40;
+const narrowWidth = 320;
 
 // What the app puts in each area, here a coloured block with its name in the middle, so the areas show at a glance.
 function block(color: string, minHeight: number | string): CSSProperties {
@@ -72,6 +73,7 @@ const Default: Story = {
     const bar = screen.getByTestId("top-bar");
     const first = screen.getByTestId("first");
     const second = screen.getByTestId("second");
+    const main = screen.getByRole("main");
 
     await expect(ref.current).toBe(root);
     await expect(root?.className).toBe("au-app-layout from-app");
@@ -79,9 +81,16 @@ const Default: Story = {
     await expect(
       screen.getByRole("navigation", { name: "Main" }).offsetWidth,
     ).toBe(navigationWidth);
-    await expect(screen.getByRole("main")).toContainElement(first);
-    await expect(screen.getByRole("banner")).toContainElement(bar);
-    await expect(getComputedStyle(screen.getByRole("main")).rowGap).toBe(
+
+    // The landmarks (decision 0085): the navigation's area, and the page with its path and filters, which is no banner.
+    await expect(screen.getByRole("complementary")).toContainElement(
+      screen.getByRole("navigation", { name: "Main" }),
+    );
+    await expect(main).toContainElement(bar);
+    await expect(main).toContainElement(first);
+    await expect(bar.closest("header")?.closest("main")).toBe(main);
+
+    await expect(getComputedStyle(first.parentElement as Element).rowGap).toBe(
       sectionGap,
     );
     await expect(first.getBoundingClientRect().bottom + 40).toBe(
@@ -94,7 +103,7 @@ const Default: Story = {
 const WithoutTopBar: Story = {
   args: { navigation, skipLabel, children: sections },
   play: async ({ canvas: screen }) => {
-    await expect(screen.queryByRole("banner")).toBeNull();
+    await expect(screen.queryByTestId("top-bar")).toBeNull();
     await expect(screen.getByRole("main")).toBeInTheDocument();
   },
 };
@@ -141,6 +150,7 @@ const SkipLink: Story = {
       </nav>
     ),
     skipLabel,
+    topBar: <button type="button">In the top bar</button>,
     children: <button type="button">In the content</button>,
   },
   render: (args) => <Skipping {...args} />,
@@ -164,6 +174,11 @@ const SkipLink: Story = {
     await userEvent.keyboard("{Enter}");
     await expect(screen.getByRole("main")).toHaveFocus();
 
+    // Into the page from its top, so its filters come first.
+    await userEvent.tab();
+    await expect(
+      screen.getByRole("button", { name: "In the top bar" }),
+    ).toHaveFocus();
     await userEvent.tab();
     await expect(
       screen.getByRole("button", { name: "In the content" }),
@@ -191,7 +206,7 @@ const TopBarScrollsAway: Story = {
     const button = screen.getByRole("button", {
       name: "Reached by keyboard",
     });
-    const bar = screen.getByRole("banner");
+    const bar = screen.getByTestId("top-bar");
 
     window.scrollTo({ top: 1000, behavior: "instant" });
     button.focus();
@@ -203,5 +218,86 @@ const TopBarScrollsAway: Story = {
   },
 };
 
+const pages = Array.from({ length: 80 }, (_, index) => `page-${index + 1}`);
+const manyLinks = pages.map((page) => (
+  <div key={page} style={{ whiteSpace: "nowrap" }}>
+    <a href={`#${page}`} style={{ display: "inline-block", minHeight: 24 }}>
+      {page}
+    </a>
+  </div>
+));
+
+// A navigation taller than the screen: its area scrolls, and the page does not move with it (decision 0085).
+const TallNavigation: Story = {
+  tags: ["!dev"],
+  args: {
+    navigation: (
+      <nav aria-label="Main" style={{ width: navigationWidth }}>
+        {manyLinks}
+      </nav>
+    ),
+    skipLabel,
+    children: sections,
+  },
+  play: async ({ canvas: screen }) => {
+    const area = screen.getByRole("complementary");
+
+    await expect(area.offsetHeight).toBe(window.innerHeight);
+    await expect(area.scrollHeight).toBeGreaterThan(area.clientHeight);
+    await expect(getComputedStyle(area).overflowY).toBe("auto");
+    await expect(document.documentElement.scrollHeight).toBe(
+      document.documentElement.clientHeight,
+    );
+  },
+};
+
+// Below breakpoint-md the navigation is over the rest, and scrolls sideways by itself, with the page still.
+const NarrowScreen: Story = {
+  parameters: {
+    viewport: {
+      options: {
+        narrow: {
+          name: "Narrow",
+          styles: { width: `${narrowWidth}px`, height: "600px" },
+          type: "mobile",
+        },
+      },
+    },
+  },
+  globals: { viewport: { value: "narrow" } },
+  args: {
+    navigation: (
+      <nav
+        aria-label="Main"
+        style={{ display: "flex", gap: 16, width: "max-content" }}
+      >
+        {manyLinks.slice(0, 10)}
+      </nav>
+    ),
+    skipLabel,
+    topBar,
+    children: sections,
+  },
+  play: async ({ canvas: screen }) => {
+    const area = screen.getByRole("complementary");
+    const main = screen.getByRole("main");
+
+    await expect(window.innerWidth).toBe(narrowWidth);
+    await expect(area.getBoundingClientRect().bottom).toBeLessThanOrEqual(
+      main.getBoundingClientRect().top,
+    );
+    await expect(area.scrollWidth).toBeGreaterThan(area.clientWidth);
+    await expect(document.documentElement.scrollWidth).toBe(narrowWidth);
+  },
+};
+
 export default meta;
-export { Default, SkipLink, TopBarScrollsAway, WideScreen, WithoutTopBar };
+export {
+  Default,
+  NarrowScreen,
+  SkipLink,
+  TallNavigation,
+  TopBarScrollsAway,
+  WideScreen,
+  WithoutTopBar,
+};
