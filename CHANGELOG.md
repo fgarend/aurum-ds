@@ -6,6 +6,8 @@ follow decision 0004.
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-11-04
+
 ### Added
 
 - `NavList`, `NavSection` and `NavItem`: the pieces of a navigation, which the app
@@ -44,6 +46,11 @@ follow decision 0004.
 - `AppLayout`'s `topBar` scrolls away with the page instead of staying in view: it
   hid a control reached by keyboard (WCAG 2.4.11) and took 37% of the height at a
   zoom of 400%. The app's path and filters leave the screen as the page scrolls.
+
+### Fixed
+
+- With Tailwind, its utilities win over Aurum's text styles, such as `.au-text-body`, as they
+  do over its other rules. An app that has both on one element may look different.
 
 ## [0.2.0] - 2026-11-03
 
@@ -143,7 +150,8 @@ The base, with no component yet.
   `"@fgarend/aurum-ds": "github:fgarend/aurum-ds#v0.1.0"`. React 19 is a peer
   dependency.
 
-[Unreleased]: https://github.com/fgarend/aurum-ds/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/fgarend/aurum-ds/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/fgarend/aurum-ds/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/fgarend/aurum-ds/compare/v0.1.5...v0.2.0
 [0.1.5]: https://github.com/fgarend/aurum-ds/compare/v0.1.4...v0.1.5
 [0.1.4]: https://github.com/fgarend/aurum-ds/compare/v0.1.3...v0.1.4
