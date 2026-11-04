@@ -16,7 +16,7 @@ Read from the app's repository on 2026-11-01.
 - **React 19**, TypeScript 7, React Aria, Lucide (1.61) and Tailwind 4 with
   shadcn.
 - **Browsers:** none stated, and its visual tests run in Chromium only.
-  Aurum tests in Chromium only until the app says otherwise (decision 0032).
+  Aurum's own tests run in Chromium, Firefox and WebKit (decision 0045).
 - **Layout:** the side navigation turns into a strip at the top below the
   `md` breakpoint.
 

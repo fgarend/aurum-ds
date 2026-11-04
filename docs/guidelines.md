@@ -17,9 +17,9 @@ Aurum is a quiet, minimal design system for products that handle money — perso
 - Sentence case everywhere: “Add transaction”, “Monthly overview”. Uppercase only for `text-overline` nav section labels.
 - Address the user as “you”; the product never says “I” or “we”. Short, plain sentences. No exclamation marks, no emoji.
 - Buttons are verbs (“Save budget”, “Export”); empty states say what's missing and the next step (“No transactions yet — add your first expense or import a statement.”).
-- Money: locale-formatted through `Aurum.formatMoney` / `Amount` (default `pt-BR`, `BRL`). Use the true minus “−” (U+2212), a thin space after the sign, and always two decimals except in charts and compact KPIs.
+- Money: locale-formatted (`pt-BR`, `BRL`, by default), by the app until `Amount` exists. Use the true minus “−” (U+2212), a thin space after the sign, and always two decimals except in charts and compact KPIs.
 - Percentages one decimal (“4,2%”); dates relative when recent (“Today”, “Yesterday”), otherwise short (“14 Oct”).
-- Copy is passed in by the consumer — components ship English defaults (`ofLabel`, `pendingLabel`, `closeLabel`…) you override per locale.
+- Copy is passed in by the app, in its language: components have no default texts, and a text they need is a required prop, as `skipLabel` (decision 0054).
 
 ## Visual foundations
 
@@ -71,7 +71,7 @@ Tokens are named here as `tokens.json` names them. In CSS, each token is a custo
 ### Shape, borders, elevation
 
 - Radii are small and quiet: `radius-sm` 4 (checkboxes), `radius-md` 6 (buttons, inputs, nav items, tiles, alerts), `radius-lg` 8 (cards, tables), `radius-xl` 12 (dialogs, sheets). `radius-pill` only for badges, switches, progress tracks and avatars — not for buttons or fields.
-- Borders do the work: cards have a 1px `line` border plus `shadow-sm`. `shadow-md` only for floating elements (menus, the add button), `shadow-lg` only for modal dialogs. No gradients, no glass, no coloured left-border accents.
+- Borders do the work: cards have a 1px `line` border plus `shadow-sm`. `shadow-md` only for floating elements (menus, the add button), `shadow-lg` only for modal dialogs. No glass, and no coloured left-border accents on cards or content: the one exception is the mark of a navigation's current item, which tells a state by its shape (decision 0084). No gradients, but for the dark surface if the app paints it so.
 
 ### Forms
 
@@ -83,7 +83,7 @@ Tokens are named here as `tokens.json` names them. In CSS, each token is a custo
 ### States & motion
 
 - Hover: `surface-hover` fill on neutral elements, `primary-hover` on primary fills; pressed `primary-pressed`.
-- Focus: a solid 2px graphite `focus-ring` outline with 2px offset on buttons, nav items and toggles; fields use the graphite border + gold `focus-halo` treatment above. Never remove it.
+- Focus: a solid 2px graphite `focus-ring` outline with 2px offset on buttons and toggles, and inside the item on a `NavItem`, which an area that scrolls could cut; fields use the graphite border + gold `focus-halo` treatment above. Never remove it.
 - Disabled: `surface-sunken` fill and `ink-disabled` text; no opacity tricks on text.
 - Motion: 150ms ease for colour and toggles, 300ms ease for progress fills. No bounces or parallax; respect `prefers-reduced-motion`.
 
@@ -105,12 +105,11 @@ The catalogue below is the artifact's. This package builds it in React 19 (decis
 - **Feedback** — `Alert`, `ProgressBar`, `EmptyState`, `Dialog`
 - **Navigation** — `NavList`, `NavSection`, `NavItem`, `BottomNav`
 - **Finance** — `Amount`, `StatCard`, `StatStrip`, `Delta`, `TransactionRow`, `BudgetBar`, `AllocationBar`, `Sparkline`
-- Helpers — `Aurum.formatMoney(value, {locale, currency, signed})`, `Aurum.formatPercent(value, {locale, decimals})`.
 
 Typical dashboard: a rail with `NavList` · page title · a `Section` (title, period switch, “updated” footer) over a `StatStrip` (`layout="side"`, solid circular icons, balance highlighted) or a grid of four `StatCard`s (when each needs a context footer) · a `Section` over a flush `Card` of `TransactionRow` with a “View all” footer · `Section`s over a `Card` of `BudgetBar`s and a `Card` with the `AllocationBar`.
 
 ## Using Aurum in a project
 
 - Wrap where Aurum begins in `AurumRoot` (`@fgarend/aurum-ds/AurumRoot`), once, above any layout: it brings the fonts, the tokens and the base styles, and draws no box of its own (decision 0070). Install it from a release's page, with no `git` needed: `"@fgarend/aurum-ds": "https://github.com/fgarend/aurum-ds/releases/download/vX.Y.Z/fgarend-aurum-ds-X.Y.Z.tgz"`, or from GitHub at the release's tag, which needs `git`: `"@fgarend/aurum-ds": "github:fgarend/aurum-ds#vX.Y.Z"`, where `X.Y.Z` is a version from `CHANGELOG.md` (decisions 0037 and 0051).
-- Without React, keep the tokens and type scale and reproduce components from their READMEs — the values all live in tokens.
-- Theme it for another product by changing `primary*`, `on-primary`, `primary-soft` and the four accents; keep the semantic finance colours and the contrast notes intact.
+- Aurum is for React: `tokens.css` and the classes are what an app reaches from its own CSS.
+- Theme it for another product by changing `primary*`, `on-primary`, `primary-soft` and the four accents, on `:root` after Aurum's CSS has loaded; `focus-ring` and `chart-1` are written apart from `primary`; keep the semantic finance colours and the contrast notes intact.

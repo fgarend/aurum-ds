@@ -9,8 +9,8 @@ this repository is the source.
 
 ## Status
 
-Version 0.1.0 is the base: tokens, fonts and base styles, with no component
-yet. Components arrive one per release, in the order of `docs/ROADMAP.md`.
+Tokens, fonts and base styles, and the components built so far, which arrive in the order
+of `docs/ROADMAP.md`.
 What changes in each version is in `CHANGELOG.md`.
 
 ## Install
@@ -58,7 +58,7 @@ test settings:
 test: {
   server: {
     deps: {
-      inline: ["@fgarend/aurum-ds"];
+      inline: ["@fgarend/aurum-ds"],
     }
   }
 }

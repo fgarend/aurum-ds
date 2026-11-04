@@ -30,5 +30,7 @@ on it, while its zoom does, which meets WCAG 1.4.4.
 
 ## Consequences
 
-- The Sidebar has no `size`: an item is `control-md` and the rail `sidebar-width`.
+- `NavItem` has no `size`: it is `control-md` tall, and a rail takes `navigation-width`.
+- "Changes the tokens alone" holds for what reads a token through CSS. The Tooltip reads its gap
+  as pixels, and the breakpoint's media queries stay in pixels: a move to `rem` has those too.
 - Each new component answers this question before it takes a `size`.

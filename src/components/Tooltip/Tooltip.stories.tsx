@@ -217,7 +217,7 @@ function onSide(side: keyof typeof sides): Story {
   };
 }
 
-// The other sides, as the collapsed Sidebar's name uses the right.
+// The other sides.
 const Right = onSide("right");
 const Bottom = onSide("bottom");
 const Left = onSide("left");

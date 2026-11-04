@@ -29,4 +29,7 @@ variants.
 
 ## Consequences
 
+- The guidelines forbade coloured left-border accents, which this decision overlooked when it
+  was taken. Raised with the user on 2026-11-04, the mark stays, as an exception for a state:
+  the guidelines now say so.
 - The look differs from the frozen reference, and the Sidebar's screenshots with it.

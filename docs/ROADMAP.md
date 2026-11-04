@@ -78,7 +78,8 @@ and the app asks for none. 7.44, the Sidebar's name: settled by 7.47.
   screen reader and real zoom: `docs/accessibility-script.md`. What fails becomes an
   item here. Set aside by the user on 2026-11-03, to be raised before the next release.
 - **7.7 · Badge.** The shell's environment and People's default holder. It also
-  works on a dark surface, in a `NavItem`'s `end`, as its counts.
+  works on a dark surface, in a `NavItem`'s `end`, as its counts: finance colours are about
+  2:1 on graphite, so their values there are decided here.
 - **7.15 · Section and Card.** People.
 - **7.18 · Table.** People, as the app asked before that screen.
 - **7.8 · Avatar.** People.
@@ -123,7 +124,8 @@ No order between them; each becomes items when its time comes.
   belongs to the whole system, not to a component's `size`: the tokens in `rem`,
   which today are in `px` and ignore the browser's text size, or a `scaling` on
   `AurumRoot`, as Radix Themes has. Browser zoom meets WCAG 1.4.4 until then.
-  Components take values only from tokens, so this changes the tokens alone.
+  Components take values from tokens, so this changes the tokens, the Tooltip's gap, read as
+  pixels, and the breakpoint's media queries.
 - **Below `breakpoint-md` in the screenshots.** They run at one width, so what changes
   there has checks but no screenshot.
 - **Charts' colours.** `chart-2`, `chart-3` and `chart-5` are below the 3:1 that
@@ -144,6 +146,9 @@ No order between them; each becomes items when its time comes.
 - **A tooltip on a `NavItem`.** Around it, a `span` falls between the list and its item, which
   axe fails. A `tooltip` prop, or `NavItem` drawing only its anchor. When an app collapses
   its rail (decision 0086).
+- **The `body`'s margin under `AppLayout`.** Without Tailwind's reset, the browser's 8px gives a
+  scroll bar that never goes. Found in the review of 2026-11-04.
+- **An empty `NavList`.** It hides its list and keeps a named landmark, with nothing in it.
 - **The browsers Aurum supports.** Nothing states them, while `popover` needs
   Safari 17 and iOS 18.3, and `:has` and `color-mix` have floors of their own.
 - **One place for the stories' list.** Three tests in `.storybook/` repeat the same
