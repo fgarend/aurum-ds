@@ -48,4 +48,7 @@ that differ in layout.
   `Tooltip` for the names.
 - On opening a page whose item is out of view, it stays there until scrolled, unless the
   app brings it in, more likely on a small screen.
+- A `Tooltip` around a `NavItem` puts a `span` between the list and its item, which axe
+  fails: a `NavItem` draws its `li`. So an app cannot yet name its items in a collapsed
+  rail that way (roadmap).
 - The Sidebar stays in the history, in commit `9f6058b`, for the module.

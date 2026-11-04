@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 7.48.
+**Now:** 7.7.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -63,7 +63,7 @@ comparison with its reference screenshot (decisions 0033 and 0035), the
 guidelines' Components section (decision 0031), the changelog, and a
 release.
 
-Done: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.13, 7.19, 7.20, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27, 7.28, 7.29, 7.31, 7.32, 7.33, 7.34, 7.35, 7.36, 7.43, 7.45, 7.47.
+Done: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.13, 7.19, 7.20, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27, 7.28, 7.29, 7.31, 7.32, 7.33, 7.34, 7.35, 7.36, 7.43, 7.45, 7.47, 7.48.
 
 Dropped: 7.30, the gallery's title in the browser's tab. Storybook writes
 "⋅ Storybook" after each story's name in its own code, with no setting, and
@@ -74,10 +74,6 @@ it is the Sidebar's own item, in the `navigation` of `AppLayout`. 7.40, 7.41 and
 drawer and its sections that open: they leave for the module of composed components,
 and the app asks for none. 7.44, the Sidebar's name: settled by 7.47.
 
-- **7.48 · What the review of 2026-11-04 found.** First, before Badge, one commit each: the
-  text styles in a layer; the tokens the dark surface lacks; what the removed Sidebar
-  left behind; `icon` and `children` on `NavItem`; and a Tooltip around a `NavItem`, which
-  breaks the list.
 - **7.46 · The first run of the accessibility script.** By the user, as it takes a
   screen reader and real zoom: `docs/accessibility-script.md`. What fails becomes an
   item here. Set aside by the user on 2026-11-03, to be raised before the next release.
@@ -145,6 +141,9 @@ No order between them; each becomes items when its time comes.
 - **Drawings beyond Lucide.** `Icon` and `NavItem` take only a `LucideIcon`, so an app cannot
   pass an SVG of its own. Widening the type breaks nothing, and would let `lucide-react`
   leave the peers, as Aurum imports only its type. When an app needs it.
+- **A tooltip on a `NavItem`.** Around it, a `span` falls between the list and its item, which
+  axe fails. A `tooltip` prop, or `NavItem` drawing only its anchor. When an app collapses
+  its rail (decision 0086).
 - **The browsers Aurum supports.** Nothing states them, while `popover` needs
   Safari 17 and iOS 18.3, and `:has` and `color-mix` have floors of their own.
 - **One place for the stories' list.** Three tests in `.storybook/` repeat the same
