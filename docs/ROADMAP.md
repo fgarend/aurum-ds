@@ -76,7 +76,7 @@ and the app asks for none. 7.44, the Sidebar's name: settled by 7.47.
 
 - **7.46 · The first run of the accessibility script.** By the user, as it takes a
   screen reader and real zoom: `docs/accessibility-script.md`. What fails becomes an
-  item here. Set aside by the user on 2026-11-03, to be raised before the next release.
+  item here. Set aside by the user, also at the release of v0.3.0.
 - **7.7 · Badge.** The shell's environment and People's default holder. It also
   works on a dark surface, in a `NavItem`'s `end`, as its counts: finance colours are about
   2:1 on graphite, so their values there are decided here.
@@ -134,10 +134,10 @@ No order between them; each becomes items when its time comes.
 - **A top bar that stays in view.** As an option of `AppLayout`, measuring its height
   for `scroll-padding` so it covers no focus, if the app misses it (decision 0082).
 - **Tokens for what is written by hand.** The focus ring's 2px, the 150ms of motion, and
-  `z-index`. Before the next release.
+  `z-index`. Set aside at the release of v0.3.0.
 - **Sizes and names to settle.** `Icon`'s numeric `size` against decision 0076; the
   Tooltip's width, written from a control's height; its `text` against `label` elsewhere;
-  `data-au-` for what an app writes, as a rule. Before the next release.
+  `data-au-` for what an app writes, as a rule. Set aside at the release of v0.3.0.
 - **Layers in the gallery.** Foundations with colours, type and space, and groups beyond
   `Components`; the shared `className` in `src/internal/`; the name `gold`.
 - **Drawings beyond Lucide.** `Icon` and `NavItem` take only a `LucideIcon`, so an app cannot
