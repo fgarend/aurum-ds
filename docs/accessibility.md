@@ -28,7 +28,7 @@ it is run by hand.
 
 | Criterion                                       | How           | Notes                                                                                         |
 | ----------------------------------------------- | ------------- | --------------------------------------------------------------------------------------------- |
-| 1.1.1 Non-text Content                          | axe, story    | `Icon` is hidden without a `label`, named with one                                            |
+| 1.1.1 Non-text Content                          | axe, story    | `Icon` is hidden without an `aria-label` or `aria-labelledby`, and an image with one          |
 | 1.2.1 Audio-only and Video-only                 | app           |                                                                                               |
 | 1.2.2 Captions (Prerecorded)                    | app           |                                                                                               |
 | 1.2.3 Audio Description or Media Alternative    | app           |                                                                                               |

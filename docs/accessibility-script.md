@@ -48,7 +48,7 @@ the Left and Right Arrows.
 | `applayout--default`   | VO-U, find the landmarks, if listed | The navigation's area, the navigation by its name, and the main content, with no banner |
 | `applayout--skip-link` | From the top, VO-Right Arrow        | The link to skip comes first; VO-Space bar moves on to the page                         |
 | `tooltip--default`     | Tab to the control                  | Its name once, not twice                                                                |
-| `icon--labelled`       | Move to the icon                    | It is read by its `label`                                                               |
+| `icon--labelled`       | Move to the icon                    | It is read by its `aria-label`                                                          |
 | `icon--default`        | Move across it                      | It says nothing                                                                         |
 
 ## 3. Zoom, in Safari and Chrome

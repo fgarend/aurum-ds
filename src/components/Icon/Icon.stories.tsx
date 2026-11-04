@@ -7,12 +7,12 @@ import {
   Plus,
   Wallet,
 } from "lucide-react";
-import { createRef } from "react";
+import { createRef, type ReactNode, useId } from "react";
 import { expect } from "storybook/test";
-import { Icon } from "./Icon.js";
+import { Icon, type IconProps } from "./Icon.js";
 
 // The Icon's examples (decision 0057), each checking what it shows: a Lucide drawing in a 1.5 stroke, a size in
-// pixels, hidden from screen readers unless it has a label, in the colour of the text (decision 0056).
+// pixels, hidden from screen readers unless it has a name, in the colour of the text (decision 0056).
 const meta = {
   title: "Components/Icon",
   component: Icon,
@@ -60,7 +60,7 @@ const Default: Story = {
 
 // Alone, carrying its meaning.
 const Labelled: Story = {
-  args: { icon: Info, label: "Information" },
+  args: { icon: Info, "aria-label": "Information" },
   play: async ({ canvas }) => {
     await expect(
       canvas.getByRole("img", { name: "Information" }),
@@ -135,5 +135,26 @@ const Colour: Story = {
   },
 };
 
+function NamedByAnother(props: IconProps): ReactNode {
+  const id = useId();
+  return (
+    <>
+      <span id={id}>Saved</span>
+      <Icon {...props} aria-labelledby={id} />
+    </>
+  );
+}
+
+// Named by another element, it is shown to screen readers too.
+const LabelledByAnother: Story = {
+  tags: ["!dev"],
+  render: (args) => <NamedByAnother {...args} />,
+  play: async ({ canvas: screen }) => {
+    await expect(
+      screen.getByRole("img", { name: "Saved" }),
+    ).toBeInTheDocument();
+  },
+};
+
 export default meta;
-export { Colour, Default, Labelled, Sizes };
+export { Colour, Default, Labelled, LabelledByAnother, Sizes };

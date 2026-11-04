@@ -11,26 +11,24 @@ interface IconProps extends Omit<ComponentProps<"svg">, "children"> {
   icon: LucideIcon;
   // The size in pixels.
   size?: number;
-  // What the icon means, for screen readers, when it stands alone; without it, the icon is hidden from them.
-  label?: string;
 }
 
 // A Lucide drawing, in Aurum's stroke and the colour of the text around it (decision 0056).
 function Icon({
   icon: Drawing,
   size = defaultSize,
-  label,
   className,
   ...rest
 }: IconProps): ReactElement {
+  // Named with aria-label or aria-labelledby, it stands alone and is an image; without a name, it is hidden.
   const named =
-    label === undefined
+    rest["aria-label"] === undefined && rest["aria-labelledby"] === undefined
       ? { "aria-hidden": true }
-      : { role: "img", "aria-label": label };
+      : { role: "img" };
   return (
     <Drawing
-      {...rest}
       {...named}
+      {...rest}
       className={className === undefined ? "au-icon" : `au-icon ${className}`}
       size={size}
       strokeWidth={stroke}

@@ -27,6 +27,8 @@ follow decision 0004.
 - **Breaking:** `AppLayout` requires `skipLabel` with `navigation`: the text of a
   link that lets the keyboard skip the navigation, the first thing it reaches. To
   upgrade: pass it, in the app's language, as `skipLabel="Skip to the content"`.
+- **Breaking:** `Icon`'s `label` is now `aria-label`, the native name, also honoured by
+  `aria-labelledby`. To upgrade: rename it. An `aria-label` was hidden before.
 - **Breaking:** the token `sidebar-width` is now `navigation-width`.
 - `AppLayout`'s `navigation` and `topBar`, and `NavItem`'s `end`, draw nothing when given
   what React draws nothing for, as `shown && <Filters />` when not shown.
