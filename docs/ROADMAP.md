@@ -72,16 +72,15 @@ mean a script fighting Storybook at every navigation, for a tab's text, while
 the gallery already shows Aurum's brand mark. 7.14, the Sidebar in the shell:
 it is the Sidebar's own item, in the `navigation` of `AppLayout`.
 
-- **7.45 · Accessibility across the system.** First. A decision with the target, WCAG 2.2
-  AA, which no decision states yet. A fixed list in the docs, of the criteria and
-  corner cases each component's proposal and report goes through. A test of the
-  tokens' contrast, since axe reports text on the graphite gradient as incomplete
-  and does not fail. Tests of forced colours and text spacing, if Playwright can
-  emulate them in stories. A manual script with VoiceOver and zoom, run by the
-  user. Each fix in its own commit: `AppLayout`'s sticky top bar covering focus
-  (2.4.11) and a link to skip the navigation (2.4.1); the Sidebar's current item,
-  whose fill is 1.2:1 in `surface` and `canvas` beside a subtle weight (1.4.11).
-  `control-border`, at 1.54:1, is decided in 7.16.
+- **7.45 · Accessibility across the system.** First, closing what
+  `docs/accessibility.md` marks as coming, one commit each. A test of the tokens'
+  contrast, since axe reports text on the graphite gradient as incomplete and
+  does not fail. Tests of forced colours and text spacing, if Playwright can
+  emulate them in the three browsers. `AppLayout`'s sticky top bar covering focus
+  (2.4.11) and a link to skip the navigation (2.4.1). The Sidebar's current item,
+  whose fill is 1.2:1 in `surface` and `canvas` beside a subtle weight (1.4.11). A
+  manual script with VoiceOver and zoom, run by the user. `control-border`, at
+  1.54:1, is decided in 7.16.
 - **7.40 · Collapsing the Sidebar.** After the Tooltip, as a prop of its own: the
   72px rail of icons, each one's name beside it on hover and focus, sections as
   hairlines and an item's `end` hidden, with what to do with the reference's

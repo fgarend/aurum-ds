@@ -12,6 +12,7 @@ built in small steps, each decided with the user before it is made.
 3. `docs/updating.md`: the update routine, run at the start of every roadmap
    item.
 4. Decision 0039: where each file goes.
+5. `docs/accessibility.md`: the target, and how each criterion is checked.
 
 ## Rules
 
@@ -35,6 +36,8 @@ built in small steps, each decided with the user before it is made.
 - **Nothing discussed is lost.** Whatever is deferred in a conversation goes
   into `docs/ROADMAP.md` right away.
 - **Test first.** Write the test cases, show them failing, then implement.
+- **Accessibility in the open.** Every component's proposal and report go through
+  `docs/accessibility.md`: what applies, what has a check and what does not.
 - **Fictitious data only.** Never real data, not even anonymized.
 - **English in the repository.** Code, names, documentation and commits are in
   English. Talk to the user in Portuguese.

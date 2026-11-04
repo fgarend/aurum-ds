@@ -14,8 +14,21 @@ const preview: Preview = {
     ),
   ],
   parameters: {
-    // Any violation axe finds fails the story's test (decision 0057).
-    a11y: { test: "error" },
+    // Any violation axe finds fails the story's test (decision 0057), by the rules of Aurum's target, WCAG 2.2 AA
+    // (decision 0079), which the addon's default stops short of, and of axe's best practices.
+    a11y: {
+      test: "error",
+      options: {
+        runOnly: [
+          "wcag2a",
+          "wcag2aa",
+          "wcag21a",
+          "wcag21aa",
+          "wcag22aa",
+          "best-practice",
+        ],
+      },
+    },
   },
 };
 
