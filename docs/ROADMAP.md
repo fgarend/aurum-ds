@@ -1,6 +1,8 @@
 # Roadmap
 
-**Now:** 7.7.
+**Now:** paused. The work moves to a new repository, `fgarend/moneta`, on shadcn
+(decision 0091, [`direction-v2.md`](direction-v2.md)). 7.7 and everything below
+wait here, and are taken up there as screens call for them.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
