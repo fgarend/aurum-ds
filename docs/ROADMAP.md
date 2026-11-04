@@ -73,15 +73,13 @@ the gallery already shows Aurum's brand mark. 7.14, the Sidebar in the shell:
 it is the Sidebar's own item, in the `navigation` of `AppLayout`.
 
 - **7.45 · Accessibility across the system.** First, closing what
-  `docs/accessibility.md` marks as coming, one commit each. A test of the tokens'
-  contrast, since axe reports text on the graphite gradient as incomplete and
-  does not fail. Tests of forced colours and text spacing, if Playwright can
+  `docs/accessibility.md` marks as coming, one commit each. Tests of forced colours and text spacing, if Playwright can
   emulate them in the three browsers. `AppLayout`'s sticky top bar covering focus
   (2.4.11) and a link to skip the navigation (2.4.1). The Sidebar's current item,
   whose fill is 1.2:1 in `surface` and `canvas` beside a subtle weight (1.4.11). A
   manual script with VoiceOver and zoom, run by the user. `control-border`, at
   1.54:1, is decided in 7.16.
-- **7.40 · Collapsing the Sidebar.** After the Tooltip, as a prop of its own: the
+- **7.40 · Collapsing the Sidebar.** After 7.45, as a prop of its own: the
   72px rail of icons, each one's name beside it on hover and focus, sections as
   hairlines and an item's `end` hidden, with what to do with the reference's
   gold dot and the compact switch of people (7.39) decided there. Each name in
@@ -149,6 +147,9 @@ No order between them; each becomes items when its time comes.
 - **Below `breakpoint-md` in the checks.** `AppLayout` has no check of its stacking
   there, and the screenshots run at one width, so the Sidebar's strip has checks
   but no screenshot.
+- **Charts' colours.** `chart-2`, `chart-3` and `chart-5` are below the 3:1 that
+  WCAG 1.4.11 asks of a chart's marks on `surface` (decision 0080). With the first
+  chart.
 - **Image vulnerability scan.** The system packages inside the images (the
   Debian of the Node image), which `make audit` does not cover.
 - **Update bot.** Renovate or Dependabot opening pull requests, with the CI;
