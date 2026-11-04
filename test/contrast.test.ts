@@ -214,6 +214,88 @@ describe("the graphite", () => {
   });
 });
 
+// The dark surface's values, read from its rule, so what is checked is what ships (decision 0087).
+const baseStyles = await readFile(
+  new URL("../src/components/AurumRoot/AurumRoot.css", import.meta.url),
+  "utf8",
+);
+const surfaceRule = /\[data-au-surface="inverse"\] \{(?<body>[^}]*)\}/u.exec(
+  baseStyles,
+)?.groups?.["body"];
+if (surfaceRule === undefined) {
+  throw new Error("no rule for the dark surface in AurumRoot.css");
+}
+const surfaceValues = new Map(
+  [
+    ...surfaceRule.matchAll(
+      /--au-(?<name>[a-z-]+): var\(--au-(?<value>[a-z-]+)\);/gu,
+    ),
+  ].map((match) => [match.groups?.["name"], match.groups?.["value"]]),
+);
+
+// A token as it is on the dark surface, painted over its ground when it is translucent.
+function onSurface(name: string): Colour {
+  const value = colour(surfaceValues.get(name) ?? name);
+  return value[3] === 1 ? value : over(value, colour("inverse"));
+}
+
+describe("the dark surface", () => {
+  // The tokens a component reads, each with a value for it. The rest have none on purpose: gold, the on- and inverse
+  // families are the same there; finance and chart colours wait for a component that needs them there.
+  it.each([
+    "canvas",
+    "surface",
+    "surface-hover",
+    "surface-sunken",
+    "line",
+    "line-strong",
+    "control-border",
+    "control-border-hover",
+    "ink",
+    "ink-muted",
+    "ink-subtle",
+    "ink-disabled",
+    "primary",
+    "primary-hover",
+    "primary-pressed",
+    "on-primary",
+    "primary-soft",
+    "focus-ring",
+  ])("gives %s a value", (name) => {
+    expect(surfaceValues.has(name)).toBe(true);
+  });
+
+  it.each(
+    pairs(
+      ["ink", "ink-muted", "ink-subtle", "primary"],
+      ["canvas", "surface", "surface-hover", "surface-sunken"],
+    ),
+  )("keeps %s readable on %s", (foreground, background) => {
+    expect(
+      contrast(onSurface(foreground), onSurface(background)),
+    ).toBeGreaterThanOrEqual(text);
+  });
+
+  it.each(
+    pairs(["on-primary"], ["primary", "primary-hover", "primary-pressed"]),
+  )("keeps %s readable on %s", (foreground, background) => {
+    expect(
+      contrast(onSurface(foreground), onSurface(background)),
+    ).toBeGreaterThanOrEqual(text);
+  });
+
+  it.each(
+    pairs(
+      ["focus-ring", "control-border"],
+      ["canvas", "surface", "surface-sunken"],
+    ),
+  )("shows %s on %s", (foreground, background) => {
+    expect(
+      contrast(onSurface(foreground), onSurface(background)),
+    ).toBeGreaterThanOrEqual(nonText);
+  });
+});
+
 describe("the excused pairs", () => {
   it.each(excused)(
     "$foreground on $background: $why",

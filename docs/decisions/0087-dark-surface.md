@@ -15,9 +15,9 @@ surface, with tokens for what goes on it.
 ## Decision
 
 - **The app marks an area with `data-au-surface="inverse"`.** The rule, in `AurumRoot.css`,
-  paints it `inverse`, sets `color-scheme: dark`, and gives the same tokens the values for
-  it: `ink`, `ink-muted`, `ink-subtle`, `line`, `line-strong`, `surface-hover`, `primary`,
-  `on-primary`, `primary-soft` and `focus-ring`.
+  paints it `inverse`, sets `color-scheme: dark`, and gives every token a component reads
+  for its grounds, lines, text and controls the values for it, which a test holds to the
+  list: so a card that paints `surface` inside it stays dark, under text that stays light.
 - **No component gets a prop for it**, so a new one follows with nothing to do, and pieces
   inside each other inherit it.
 - **Gold on the current `NavItem` is a rule of its own**, a matter of brand, not a value of
@@ -40,4 +40,7 @@ This replaces the three variants of decision 0075, and the Sidebar's gradient.
 - A token with no value for the surface stays wrong on it: `income`, `expense` and the chart
   colours have none yet, decided when a component needs them there.
 - A dark theme, when it comes, has this mechanism to start from.
-- The surface's pairs are checked by `test/contrast.test.ts`.
+- `test/contrast.test.ts` reads the rule, and checks the same pairs as on the light ground.
+- `ink-disabled` has no value of its own there: it is the same as `ink-subtle`, so a disabled
+  control on the dark surface is told apart by something else, until a token for it.
+- A surface inside the dark one has the same ground, told apart only by its `line`.

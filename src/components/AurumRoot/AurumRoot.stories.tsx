@@ -203,6 +203,17 @@ const DarkSurface: Story = {
       <p style={{ color: "var(--au-ink)" }}>On the dark surface</p>
       <p style={{ color: "var(--au-ink-muted)" }}>Secondary text</p>
       <p style={{ color: "var(--au-ink-subtle)" }}>Metadata</p>
+      <div
+        data-testid="card"
+        style={{
+          padding: "var(--au-space-4)",
+          border: "1px solid var(--au-line)",
+          background: "var(--au-surface)",
+          color: "var(--au-ink)",
+        }}
+      >
+        In a card
+      </div>
     </div>
   ),
   play: async ({ canvas: screen }) => {
@@ -220,6 +231,10 @@ const DarkSurface: Story = {
     await expect(getComputedStyle(screen.getByText("Metadata")).color).toBe(
       onInverseSubtle,
     );
+    // Something that paints its own ground stays dark, under text that stays light.
+    await expect(
+      getComputedStyle(screen.getByTestId("card")).backgroundColor,
+    ).toBe(inverse);
   },
 };
 

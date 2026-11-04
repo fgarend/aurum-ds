@@ -19,13 +19,21 @@
   /* A dark surface, as the app marks it (decision 0087): it paints itself, and inside it the same tokens take the values
      for it, so whatever is inside follows with no prop of its own. Finance and chart colours have none for it yet. */
   [data-au-surface="inverse"] {
+    --au-canvas: var(--au-inverse);
+    --au-surface: var(--au-inverse);
+    --au-surface-hover: var(--au-inverse-hover);
+    --au-surface-sunken: var(--au-inverse-top);
+    --au-line: var(--au-inverse-line);
+    --au-line-strong: var(--au-inverse-line);
+    --au-control-border: var(--au-on-inverse-subtle);
+    --au-control-border-hover: var(--au-on-inverse-muted);
     --au-ink: var(--au-on-inverse);
     --au-ink-muted: var(--au-on-inverse-muted);
     --au-ink-subtle: var(--au-on-inverse-subtle);
-    --au-line: var(--au-inverse-line);
-    --au-line-strong: var(--au-inverse-line);
-    --au-surface-hover: var(--au-inverse-hover);
+    --au-ink-disabled: var(--au-on-inverse-subtle);
     --au-primary: var(--au-on-inverse);
+    --au-primary-hover: var(--au-on-inverse-muted);
+    --au-primary-pressed: var(--au-on-inverse-subtle);
     --au-on-primary: var(--au-inverse);
     --au-primary-soft: var(--au-inverse-active);
     --au-focus-ring: var(--au-on-inverse);
