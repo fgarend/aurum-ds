@@ -16,6 +16,24 @@
     color-scheme: light;
   }
 
+  /* A dark surface, as the app marks it (decision 0087): it paints itself, and inside it the same tokens take the values
+     for it, so whatever is inside follows with no prop of its own. Finance and chart colours have none for it yet. */
+  [data-au-surface="inverse"] {
+    --au-ink: var(--au-on-inverse);
+    --au-ink-muted: var(--au-on-inverse-muted);
+    --au-ink-subtle: var(--au-on-inverse-subtle);
+    --au-line: var(--au-inverse-line);
+    --au-line-strong: var(--au-inverse-line);
+    --au-surface-hover: var(--au-inverse-hover);
+    --au-primary: var(--au-on-inverse);
+    --au-on-primary: var(--au-inverse);
+    --au-primary-soft: var(--au-inverse-active);
+    --au-focus-ring: var(--au-on-inverse);
+    background: var(--au-inverse);
+    color: var(--au-ink);
+    color-scheme: dark;
+  }
+
   /* AurumRoot draws no box, so it leaves the app's layout as it is: its children lay out as its parent's, and still
      inherit its font and colour. The class alone, on an element of the app's, keeps its box and paints the canvas. */
   .au-root[data-au-root] {

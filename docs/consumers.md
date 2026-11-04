@@ -46,8 +46,9 @@ Read from the app's repository on 2026-11-01.
 - **Put its pages in `AppLayout`**, with its navigation and top bar in their
   areas (decision 0073): it paints the canvas, which `AurumRoot` does not. With a
   navigation, it takes the text of the link that skips it (decision 0083).
-- **Wrap `SidebarItem` once with the router's link**, as
-  `createLink(SidebarItem)` in TanStack Router (decision 0077).
+- **Build its rail with the navigation's pieces** (decision 0086), marking a dark area with
+  `data-au-surface="inverse"` (decision 0087), and wrap `NavItem` once with the router's
+  link, as `createLink(NavItem)` in TanStack Router (decision 0077).
 - **Accept React 19 only** as the peer (decision 0019), and provide
   `lucide-react` 1, the Icon's drawings (decision 0056).
 
@@ -105,18 +106,16 @@ screen's own. Muted text, tabular figures and code already exist as the
 By what the app waits for: its shell, then People, its first screen after it
 (the app's order: the shell, People, Position, Notes, Note). Each comes after
 those it uses, and each is one item of roadmap milestone 7 and ends in a
-release. Done: Icon, AppLayout, AurumRoot, Sidebar, Tooltip.
+release. Done: Icon, AppLayout, AurumRoot, NavList, Tooltip.
 
-1. Collapsing the Sidebar, which uses Tooltip and which the app does not ask
-   for yet
-2. Badge: the shell's environment and People's default holder
-3. Section and Card: People
-4. Table: People
-5. Avatar: People
-6. Alert, which uses Icon: People is complete
-7. Button and IconButton, which use Icon
-8. PageHeader, which uses Button
-9. TextField, Select, SegmentedControl and Switch
-10. AvatarGroup, which uses Avatar; ScopeChip, which uses AvatarGroup; and the
-    switch of people, a component of its own, when a screen asks for them
-11. The side panel and BottomNav, when a screen asks for them
+1. Badge: the shell's environment and People's default holder
+2. Section and Card: People
+3. Table: People
+4. Avatar: People
+5. Alert, which uses Icon: People is complete
+6. Button and IconButton, which use Icon
+7. PageHeader, which uses Button
+8. TextField, Select, SegmentedControl and Switch
+9. AvatarGroup, which uses Avatar; ScopeChip, which uses AvatarGroup; and the
+   switch of people, a component of its own, when a screen asks for them
+10. The side panel and BottomNav, when a screen asks for them

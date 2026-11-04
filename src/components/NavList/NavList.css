@@ -1,0 +1,160 @@
+/* The NavList, NavSection and NavItem (decision 0086). Aurum's layers, among Tailwind's (decisions 0053 and 0072). */
+@layer theme, base, au.base, au.components, components, utilities;
+
+@layer au.components {
+  .au-nav-list-items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--au-space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* A list or a section with no items draws nothing, however its items came to be missing. */
+  .au-nav-list-items:not(:has(li)),
+  .au-nav-section:not(:has(li)) {
+    display: none;
+  }
+
+  .au-nav-section-label {
+    display: block;
+    padding: var(--au-space-5) var(--au-space-3) var(--au-space-2);
+    color: var(--au-ink-subtle);
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+  }
+
+  .au-nav-item {
+    display: flex;
+    align-items: center;
+    gap: var(--au-space-3);
+    min-height: var(--au-control-md);
+    padding: var(--au-space-2) var(--au-space-3);
+    border-radius: var(--au-radius-md);
+    color: var(--au-ink-muted);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+
+  .au-nav-item .au-icon,
+  .au-nav-item-end {
+    flex: none;
+  }
+
+  .au-nav-item-name {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .au-nav-item:hover {
+    background: var(--au-surface-hover);
+    color: var(--au-ink);
+  }
+
+  /* The current page. The outline, transparent, is what shows where forced colours remove the fill. */
+  .au-nav-item[aria-current="page"] {
+    position: relative;
+    outline: 1px solid transparent;
+    outline-offset: -1px;
+    background: var(--au-primary-soft);
+    color: var(--au-primary);
+  }
+
+  /* Its mark, which tells it apart by its shape, where the fill barely shows (WCAG 1.4.1 and 1.4.11, decision 0084). A
+     border, so forced colours keep it. */
+  .au-nav-item[aria-current="page"]::before {
+    content: "";
+    position: absolute;
+    inset-block: var(--au-space-2);
+    left: 0;
+    border-left: var(--au-space-1) solid var(--au-primary);
+    border-radius: var(--au-radius-pill);
+  }
+
+  /* On a dark surface, the current page's accent is gold, a matter of brand rather than of the surface's tokens. */
+  [data-au-surface="inverse"] .au-nav-item[aria-current="page"]::before {
+    border-left-color: var(--au-gold);
+  }
+
+  [data-au-surface="inverse"] .au-nav-item[aria-current="page"] .au-icon {
+    color: var(--au-gold);
+  }
+
+  /* In forced colours a browser may keep a colour set on the svg itself, here gold on white, so it follows the text. */
+  @media (forced-colors: active) {
+    [data-au-surface="inverse"] .au-nav-item[aria-current="page"] .au-icon {
+      color: inherit;
+    }
+  }
+
+  /* The ring inside the item, which an area that scrolls would cut outside it. It comes after the current page's outline,
+     and its colour is the surface's. */
+  .au-nav-item:focus-visible,
+  .au-nav-item[aria-current="page"]:focus-visible {
+    outline: 2px solid var(--au-focus-ring);
+    outline-offset: -2px;
+  }
+
+  /* In one line: each name whole, whatever scrolls being the app's or AppLayout's, and the titles only for screen readers. */
+  .au-nav-list[data-orientation="horizontal"] .au-nav-list-items,
+  .au-nav-list[data-orientation="responsive"] .au-nav-list-items {
+    flex-direction: row;
+  }
+
+  .au-nav-list[data-orientation="horizontal"] .au-nav-section,
+  .au-nav-list[data-orientation="responsive"] .au-nav-section {
+    position: relative;
+  }
+
+  .au-nav-list[data-orientation="horizontal"] .au-nav-section-label,
+  .au-nav-list[data-orientation="responsive"] .au-nav-section-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .au-nav-list[data-orientation="horizontal"] .au-nav-item,
+  .au-nav-list[data-orientation="responsive"] .au-nav-item {
+    white-space: nowrap;
+  }
+
+  .au-nav-list
+    > .au-nav-list-items
+    > .au-nav-section:first-child
+    .au-nav-section-label {
+    padding-top: 0;
+  }
+
+  /* The tokens' breakpoint-md: a media query cannot read a custom property, and a check holds them alike. */
+  @media (min-width: 768px) {
+    .au-nav-list[data-orientation="responsive"] .au-nav-list-items {
+      flex-direction: column;
+    }
+
+    .au-nav-list[data-orientation="responsive"] .au-nav-section-label {
+      position: static;
+      width: auto;
+      height: auto;
+      padding: var(--au-space-5) var(--au-space-3) var(--au-space-2);
+      overflow: visible;
+      clip-path: none;
+      white-space: normal;
+    }
+
+    .au-nav-list[data-orientation="responsive"]
+      > .au-nav-list-items
+      > .au-nav-section:first-child
+      .au-nav-section-label {
+      padding-top: 0;
+    }
+
+    .au-nav-list[data-orientation="responsive"] .au-nav-item {
+      white-space: normal;
+    }
+  }
+}

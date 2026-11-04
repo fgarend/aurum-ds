@@ -1,6 +1,6 @@
 # 0075. Sidebar
 
-- Status: Accepted
+- Status: Superseded by 0086 and 0087
 - Date: 2026-11-03
 
 ## Context

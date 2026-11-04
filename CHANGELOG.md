@@ -8,13 +8,14 @@ follow decision 0004.
 
 ### Added
 
-- `Sidebar`, `SidebarSection` and `SidebarItem`: the app's navigation, in
-  `AppLayout`'s `navigation`. Three variants, `inverse` by default, `surface` and
-  `canvas`; a `header` and a `footer` that take anything; and items with an icon
-  and an optional `end`. The items' area scrolls and brings the current page,
-  marked by `aria-current="page"` with a mark on its edge, into view; long names break into lines; below
-  768px it is a strip that scrolls. Wrap `SidebarItem` once with the router's
-  link, as `createLink(SidebarItem)` in TanStack Router.
+- `NavList`, `NavSection` and `NavItem`: the pieces of a navigation, which the app
+  puts where it wants, as its rail in `AppLayout`'s `navigation`. Items have an icon, a
+  name in text and an optional `end`, and the current page, marked by
+  `aria-current="page"`, has a mark on its edge. `orientation` is `vertical`,
+  `horizontal` or `responsive`. Wrap `NavItem` once with the router's link, as
+  `createLink(NavItem)` in TanStack Router.
+- `data-au-surface="inverse"`: on any element inside `AurumRoot`, it paints a dark
+  surface, where the same tokens take its values, so components follow with no prop.
 - `Tooltip`: the name of a control with no text of its own, on the screen, on
   hover and on keyboard focus. It wraps the control, which keeps its own name:
   `<Tooltip text="Notes"><button aria-label="Notes">…</button></Tooltip>`. It

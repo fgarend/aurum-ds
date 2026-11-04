@@ -21,7 +21,7 @@ function radius(name: string): number {
   return Number.parseInt(token.value, 10);
 }
 
-// The brand mark of Aurum's Sidebar: an A on a gold square, beside the name.
+// Aurum's brand mark: an A on a gold square, beside the name.
 const brand = `<span style="display: inline-flex; align-items: center; gap: 10px; font-weight: 600;">
   <span style="display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: ${radius("radius-md")}px; background: ${color("gold")}; color: ${color("on-gold")}; font-size: 13px;">A</span>
   Aurum DS

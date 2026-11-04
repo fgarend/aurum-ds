@@ -1,6 +1,6 @@
 # 0084. The mark of the Sidebar's current item
 
-- Status: Accepted
+- Status: Accepted; the mark is now on `NavItem` (decision 0086), its gold on a dark surface (decision 0087)
 - Date: 2026-11-03
 
 ## Context

@@ -31,9 +31,9 @@ Tokens are named here as `tokens.json` names them. In CSS, each token is a custo
 - Ground: `canvas` for the page, `surface` for cards, sidebar, dialogs and inputs, `surface-sunken` for tracks, tiles and recessed panels, `surface-hover` for hover.
 - Text: `ink` for content and headings, `ink-muted` for secondary text and labels, `ink-subtle` for metadata, dates and placeholders. All three pass 4.5:1 on `canvas`, `surface` and `surface-sunken`. `ink-disabled` is for disabled labels only.
 - Brand: `primary` (graphite) for primary buttons, selected states, checked controls and links; text on it is `on-primary`. `primary-soft` is a warm neutral tint for selected and informational backgrounds.
-- Accent: `gold` for the accent Button and IconButton (`variant="accent"`), the floating add button, the brand mark, the active icon in the inverse Sidebar, the active BottomNav pip, the one highlighted KPI tile and chart series 2. Text on gold is `on-gold`; gold as text is `gold-ink`. Keep gold to small areas — never a page or card background. `sand` is decorative only.
+- Accent: `gold` for the accent Button and IconButton (`variant="accent"`), the floating add button, the brand mark, the current icon in a navigation on the dark surface, the active BottomNav pip, the one highlighted KPI tile and chart series 2. Text on gold is `on-gold`; gold as text is `gold-ink`. Keep gold to small areas — never a page or card background. `sand` is decorative only.
 - Lines: `line` for card borders and dividers, `line-strong` for stronger dividers, `control-border` for the resting edge of fields and secondary buttons, `control-border-hover` for hover and checkbox edges.
-- `inverse` (graphite) is the one dark surface: the `inverse` Sidebar draws it as a quiet gradient (`inverse-top` → `inverse` → `inverse-bottom`, darkest at the top) with a faint gold glow behind the brand. Hover and active fills are translucent white so they follow the gradient. Text on it uses `on-inverse`, `on-inverse-muted`, `on-inverse-subtle`.
+- `inverse` (graphite) is the one dark surface: an area with `data-au-surface="inverse"` paints it, and inside it the same tokens take the values for it, so components follow with no prop. An app may paint it as a quiet gradient (`inverse-top` → `inverse` → `inverse-bottom`, darkest at the top). Hover and active fills are translucent white so they follow it. Finance and chart colours have no values for it yet.
 - Ground vs cards stay close (`canvas` → `surface` is ~1.05:1): separation comes from the `line` border, not from a contrasting background. Keep `canvas` light — no patterns or textures on it.
 - Finance semantics, each with a `*-soft` tint for tiles, chips and alerts:
   - `income` — money in, positive change, success (`success` is an alias). A clear green. Green and red are told apart by hue, so every amount and delta also carries its + / − sign or arrow — never colour alone.
@@ -47,7 +47,7 @@ Tokens are named here as `tokens.json` names them. In CSS, each token is a custo
 
 ### People and household
 
-- An app can hold several people (e.g. a couple) plus a household view of everyone together. A switch of people (“Visão”), a component of its own in the Sidebar's `footer` or the top bar, chooses whose data every screen shows; shared registries (institutions, issuers, assets, categories) ignore it.
+- An app can hold several people (e.g. a couple) plus a household view of everyone together. A switch of people (“Visão”), a component of its own in the navigation's area or the top bar, chooses whose data every screen shows; shared registries (institutions, issuers, assets, categories) ignore it.
 - Each person gets one `tone` (1–8, from the category palette) used everywhere: Avatar, the owner marker on TransactionRow, StatStrip/StatCard `breakdown`. Never use `income`/`expense` or `gold` as a person colour.
 - In the household view: show owner markers on mixed lists, a per-person `breakdown` under KPIs, and tag transfers between people as internal (they are left out of totals). In a single-person view hide owner markers.
 - Joint accounts belong to several people with shares; individual views count the person's share, the household view counts the account once.
@@ -65,7 +65,7 @@ Tokens are named here as `tokens.json` names them. In CSS, each token is a custo
 - 4px base: `space-1` 4 · `space-2` 8 · `space-3` 12 · `space-4` 16 · `space-5` 20 · `space-6` 24 · `space-8` 32 · `space-10` 40 · `space-12` 48 · `space-16` 64.
 - Pages are built from `Section`s: a section's title, subtitle, actions and footer sit on `canvas`, outside the box; the content itself stays in `Card`s (KPI cards, row lists, budget bars, charts). The card holds only data — never its own heading. Sections are `space-12` apart on desktop (`space-8` on mobile).
 - Card padding `space-5`; gap between cards `space-4` (mobile) / `space-6` (desktop); page padding `space-4` (mobile) / `space-10` (desktop).
-- App shell: `Sidebar` (`sidebar-width`, 248px; `variant="inverse"` graphite is the default look for this palette — see its guide) + content column up to `content-max` (1360px), centred, in `AppLayout`. Below `breakpoint-md` (768px) the Sidebar is a strip across the top, which scrolls, and cards stack.
+- App shell: `AppLayout`, with the app's rail in its `navigation` (`sidebar-width`, 248px, usually on the dark surface) built with `NavList`, and a content column up to `content-max` (1360px), centred. Below `breakpoint-md` (768px) the navigation sits at the top, where a `NavList` with `orientation="responsive"` is one line that scrolls, and cards stack.
 - Controls are `control-sm` 32, `control-md` 40 (default) or `control-lg` 48 tall — nothing in between.
 
 ### Shape, borders, elevation
@@ -103,11 +103,11 @@ The catalogue below is the artifact's. This package builds it in React 19 (decis
 - **Forms** — `TextField`, `AmountInput`, `Select`, `Checkbox`, `Switch`, `SegmentedControl`
 - **Layout & display** — `AppLayout`, `Section`, `Card`, `Badge`, `Avatar`, `Icon`
 - **Feedback** — `Alert`, `ProgressBar`, `EmptyState`, `Dialog`
-- **Navigation** — `Sidebar`, `BottomNav`
+- **Navigation** — `NavList`, `NavSection`, `NavItem`, `BottomNav`
 - **Finance** — `Amount`, `StatCard`, `StatStrip`, `Delta`, `TransactionRow`, `BudgetBar`, `AllocationBar`, `Sparkline`
 - Helpers — `Aurum.formatMoney(value, {locale, currency, signed})`, `Aurum.formatPercent(value, {locale, decimals})`.
 
-Typical dashboard: `Sidebar` · page title · a `Section` (title, period switch, “updated” footer) over a `StatStrip` (`layout="side"`, solid circular icons, balance highlighted) or a grid of four `StatCard`s (when each needs a context footer) · a `Section` over a flush `Card` of `TransactionRow` with a “View all” footer · `Section`s over a `Card` of `BudgetBar`s and a `Card` with the `AllocationBar`.
+Typical dashboard: a rail with `NavList` · page title · a `Section` (title, period switch, “updated” footer) over a `StatStrip` (`layout="side"`, solid circular icons, balance highlighted) or a grid of four `StatCard`s (when each needs a context footer) · a `Section` over a flush `Card` of `TransactionRow` with a “View all” footer · `Section`s over a `Card` of `BudgetBar`s and a `Card` with the `AllocationBar`.
 
 ## Using Aurum in a project
 

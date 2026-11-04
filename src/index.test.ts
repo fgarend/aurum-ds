@@ -9,9 +9,9 @@ it("exports exactly the public API", async () => {
     "AppLayout",
     "AurumRoot",
     "Icon",
-    "Sidebar",
-    "SidebarItem",
-    "SidebarSection",
+    "NavItem",
+    "NavList",
+    "NavSection",
     "Tooltip",
   ]);
 });

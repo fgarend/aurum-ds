@@ -340,6 +340,25 @@ const InAScrollingArea: Story = {
   },
 };
 
+// On a dark surface it turns light by itself, so it never melts into what is around it (decision 0087).
+const OnADarkSurface: Story = {
+  tags: ["visual"],
+  render: (args) => (
+    <div data-au-surface="inverse">
+      <Opened {...args} />
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const popup = canvasElement.querySelector(".au-tooltip") as HTMLElement;
+
+    await waitFor(() => expect(isOpen(popup)).toBe(true));
+    await expect(getComputedStyle(popup).backgroundColor).toBe(
+      "rgb(244, 244, 242)",
+    );
+    await expect(getComputedStyle(popup).color).toBe("rgb(48, 51, 56)");
+  },
+};
+
 // It draws no box around the control, so the control lays out as if it were not there.
 const LeavesTheLayout: Story = {
   args: { text: "Wide" },
@@ -370,6 +389,7 @@ export {
   LeavesTheLayout,
   Left,
   LongText,
+  OnADarkSurface,
   Right,
   Touch,
 };

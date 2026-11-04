@@ -17,6 +17,9 @@ type Story = StoryObj<typeof meta>;
 const canvas = "rgb(250, 249, 246)";
 const ink = "rgb(35, 38, 43)";
 const focusRing = "rgb(43, 46, 51)";
+const inverse = "rgb(48, 51, 56)";
+const onInverse = "rgb(244, 244, 242)";
+const onInverseSubtle = "rgb(182, 185, 189)";
 // Browsers write a family name with or without quotes: Firefox keeps them, Chromium and WebKit drop them.
 const quotes = /"/gu;
 const textStyles = tokens.type.groups.flatMap((group) => group.styles);
@@ -181,10 +184,44 @@ const WithTailwind: Story = {
   },
 };
 
+// An area on the dark surface: it paints itself graphite, and inside it the same tokens take the values for it, so whatever
+// is inside follows with no prop of its own (decision 0087).
+const DarkSurface: Story = {
+  tags: ["visual"],
+  render: () => (
+    <div
+      data-au-surface="inverse"
+      data-testid="area"
+      style={{ padding: "var(--au-space-6)" }}
+    >
+      <p style={{ color: "var(--au-ink)" }}>On the dark surface</p>
+      <p style={{ color: "var(--au-ink-muted)" }}>Secondary text</p>
+      <p style={{ color: "var(--au-ink-subtle)" }}>Metadata</p>
+    </div>
+  ),
+  play: async ({ canvas: screen }) => {
+    const area = screen.getByTestId("area");
+    const style = getComputedStyle(area);
+
+    await expect(style.backgroundColor).toBe(inverse);
+    await expect(style.color).toBe(onInverse);
+    await expect(style.colorScheme).toBe("dark");
+    await expect(style.getPropertyValue("--au-ink").trim()).toBe("#f4f4f2");
+    await expect(style.getPropertyValue("--au-primary").trim()).toBe("#f4f4f2");
+    await expect(style.getPropertyValue("--au-on-primary").trim()).toBe(
+      "#303338",
+    );
+    await expect(getComputedStyle(screen.getByText("Metadata")).color).toBe(
+      onInverseSubtle,
+    );
+  },
+};
+
 export default meta;
 export {
   AppCss,
   ClassAlone,
+  DarkSurface,
   Default,
   Focus,
   Fonts,

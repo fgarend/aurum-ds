@@ -1,6 +1,6 @@
 # 0080. The contrast of the tokens
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0087: the Sidebar and its glow are gone
 - Date: 2026-11-03
 
 ## Context

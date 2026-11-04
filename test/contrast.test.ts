@@ -107,23 +107,16 @@ const textPairs: [string, string][] = [
 ];
 
 const focusPairs = pairs(["focus-ring"], grounds);
-// The mark beside the Sidebar's current item, on the current item's fill in each light variant (decision 0084).
+// The mark beside a navigation's current item, on its fill and on the surface (decision 0084).
 const markPairs: [string, string][] = pairs(
   ["primary"],
   ["primary-soft", "surface"],
 );
 
-// The graphite: its three stops, the Sidebar's gold glow at its strongest (Sidebar.css), and the translucent fills over
-// each.
+// The dark surface (decision 0087), which an app may paint as any of the graphite's three stops, and the translucent fills
+// over each.
 const graphite = ["inverse-top", "inverse", "inverse-bottom"].map(colour);
-const glowStrength = 0.07;
-const rail = [
-  ...graphite,
-  over(
-    [...colour("gold").slice(0, 3), glowStrength] as unknown as Colour,
-    colour("inverse-top"),
-  ),
-];
+const rail = graphite;
 const railActive = graphite.map((stop) => over(colour("inverse-active"), stop));
 const railHover = graphite.map((stop) => over(colour("inverse-hover"), stop));
 

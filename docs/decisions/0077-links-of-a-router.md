@@ -1,6 +1,6 @@
 # 0077. A router's links
 
-- Status: Accepted
+- Status: Accepted; `SidebarItem` is now `NavItem` (decision 0086)
 - Date: 2026-11-03
 
 ## Context

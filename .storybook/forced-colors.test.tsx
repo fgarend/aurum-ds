@@ -29,9 +29,9 @@ function withoutEdge(root: Element): string[] {
     .map((element) => element.className.toString());
 }
 
-// The Sidebar's mark, drawn as a border so it stays (decision 0084).
+// A navigation's mark, drawn as a border so it stays (decision 0084).
 function withoutMark(root: Element): string[] {
-  return [...root.querySelectorAll('.au-sidebar-item[aria-current="page"]')]
+  return [...root.querySelectorAll('.au-nav-item[aria-current="page"]')]
     .filter((item) => {
       const { borderLeftColor, borderLeftStyle } = getComputedStyle(
         item,
