@@ -16,3 +16,4 @@ export {
   SidebarSection,
   type SidebarSectionProps,
 } from "./components/Sidebar/Sidebar.js";
+export { Tooltip, type TooltipProps } from "./components/Tooltip/Tooltip.js";

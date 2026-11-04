@@ -12,5 +12,6 @@ it("exports exactly the public API", async () => {
     "Sidebar",
     "SidebarItem",
     "SidebarSection",
+    "Tooltip",
   ]);
 });

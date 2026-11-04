@@ -1,6 +1,6 @@
 # Roadmap
 
-**Now:** 7.40.
+**Now:** 7.45.
 
 Everything planned, in order. Each item is one small delivery, usually one
 commit, and leaves the repository working. Every tool or standard is decided
@@ -63,7 +63,7 @@ comparison with its reference screenshot (decisions 0033 and 0035), the
 guidelines' Components section (decision 0031), the changelog, and a
 release.
 
-Done: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.13, 7.19, 7.20, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27, 7.28, 7.29, 7.31, 7.32, 7.33, 7.34, 7.35, 7.36.
+Done: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.13, 7.19, 7.20, 7.21, 7.22, 7.23, 7.24, 7.25, 7.26, 7.27, 7.28, 7.29, 7.31, 7.32, 7.33, 7.34, 7.35, 7.36, 7.43.
 
 Dropped: 7.30, the gallery's title in the browser's tab. Storybook writes
 "⋅ Storybook" after each story's name in its own code, with no setting, and
@@ -72,14 +72,30 @@ mean a script fighting Storybook at every navigation, for a tab's text, while
 the gallery already shows Aurum's brand mark. 7.14, the Sidebar in the shell:
 it is the Sidebar's own item, in the `navigation` of `AppLayout`.
 
-- **7.40 · Collapsing the Sidebar.** First, as a prop of its own: the
+- **7.45 · Accessibility across the system.** First. A decision with the target, WCAG 2.2
+  AA, which no decision states yet. A fixed list in the docs, of the criteria and
+  corner cases each component's proposal and report goes through. A test of the
+  tokens' contrast, since axe reports text on the graphite gradient as incomplete
+  and does not fail. Tests of forced colours and text spacing, if Playwright can
+  emulate them in stories. A manual script with VoiceOver and zoom, run by the
+  user. Each fix in its own commit: `AppLayout`'s sticky top bar covering focus
+  (2.4.11) and a link to skip the navigation (2.4.1); the Sidebar's current item,
+  whose fill is 1.2:1 in `surface` and `canvas` beside a subtle weight (1.4.11).
+  `control-border`, at 1.54:1, is decided in 7.16.
+- **7.40 · Collapsing the Sidebar.** After the Tooltip, as a prop of its own: the
   72px rail of icons, each one's name beside it on hover and focus, sections as
   hairlines and an item's `end` hidden, with what to do with the reference's
-  gold dot and the compact switch of people (7.39) decided there. All of the prototype's screens have it; the app does
-  not ask for it yet.
+  gold dot and the compact switch of people (7.39) decided there. Each name in
+  a Tooltip (decision 0078), far enough to clear the graphite rail. All of the prototype's screens have it; the app does
+  not ask for it yet. Its release also brings the Sidebar, which has waited for
+  it.
 - **7.42 · Sections that open and close, and items within items.** After 7.40,
   as props of `SidebarSection` and `SidebarItem`: W3C's disclosure pattern, with
   a closed section opening when its item is the current one.
+- **7.44 · The Sidebar's name.** Sidebar, or a name for what it is rather than
+  where it sits, since it is a navigation and a strip on a small screen. Raised
+  by the user. Before the release that first brings it, while renaming breaks
+  nothing.
 - **7.7 · Badge.** The shell's environment and People's default holder. It also
   works on the graphite Sidebar, in a `SidebarItem`'s `end`, as its counts.
 - **7.15 · Section and Card.** People.
@@ -134,9 +150,6 @@ No order between them; each becomes items when its time comes.
 - **Below `breakpoint-md` in the checks.** `AppLayout` has no check of its stacking
   there, and the screenshots run at one width, so the Sidebar's strip has checks
   but no screenshot.
-- **A list of corner cases for every component.** Empty, too much, long text,
-  narrow and short screens, keyboard and forced colours, in the docs, from the
-  Sidebar's map (decision 0075).
 - **Image vulnerability scan.** The system packages inside the images (the
   Debian of the Node image), which `make audit` does not cover.
 - **Update bot.** Renovate or Dependabot opening pull requests, with the CI;

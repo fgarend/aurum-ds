@@ -15,6 +15,11 @@ follow decision 0004.
   marked by `aria-current="page"`, into view; long names break into lines; below
   768px it is a strip that scrolls. Wrap `SidebarItem` once with the router's
   link, as `createLink(SidebarItem)` in TanStack Router.
+- `Tooltip`: the name of a control with no text of its own, on the screen, on
+  hover and on keyboard focus. It wraps the control, which keeps its own name:
+  `<Tooltip text="Notes"><button aria-label="Notes">…</button></Tooltip>`. It
+  closes on Escape, and does not open on touch. It needs the browser's native
+  `popover`; without it, no tooltip opens.
 
 ## [0.2.0] - 2026-11-03
 

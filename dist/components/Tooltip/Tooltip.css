@@ -1,0 +1,34 @@
+/* The Tooltip (decision 0078). Aurum's layers, among Tailwind's (decisions 0053 and 0072). */
+@layer theme, base, au.base, au.components, components, utilities;
+
+@layer au.components {
+  /* It draws no box, so the control lays out as if it were not there. */
+  .au-tooltip-anchor {
+    /* biome-ignore lint/suspicious/useBaseline: every browser lays it out; Baseline holds it back over elements with a
+       role losing it for screen readers, and this span has none (decision 0070). */
+    display: contents;
+  }
+
+  /* Hidden unless open, also in a browser without popovers, where it never opens (decision 0078). */
+  .au-tooltip {
+    display: none;
+    position: fixed;
+    inset: auto;
+    width: max-content;
+    max-width: calc(var(--au-control-lg) * 6);
+    margin: 0;
+    padding: var(--au-space-1) var(--au-space-2);
+    border: 0;
+    border-radius: var(--au-radius-md);
+    background: var(--au-primary);
+    box-shadow: var(--au-shadow-md);
+    color: var(--au-on-primary);
+    overflow-wrap: anywhere;
+  }
+
+  /* biome-ignore lint/suspicious/useBaseline: newly available only; without it the rule falls away, and the tooltip stays
+     hidden over a control that has its own name (decision 0078). */
+  .au-tooltip:popover-open {
+    display: block;
+  }
+}

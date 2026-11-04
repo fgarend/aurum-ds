@@ -104,9 +104,10 @@ screen's own. Muted text, tabular figures and code already exist as the
 By what the app waits for: its shell, then People, its first screen after it
 (the app's order: the shell, People, Position, Notes, Note). Each comes after
 those it uses, and each is one item of roadmap milestone 7 and ends in a
-release. Done: Icon, AppLayout, AurumRoot, Sidebar.
+release. Done: Icon, AppLayout, AurumRoot, Sidebar, Tooltip.
 
-1. Collapsing the Sidebar, which the app does not ask for yet
+1. Collapsing the Sidebar, which uses Tooltip and which the app does not ask
+   for yet
 2. Badge: the shell's environment and People's default holder
 3. Section and Card: People
 4. Table: People
