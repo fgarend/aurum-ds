@@ -60,7 +60,7 @@ it is run by hand.
 | 2.4.5 Multiple Ways                             | app            |                                                                                                      |
 | 2.4.6 Headings and Labels                       | app            |                                                                                                      |
 | 2.4.7 Focus Visible                             | story, tokens  | The ring, computed, and its contrast                                                                 |
-| 2.4.11 Focus Not Obscured (Minimum)             | coming         | `AppLayout`'s sticky top bar (7.45)                                                                  |
+| 2.4.11 Focus Not Obscured (Minimum)             | story          | Nothing in Aurum stays over the content: the top bar scrolls away (decision 0082)                    |
 | 2.5.1 Pointer Gestures                          | none yet       |                                                                                                      |
 | 2.5.2 Pointer Cancellation                      | none yet       | Links and buttons act natively                                                                       |
 | 2.5.3 Label in Name                             | app            | The visible name and the accessible one                                                              |

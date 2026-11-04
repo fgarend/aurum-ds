@@ -73,9 +73,6 @@ const Default: Story = {
     ).toBe(navigationWidth);
     await expect(screen.getByRole("main")).toContainElement(first);
     await expect(screen.getByRole("banner")).toContainElement(bar);
-    await expect(getComputedStyle(screen.getByRole("banner")).position).toBe(
-      "sticky",
-    );
     await expect(getComputedStyle(screen.getByRole("main")).rowGap).toBe(
       sectionGap,
     );
@@ -114,5 +111,36 @@ const WideScreen: Story = {
   },
 };
 
+// The top bar scrolls away with the page, so it covers nothing a keyboard reaches (WCAG 2.4.11, decision 0082), and takes
+// no height from a person at a high zoom. Only a test: it shows nothing the other examples do not.
+const TopBarScrollsAway: Story = {
+  tags: ["!dev"],
+  args: {
+    navigation,
+    topBar,
+    children: (
+      <>
+        <div style={{ height: 1000 }} />
+        <button type="button">Reached by keyboard</button>
+        <div style={{ height: 3000 }} />
+      </>
+    ),
+  },
+  play: async ({ canvas: screen }) => {
+    const button = screen.getByRole("button", {
+      name: "Reached by keyboard",
+    });
+    const bar = screen.getByRole("banner");
+
+    window.scrollTo({ top: 1000, behavior: "instant" });
+    button.focus();
+
+    await expect(button).toHaveFocus();
+    await expect(bar.getBoundingClientRect().bottom).toBeLessThanOrEqual(0);
+    await expect(button.getBoundingClientRect().top).toBeGreaterThanOrEqual(0);
+    window.scrollTo({ top: 0, behavior: "instant" });
+  },
+};
+
 export default meta;
-export { Default, WideScreen, WithoutTopBar };
+export { Default, TopBarScrollsAway, WideScreen, WithoutTopBar };

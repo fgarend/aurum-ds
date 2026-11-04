@@ -73,8 +73,7 @@ the gallery already shows Aurum's brand mark. 7.14, the Sidebar in the shell:
 it is the Sidebar's own item, in the `navigation` of `AppLayout`.
 
 - **7.45 · Accessibility across the system.** First, closing what
-  `docs/accessibility.md` marks as coming, one commit each. `AppLayout`'s sticky top bar covering focus
-  (2.4.11) and a link to skip the navigation (2.4.1). The Sidebar's current item,
+  `docs/accessibility.md` marks as coming, one commit each. A link to skip the navigation in `AppLayout` (2.4.1). The Sidebar's current item,
   whose fill is 1.2:1 in `surface` and `canvas` beside a subtle weight (1.4.11). A
   manual script with VoiceOver and zoom, run by the user. `control-border`, at
   1.54:1, is decided in 7.16.
@@ -149,6 +148,16 @@ No order between them; each becomes items when its time comes.
 - **Charts' colours.** `chart-2`, `chart-3` and `chart-5` are below the 3:1 that
   WCAG 1.4.11 asks of a chart's marks on `surface` (decision 0080). With the first
   chart.
+- **A top bar that stays in view.** As an option of `AppLayout`, measuring its height
+  for `scroll-padding` so it covers no focus, if the app misses it (decision 0082).
+- **The browsers Aurum supports.** Nothing states them, while `popover` needs
+  Safari 17 and iOS 18.3, and `:has` and `color-mix` have floors of their own.
+- **One place for the stories' list.** Three tests in `.storybook/` repeat the same
+  glob and `composeStories`.
+- **The top bar as a `header`.** It is exposed as the page's banner landmark, for a
+  path and filters, while the brand is in the navigation. To check if it belongs.
+- **The Sidebar's hidden titles repeat `.au-sr`.** The strip hides them with the same
+  declarations as the base class, which a media query cannot apply.
 - **Image vulnerability scan.** The system packages inside the images (the
   Debian of the Node image), which `make audit` does not cover.
 - **Update bot.** Renovate or Dependabot opening pull requests, with the CI;

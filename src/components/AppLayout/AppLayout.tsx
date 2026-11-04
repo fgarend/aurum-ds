@@ -4,7 +4,7 @@ import "./AppLayout.css";
 interface AppLayoutProps extends ComponentProps<"div"> {
   // The app's navigation, at the side, as wide as it draws itself; at the top on a small screen.
   navigation?: ReactNode;
-  // What stays at the top of the content, such as the page's path and filters; without it, no bar is drawn.
+  // What opens the content, such as the page's path and filters; without it, no bar is drawn.
   topBar?: ReactNode;
 }
 

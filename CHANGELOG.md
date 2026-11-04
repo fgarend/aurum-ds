@@ -21,6 +21,12 @@ follow decision 0004.
   closes on Escape, and does not open on touch. It needs the browser's native
   `popover`; without it, no tooltip opens.
 
+### Changed
+
+- `AppLayout`'s `topBar` scrolls away with the page instead of staying in view: it
+  hid a control reached by keyboard (WCAG 2.4.11) and took 37% of the height at a
+  zoom of 400%. The app's path and filters leave the screen as the page scrolls.
+
 ## [0.2.0] - 2026-11-03
 
 ### Removed

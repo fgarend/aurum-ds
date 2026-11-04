@@ -1,6 +1,6 @@
 # 0073. AppLayout
 
-- Status: Accepted
+- Status: Accepted; partly superseded by 0082: the top bar scrolls away
 - Date: 2026-11-03
 
 ## Context

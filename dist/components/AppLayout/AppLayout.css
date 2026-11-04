@@ -27,9 +27,6 @@
   }
 
   .au-app-layout-top-bar {
-    position: sticky;
-    top: 0;
-    z-index: 1;
     padding-block: var(--au-space-3);
     border-bottom: 1px solid var(--au-line);
     background: var(--au-canvas);
