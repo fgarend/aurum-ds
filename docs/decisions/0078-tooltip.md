@@ -35,6 +35,8 @@ was neither cut by an area that scrolls nor covered by a sticky bar's z-index.
 - **Opening:** 150ms on hover, the guidelines' duration, and at once on keyboard
   focus. It closes 100ms after the pointer leaves, time to cross onto it, and at
   once on Escape, click, blur, scroll or resize. A touch does not open it.
+- **With no text it never opens**, and draws the same elements, so the control is not
+  remounted when the text comes and goes.
 - **`side`**, `top` by default, goes to the opposite side when it does not fit,
   and slides along the other axis until it does. A long name breaks into lines.
 - **One look**, `primary` and `on-primary`, with no variants or animation. The

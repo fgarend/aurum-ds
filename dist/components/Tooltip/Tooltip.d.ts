@@ -5,6 +5,6 @@ interface TooltipProps extends Omit<ComponentProps<"span">, "children"> {
     side?: Side;
     children: ReactElement;
 }
-declare function Tooltip({ text, children, ...rest }: TooltipProps): ReactElement;
+declare function Tooltip({ text, side, children, className, ref, ...rest }: TooltipProps): ReactElement;
 export type { TooltipProps };
 export { Tooltip };

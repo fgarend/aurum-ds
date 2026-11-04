@@ -46,7 +46,10 @@ function place(popup, control, wanted) {
     popup.style.left = `${within(final.left, size.width, clientWidth)}px`;
     popup.style.top = `${within(final.top, size.height, clientHeight)}px`;
 }
-function TooltipAnchor({ text, side = "top", children, className, ref, ...rest }) {
+// The name of a control with no text of its own, on the screen, on hover and on keyboard focus (decision 0078). It is
+// only shown: the control keeps its own name, so it reads the same to a screen reader, and on touch, without it. With no
+// text it never opens, and the control stays where it is if the text comes and goes.
+function Tooltip({ text, side = "top", children, className, ref, ...rest }) {
     const anchor = useRef(null);
     const popup = useRef(null);
     const timer = useRef(undefined);
@@ -57,7 +60,7 @@ function TooltipAnchor({ text, side = "top", children, className, ref, ...rest }
         const element = popup.current;
         // Every browser that runs the tests has popovers. Without them the control has no tooltip, and needs none for its name.
         /* istanbul ignore next -- @preserve: only a browser without popovers takes the other way. */
-        if (!(open && "showPopover" in element)) {
+        if (!(open && text !== "" && "showPopover" in element)) {
             return;
         }
         element.showPopover();
@@ -78,7 +81,7 @@ function TooltipAnchor({ text, side = "top", children, className, ref, ...rest }
             window.removeEventListener("resize", close);
             element.hidePopover();
         };
-    }, [open, side]);
+    }, [open, side, text]);
     function later(next, delay) {
         clearTimeout(timer.current);
         timer.current = setTimeout(() => setOpen(next), delay);
@@ -103,10 +106,5 @@ function TooltipAnchor({ text, side = "top", children, className, ref, ...rest }
         }, ref: anchor, children: [children, _jsx("span", { ...rest, "aria-hidden": "true", className: className === undefined
                     ? "au-tooltip au-text-label"
                     : `au-tooltip au-text-label ${className}`, popover: "manual", ref: popup, children: text })] }));
-}
-// The name of a control with no text of its own, on the screen, on hover and on keyboard focus (decision 0078). It is
-// only shown: the control keeps its own name, so it reads the same to a screen reader, and on touch, without it.
-function Tooltip({ text, children, ...rest }) {
-    return text === "" ? (children) : (_jsx(TooltipAnchor, { ...rest, text: text, children: children }));
 }
 export { Tooltip };

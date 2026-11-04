@@ -6,6 +6,7 @@ import {
   type ReactNode,
   useEffect,
   useRef,
+  useState,
 } from "react";
 import { expect, fireEvent, userEvent, waitFor } from "storybook/test";
 import { Icon } from "../Icon/Icon.js";
@@ -264,7 +265,34 @@ const LongText: Story = {
   },
 };
 
-// With no text there is nothing to show: nothing is drawn, and the control works as ever.
+function Toggling(): ReactNode {
+  const [named, setNamed] = useState(true);
+  return (
+    <Tooltip text={named ? "Notes" : ""}>
+      <button aria-label="Notes" onClick={() => setNamed(!named)} type="button">
+        <Icon icon={FileText} />
+      </button>
+    </Tooltip>
+  );
+}
+
+// Its text coming and going, as on a rail that collapses, leaves the control where it is, with its focus and its state.
+const TextComesAndGoes: Story = {
+  tags: ["!dev"],
+  render: () => <Toggling />,
+  play: async ({ canvas: screen }) => {
+    const button = screen.getByRole("button", { name: "Notes" });
+
+    await userEvent.click(button);
+    await expect(screen.getByRole("button", { name: "Notes" })).toBe(button);
+    await expect(button).toHaveFocus();
+    await userEvent.click(button);
+    await expect(screen.getByRole("button", { name: "Notes" })).toBe(button);
+    await expect(button).toHaveFocus();
+  },
+};
+
+// With no text there is nothing to show: it never opens, and the control works as ever.
 const EmptyText: Story = {
   args: { text: "" },
   render: (args) => (
@@ -275,7 +303,10 @@ const EmptyText: Story = {
   play: async ({ canvas: screen, canvasElement }) => {
     await userEvent.tab();
     await expect(screen.getByRole("button", { name: "Notes" })).toHaveFocus();
-    await expect(canvasElement.querySelector(".au-tooltip")).toBeNull();
+    await pause(hoverDelay);
+    await expect(isOpen(canvasElement.querySelector(".au-tooltip"))).toBe(
+      false,
+    );
   },
 };
 
@@ -391,5 +422,6 @@ export {
   LongText,
   OnADarkSurface,
   Right,
+  TextComesAndGoes,
   Touch,
 };

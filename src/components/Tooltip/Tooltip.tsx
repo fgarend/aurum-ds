@@ -79,7 +79,10 @@ function place(popup: HTMLElement, control: Element, wanted: Side): void {
   popup.style.top = `${within(final.top, size.height, clientHeight)}px`;
 }
 
-function TooltipAnchor({
+// The name of a control with no text of its own, on the screen, on hover and on keyboard focus (decision 0078). It is
+// only shown: the control keeps its own name, so it reads the same to a screen reader, and on touch, without it. With no
+// text it never opens, and the control stays where it is if the text comes and goes.
+function Tooltip({
   text,
   side = "top",
   children,
@@ -99,7 +102,7 @@ function TooltipAnchor({
     const element = popup.current as HTMLSpanElement;
     // Every browser that runs the tests has popovers. Without them the control has no tooltip, and needs none for its name.
     /* istanbul ignore next -- @preserve: only a browser without popovers takes the other way. */
-    if (!(open && "showPopover" in element)) {
+    if (!(open && text !== "" && "showPopover" in element)) {
       return;
     }
     element.showPopover();
@@ -120,7 +123,7 @@ function TooltipAnchor({
       window.removeEventListener("resize", close);
       element.hidePopover();
     };
-  }, [open, side]);
+  }, [open, side, text]);
 
   function later(next: boolean, delay: number): void {
     clearTimeout(timer.current);
@@ -172,18 +175,6 @@ function TooltipAnchor({
         {text}
       </span>
     </span>
-  );
-}
-
-// The name of a control with no text of its own, on the screen, on hover and on keyboard focus (decision 0078). It is
-// only shown: the control keeps its own name, so it reads the same to a screen reader, and on touch, without it.
-function Tooltip({ text, children, ...rest }: TooltipProps): ReactElement {
-  return text === "" ? (
-    children
-  ) : (
-    <TooltipAnchor {...rest} text={text}>
-      {children}
-    </TooltipAnchor>
   );
 }
 
