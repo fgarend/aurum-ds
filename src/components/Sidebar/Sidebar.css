@@ -145,6 +145,15 @@
     color: var(--au-gold);
   }
 
+  /* In forced colours a browser may keep a colour set on the svg itself, here gold on white, so it follows the text. */
+  @media (forced-colors: active) {
+    .au-sidebar[data-variant="inverse"]
+      .au-sidebar-item[aria-current="page"]
+      .au-icon {
+      color: inherit;
+    }
+  }
+
   /* The ring inside the item, which the scrolling area would cut outside it. */
   .au-sidebar[data-variant] .au-sidebar-item:focus-visible {
     outline: 2px solid var(--au-focus-ring);

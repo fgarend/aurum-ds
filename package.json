@@ -15,7 +15,7 @@
     "types": "tsc && tsc -p tsconfig.node.json && tsc -p tsconfig.browser.json",
     "test": "vitest run --project node",
     "test-repository": "vitest run --project repository",
-    "test-browser": "vitest run --project visual --project storybook",
+    "test-browser": "vitest run --project visual --project storybook --project text-spacing --project forced-colors",
     "coverage": "vitest run --coverage --project node --project storybook --project visual",
     "pack": "node scripts/check-package.ts /pnpm-store",
     "check-release": "node scripts/check-release.ts",

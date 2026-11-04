@@ -19,6 +19,8 @@
     margin: 0;
     padding: var(--au-space-1) var(--au-space-2);
     border: 0;
+    /* Transparent, it is the edge that shows where forced colours remove the fill. */
+    outline: 1px solid transparent;
     border-radius: var(--au-radius-md);
     background: var(--au-primary);
     box-shadow: var(--au-shadow-md);

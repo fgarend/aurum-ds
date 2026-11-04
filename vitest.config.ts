@@ -10,6 +10,9 @@ const repositoryChecks = "test/**/*.test.ts";
 // One visual test compares every story tagged visual with its screenshot (decision 0060). It imports the stories,
 // so it gets what every story runs in.
 const storyScreenshots = ".storybook/visual.test.tsx";
+// Two more that go through every story, for what a person's settings change (decision 0081).
+const storyTextSpacing = ".storybook/text-spacing.test.tsx";
+const storyForcedColors = ".storybook/forced-colors.test.tsx";
 const storySetup = ".storybook/vitest.setup.ts";
 const pixels = /^(?<number>\d+)px$/u;
 
@@ -111,6 +114,29 @@ const config: ViteUserConfig = defineConfig({
           name: "visual",
           include: [storyScreenshots],
           browser: chromium(),
+          setupFiles: [storySetup],
+        },
+      },
+      {
+        test: {
+          name: "text-spacing",
+          include: [storyTextSpacing],
+          browser: everyBrowser(),
+          setupFiles: [storySetup],
+        },
+      },
+      {
+        test: {
+          name: "forced-colors",
+          include: [storyForcedColors],
+          browser: {
+            ...inBrowser,
+            provider: playwright({
+              contextOptions: { forcedColors: "active" },
+            }),
+            // WebKit's emulation answers the media query but forces no colours.
+            instances: [{ browser: "chromium" }, { browser: "firefox" }],
+          },
           setupFiles: [storySetup],
         },
       },

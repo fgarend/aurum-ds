@@ -73,8 +73,7 @@ the gallery already shows Aurum's brand mark. 7.14, the Sidebar in the shell:
 it is the Sidebar's own item, in the `navigation` of `AppLayout`.
 
 - **7.45 · Accessibility across the system.** First, closing what
-  `docs/accessibility.md` marks as coming, one commit each. Tests of forced colours and text spacing, if Playwright can
-  emulate them in the three browsers. `AppLayout`'s sticky top bar covering focus
+  `docs/accessibility.md` marks as coming, one commit each. `AppLayout`'s sticky top bar covering focus
   (2.4.11) and a link to skip the navigation (2.4.1). The Sidebar's current item,
   whose fill is 1.2:1 in `surface` and `canvas` beside a subtle weight (1.4.11). A
   manual script with VoiceOver and zoom, run by the user. `control-border`, at

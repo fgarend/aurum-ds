@@ -19,6 +19,7 @@ it is run by hand.
   reports as incomplete, such as text on a gradient, does not fail.
 - **story:** a check in a story's `play` function.
 - **tokens:** `test/contrast.test.ts`, on the palette's pairs (decision 0080).
+- **every story:** text spacing and forced colours, on all stories (decision 0081).
 - **script:** by hand, and it has not been run yet (item 7.45).
 - **coming:** a check planned, with its item.
 - **app:** the app's to meet, as it depends on its words or its content.
@@ -44,7 +45,7 @@ it is run by hand.
 | 1.4.5 Images of Text                            | app            |                                                                                                      |
 | 1.4.10 Reflow                                   | story, script  | The Sidebar at 320px; `AppLayout` has no check there (roadmap)                                       |
 | 1.4.11 Non-text Contrast                        | tokens, coming | Focus rings and the current icon; the Sidebar's current item (7.45); `control-border` (7.16); charts |
-| 1.4.12 Text Spacing                             | coming         | Item 7.45                                                                                            |
+| 1.4.12 Text Spacing                             | every story    | All three browsers                                                                                   |
 | 1.4.13 Content on Hover or Focus                | story          | `Tooltip`                                                                                            |
 | 2.1.1 Keyboard                                  | story          | Each interactive component                                                                           |
 | 2.1.2 No Keyboard Trap                          | story, script  | Moving on by Tab in a story                                                                          |
@@ -91,4 +92,5 @@ A component's stories show what it does in each of these that applies:
 - **Long text:** a long name, a word with no spaces, another language.
 - **Narrow and short screens:** 320px wide, and very short, as at a high zoom.
 - **Input:** keyboard alone, touch alone, a pointer crossing it.
-- **Preferences:** forced colours, reduced motion, larger text.
+- **Preferences:** forced colours and text spacing, checked on every story; reduced
+  motion, once a component animates; larger text.
