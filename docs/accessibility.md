@@ -25,63 +25,63 @@ it is run by hand.
 - **app:** the app's to meet, as it depends on its words or its content.
 - **none yet:** no component does this yet; whichever first does brings the check.
 
-| Criterion                                       | How            | Notes                                                                                                |
-| ----------------------------------------------- | -------------- | ---------------------------------------------------------------------------------------------------- |
-| 1.1.1 Non-text Content                          | axe, story     | `Icon` is hidden without a `label`, named with one                                                   |
-| 1.2.1 Audio-only and Video-only                 | app            |                                                                                                      |
-| 1.2.2 Captions (Prerecorded)                    | app            |                                                                                                      |
-| 1.2.3 Audio Description or Media Alternative    | app            |                                                                                                      |
-| 1.2.4 Captions (Live)                           | app            |                                                                                                      |
-| 1.2.5 Audio Description                         | app            |                                                                                                      |
-| 1.3.1 Info and Relationships                    | axe, story     | Tests find elements by role and name                                                                 |
-| 1.3.2 Meaningful Sequence                       | story, script  | Keyboard order in a story; reading order by hand                                                     |
-| 1.3.3 Sensory Characteristics                   | app            |                                                                                                      |
-| 1.3.4 Orientation                               | script         | Nothing in Aurum locks it                                                                            |
-| 1.3.5 Identify Input Purpose                    | none yet       | With the form controls (7.16)                                                                        |
-| 1.4.1 Use of Color                              | coming         | The Sidebar's current item (7.45)                                                                    |
-| 1.4.2 Audio Control                             | app            |                                                                                                      |
-| 1.4.3 Contrast (Minimum)                        | axe, tokens    | axe on flat colours; the tokens also on the graphite gradient                                        |
-| 1.4.4 Resize Text                               | script         | By browser zoom; the tokens are in `px` (decision 0076)                                              |
-| 1.4.5 Images of Text                            | app            |                                                                                                      |
-| 1.4.10 Reflow                                   | story, script  | The Sidebar at 320px; `AppLayout` has no check there (roadmap)                                       |
-| 1.4.11 Non-text Contrast                        | tokens, coming | Focus rings and the current icon; the Sidebar's current item (7.45); `control-border` (7.16); charts |
-| 1.4.12 Text Spacing                             | every story    | All three browsers                                                                                   |
-| 1.4.13 Content on Hover or Focus                | story          | `Tooltip`                                                                                            |
-| 2.1.1 Keyboard                                  | story          | Each interactive component                                                                           |
-| 2.1.2 No Keyboard Trap                          | story, script  | Moving on by Tab in a story                                                                          |
-| 2.1.4 Character Key Shortcuts                   | none yet       |                                                                                                      |
-| 2.2.1 Timing Adjustable                         | none yet       |                                                                                                      |
-| 2.2.2 Pause, Stop, Hide                         | none yet       |                                                                                                      |
-| 2.3.1 Three Flashes or Below Threshold          | none yet       |                                                                                                      |
-| 2.4.1 Bypass Blocks                             | story          | `AppLayout`'s link and landmarks (decision 0083)                                                     |
-| 2.4.2 Page Titled                               | app            |                                                                                                      |
-| 2.4.3 Focus Order                               | story          |                                                                                                      |
-| 2.4.4 Link Purpose (In Context)                 | axe, app       | axe finds a link with no name; its words are the app's                                               |
-| 2.4.5 Multiple Ways                             | app            |                                                                                                      |
-| 2.4.6 Headings and Labels                       | app            |                                                                                                      |
-| 2.4.7 Focus Visible                             | story, tokens  | The ring, computed, and its contrast                                                                 |
-| 2.4.11 Focus Not Obscured (Minimum)             | story          | Nothing in Aurum stays over the content: the top bar scrolls away (decision 0082)                    |
-| 2.5.1 Pointer Gestures                          | none yet       |                                                                                                      |
-| 2.5.2 Pointer Cancellation                      | none yet       | Links and buttons act natively                                                                       |
-| 2.5.3 Label in Name                             | app            | The visible name and the accessible one                                                              |
-| 2.5.4 Motion Actuation                          | none yet       |                                                                                                      |
-| 2.5.7 Dragging Movements                        | none yet       |                                                                                                      |
-| 2.5.8 Target Size (Minimum)                     | axe            |                                                                                                      |
-| 3.1.1 Language of Page                          | app            |                                                                                                      |
-| 3.1.2 Language of Parts                         | app            |                                                                                                      |
-| 3.2.1 On Focus                                  | story          | A tooltip opens on focus, and focus stays put                                                        |
-| 3.2.2 On Input                                  | none yet       | With the form controls (7.16)                                                                        |
-| 3.2.3 Consistent Navigation                     | app            |                                                                                                      |
-| 3.2.4 Consistent Identification                 | app            |                                                                                                      |
-| 3.2.6 Consistent Help                           | app            |                                                                                                      |
-| 3.3.1 Error Identification                      | none yet       | With the form controls (7.16)                                                                        |
-| 3.3.2 Labels or Instructions                    | none yet       | With the form controls (7.16)                                                                        |
-| 3.3.3 Error Suggestion                          | app            |                                                                                                      |
-| 3.3.4 Error Prevention (Legal, Financial, Data) | app            | Heavy in a finance app: review and confirm                                                           |
-| 3.3.7 Redundant Entry                           | app            |                                                                                                      |
-| 3.3.8 Accessible Authentication (Minimum)       | app            |                                                                                                      |
-| 4.1.2 Name, Role, Value                         | axe, story     |                                                                                                      |
-| 4.1.3 Status Messages                           | none yet       | With Alert (7.17)                                                                                    |
+| Criterion                                       | How           | Notes                                                                                           |
+| ----------------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------- |
+| 1.1.1 Non-text Content                          | axe, story    | `Icon` is hidden without a `label`, named with one                                              |
+| 1.2.1 Audio-only and Video-only                 | app           |                                                                                                 |
+| 1.2.2 Captions (Prerecorded)                    | app           |                                                                                                 |
+| 1.2.3 Audio Description or Media Alternative    | app           |                                                                                                 |
+| 1.2.4 Captions (Live)                           | app           |                                                                                                 |
+| 1.2.5 Audio Description                         | app           |                                                                                                 |
+| 1.3.1 Info and Relationships                    | axe, story    | Tests find elements by role and name                                                            |
+| 1.3.2 Meaningful Sequence                       | story, script | Keyboard order in a story; reading order by hand                                                |
+| 1.3.3 Sensory Characteristics                   | app           |                                                                                                 |
+| 1.3.4 Orientation                               | script        | Nothing in Aurum locks it                                                                       |
+| 1.3.5 Identify Input Purpose                    | none yet      | With the form controls (7.16)                                                                   |
+| 1.4.1 Use of Color                              | story         | The Sidebar's current item has a mark, a shape (decision 0084)                                  |
+| 1.4.2 Audio Control                             | app           |                                                                                                 |
+| 1.4.3 Contrast (Minimum)                        | axe, tokens   | axe on flat colours; the tokens also on the graphite gradient                                   |
+| 1.4.4 Resize Text                               | script        | By browser zoom; the tokens are in `px` (decision 0076)                                         |
+| 1.4.5 Images of Text                            | app           |                                                                                                 |
+| 1.4.10 Reflow                                   | story, script | The Sidebar at 320px; `AppLayout` has no check there (roadmap)                                  |
+| 1.4.11 Non-text Contrast                        | tokens        | Focus rings, and the Sidebar's current icon and mark; `control-border` (7.16); charts (roadmap) |
+| 1.4.12 Text Spacing                             | every story   | All three browsers                                                                              |
+| 1.4.13 Content on Hover or Focus                | story         | `Tooltip`                                                                                       |
+| 2.1.1 Keyboard                                  | story         | Each interactive component                                                                      |
+| 2.1.2 No Keyboard Trap                          | story, script | Moving on by Tab in a story                                                                     |
+| 2.1.4 Character Key Shortcuts                   | none yet      |                                                                                                 |
+| 2.2.1 Timing Adjustable                         | none yet      |                                                                                                 |
+| 2.2.2 Pause, Stop, Hide                         | none yet      |                                                                                                 |
+| 2.3.1 Three Flashes or Below Threshold          | none yet      |                                                                                                 |
+| 2.4.1 Bypass Blocks                             | story         | `AppLayout`'s link and landmarks (decision 0083)                                                |
+| 2.4.2 Page Titled                               | app           |                                                                                                 |
+| 2.4.3 Focus Order                               | story         |                                                                                                 |
+| 2.4.4 Link Purpose (In Context)                 | axe, app      | axe finds a link with no name; its words are the app's                                          |
+| 2.4.5 Multiple Ways                             | app           |                                                                                                 |
+| 2.4.6 Headings and Labels                       | app           |                                                                                                 |
+| 2.4.7 Focus Visible                             | story, tokens | The ring, computed, and its contrast                                                            |
+| 2.4.11 Focus Not Obscured (Minimum)             | story         | Nothing in Aurum stays over the content: the top bar scrolls away (decision 0082)               |
+| 2.5.1 Pointer Gestures                          | none yet      |                                                                                                 |
+| 2.5.2 Pointer Cancellation                      | none yet      | Links and buttons act natively                                                                  |
+| 2.5.3 Label in Name                             | app           | The visible name and the accessible one                                                         |
+| 2.5.4 Motion Actuation                          | none yet      |                                                                                                 |
+| 2.5.7 Dragging Movements                        | none yet      |                                                                                                 |
+| 2.5.8 Target Size (Minimum)                     | axe           |                                                                                                 |
+| 3.1.1 Language of Page                          | app           |                                                                                                 |
+| 3.1.2 Language of Parts                         | app           |                                                                                                 |
+| 3.2.1 On Focus                                  | story         | A tooltip opens on focus, and focus stays put                                                   |
+| 3.2.2 On Input                                  | none yet      | With the form controls (7.16)                                                                   |
+| 3.2.3 Consistent Navigation                     | app           |                                                                                                 |
+| 3.2.4 Consistent Identification                 | app           |                                                                                                 |
+| 3.2.6 Consistent Help                           | app           |                                                                                                 |
+| 3.3.1 Error Identification                      | none yet      | With the form controls (7.16)                                                                   |
+| 3.3.2 Labels or Instructions                    | none yet      | With the form controls (7.16)                                                                   |
+| 3.3.3 Error Suggestion                          | app           |                                                                                                 |
+| 3.3.4 Error Prevention (Legal, Financial, Data) | app           | Heavy in a finance app: review and confirm                                                      |
+| 3.3.7 Redundant Entry                           | app           |                                                                                                 |
+| 3.3.8 Accessible Authentication (Minimum)       | app           |                                                                                                 |
+| 4.1.2 Name, Role, Value                         | axe, story    |                                                                                                 |
+| 4.1.3 Status Messages                           | none yet      | With Alert (7.17)                                                                               |
 
 ## Corner cases
 

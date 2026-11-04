@@ -83,10 +83,27 @@
 
   /* The current page. The outline, transparent, is what shows where forced colours remove the fill. */
   .au-sidebar-item[aria-current="page"] {
+    position: relative;
     outline: 1px solid transparent;
     outline-offset: -1px;
     background: var(--au-primary-soft);
     color: var(--au-primary);
+  }
+
+  /* Its mark, which tells it apart by its shape, where the fill barely shows (WCAG 1.4.1 and 1.4.11, decision 0084). A
+     border, so forced colours keep it. */
+  .au-sidebar-item[aria-current="page"]::before {
+    content: "";
+    position: absolute;
+    inset-block: var(--au-space-2);
+    left: 0;
+    border-left: var(--au-space-1) solid var(--au-primary);
+    border-radius: var(--au-radius-pill);
+  }
+
+  .au-sidebar[data-variant="inverse"]
+    .au-sidebar-item[aria-current="page"]::before {
+    border-left-color: var(--au-gold);
   }
 
   /* The surface variant, white with a border. */

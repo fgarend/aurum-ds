@@ -107,6 +107,11 @@ const textPairs: [string, string][] = [
 ];
 
 const focusPairs = pairs(["focus-ring"], grounds);
+// The mark beside the Sidebar's current item, on the current item's fill in each light variant (decision 0084).
+const markPairs: [string, string][] = pairs(
+  ["primary"],
+  ["primary-soft", "surface"],
+);
 
 // The graphite: its three stops, the Sidebar's gold glow at its strongest (Sidebar.css), and the translucent fills over
 // each.
@@ -173,11 +178,14 @@ describe("the palette", () => {
     ).toBeGreaterThanOrEqual(text);
   });
 
-  it.each(focusPairs)("%s shows on %s", (foreground, background) => {
-    expect(
-      contrast(colour(foreground), colour(background)),
-    ).toBeGreaterThanOrEqual(nonText);
-  });
+  it.each([...focusPairs, ...markPairs])(
+    "%s shows on %s",
+    (foreground, background) => {
+      expect(
+        contrast(colour(foreground), colour(background)),
+      ).toBeGreaterThanOrEqual(nonText);
+    },
+  );
 });
 
 describe("the graphite", () => {
@@ -198,7 +206,7 @@ describe("the graphite", () => {
     }
   });
 
-  it("shows the current item's gold icon", () => {
+  it("shows the current item's gold icon and mark", () => {
     for (const ground of railActive) {
       expect(contrast(colour("gold"), ground)).toBeGreaterThanOrEqual(nonText);
     }

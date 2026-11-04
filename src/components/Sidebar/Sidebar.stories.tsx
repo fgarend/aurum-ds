@@ -46,6 +46,7 @@ const onInverseMuted = "rgb(207, 209, 212)";
 const inverseActive = "rgba(255, 255, 255, 0.1)";
 const none = "rgba(0, 0, 0, 0)";
 const focusOffset = "-2px";
+const markWidth = "4px";
 const narrowWidth = 320;
 
 // Each item's accessible name, as far as tells it apart.
@@ -126,6 +127,11 @@ function many(current: string | undefined): ReactNode {
       </SidebarItem>
     );
   });
+}
+
+// The mark beside the current page, which tells it apart by its shape (WCAG 1.4.1 and 1.4.11, decision 0084).
+function mark(item: Element): CSSStyleDeclaration {
+  return getComputedStyle(item, "::before");
 }
 
 function scrollArea(nav: Element): HTMLElement {
@@ -220,6 +226,9 @@ const Inverse: Story = {
       getComputedStyle(current.querySelector("svg") as Element).color,
     ).toBe(gold);
     await expect(getComputedStyle(other).fontWeight).toBe("400");
+    await expect(mark(current).borderLeftWidth).toBe(markWidth);
+    await expect(mark(current).borderLeftColor).toBe(gold);
+    await expect(mark(other).content).toBe("none");
 
     // By keyboard, in order, with a ring inside the item, which the area's scrolling would cut outside it.
     await userEvent.tab();
@@ -252,6 +261,8 @@ const Surface: Story = {
     await expect(getComputedStyle(current).backgroundColor).toBe(primarySoft);
     await expect(getComputedStyle(current).color).toBe(primary);
     await expect(getComputedStyle(current).outlineStyle).toBe("solid");
+    await expect(mark(current).borderLeftWidth).toBe(markWidth);
+    await expect(mark(current).borderLeftColor).toBe(primary);
   },
 };
 
@@ -269,6 +280,8 @@ const Canvas: Story = {
     await expect(getComputedStyle(current).backgroundColor).toBe(surface);
     await expect(getComputedStyle(current).color).toBe(ink);
     await expect(getComputedStyle(current).outlineColor).toBe(line);
+    await expect(mark(current).borderLeftWidth).toBe(markWidth);
+    await expect(mark(current).borderLeftColor).toBe(primary);
   },
 };
 

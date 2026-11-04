@@ -12,7 +12,7 @@ follow decision 0004.
   `AppLayout`'s `navigation`. Three variants, `inverse` by default, `surface` and
   `canvas`; a `header` and a `footer` that take anything; and items with an icon
   and an optional `end`. The items' area scrolls and brings the current page,
-  marked by `aria-current="page"`, into view; long names break into lines; below
+  marked by `aria-current="page"` with a mark on its edge, into view; long names break into lines; below
   768px it is a strip that scrolls. Wrap `SidebarItem` once with the router's
   link, as `createLink(SidebarItem)` in TanStack Router.
 - `Tooltip`: the name of a control with no text of its own, on the screen, on

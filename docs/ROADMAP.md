@@ -73,8 +73,7 @@ the gallery already shows Aurum's brand mark. 7.14, the Sidebar in the shell:
 it is the Sidebar's own item, in the `navigation` of `AppLayout`.
 
 - **7.45 · Accessibility across the system.** First, closing what
-  `docs/accessibility.md` marks as coming, one commit each. The Sidebar's current item,
-  whose fill is 1.2:1 in `surface` and `canvas` beside a subtle weight (1.4.11). A
+  `docs/accessibility.md` marks as coming, one commit each. A
   manual script with VoiceOver and zoom, run by the user. `control-border`, at
   1.54:1, is decided in 7.16.
 - **7.40 · Collapsing the Sidebar.** After 7.45, as a prop of its own: the

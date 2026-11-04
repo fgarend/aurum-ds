@@ -29,6 +29,19 @@ function withoutEdge(root: Element): string[] {
     .map((element) => element.className.toString());
 }
 
+// The Sidebar's mark, drawn as a border so it stays (decision 0084).
+function withoutMark(root: Element): string[] {
+  return [...root.querySelectorAll('.au-sidebar-item[aria-current="page"]')]
+    .filter((item) => {
+      const { borderLeftColor, borderLeftStyle } = getComputedStyle(
+        item,
+        "::before",
+      );
+      return borderLeftStyle !== "solid" || borderLeftColor === none;
+    })
+    .map((item) => item.textContent ?? "");
+}
+
 // A colour set on the svg itself stays as it is in forced colours, whatever is behind it now.
 function offColourIcons(root: Element): string[] {
   return [...root.querySelectorAll("a .au-icon, button .au-icon")]
@@ -54,6 +67,7 @@ it.each(stories.map((story) => [story.id, story] as const))(
     });
 
     expect(withoutEdge(screen.container)).toEqual([]);
+    expect(withoutMark(screen.container)).toEqual([]);
     expect(offColourIcons(screen.container)).toEqual([]);
 
     await screen.unmount();
